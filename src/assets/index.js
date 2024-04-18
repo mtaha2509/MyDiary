@@ -1,3 +1,4 @@
 import Diary from "./Diary.svg"
-
-export {Diary}
+import dropdown from "./dropdown.svg"
+import logo1 from "./logo1.svg"
+export {Diary, dropdown, logo1}

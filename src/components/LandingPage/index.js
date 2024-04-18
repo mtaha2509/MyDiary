@@ -1,3 +1,4 @@
 import NavBar from "./navbar/navbar"
 import Header from "./header/Header"
-export {NavBar,Header}
+import Footer from "./footer/Footer"
+export {NavBar,Header, Footer}
