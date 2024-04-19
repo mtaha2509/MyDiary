@@ -1,0 +1,93 @@
+.Box {
+    padding: 5% 2.5%;
+    background: black;
+    /* position: absolute; */
+    bottom: 0;
+    width: 95%;
+}
+
+.FooterContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.Column {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 60px;
+}
+
+.Row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+    grid-gap: 20px;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+.FooterLink {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.FooterLink:hover {
+    color: green;
+    transition: 200ms ease-in;
+}
+
+.Heading {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 50px 100px;
+    margin-bottom: 10px;
+}
+
+.h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px; /* Reduce the margin-bottom value */
+}
+
+.ul {
+    padding-left: '10px';
+}
+
+.footer-column h2 {
+    margin-bottom: 5px; /* Adjust this value to reduce or increase the space between the heading and links */
+  }
+  
+li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    color: #000000;
+  }
