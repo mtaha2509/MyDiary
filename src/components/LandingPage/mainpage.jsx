@@ -5,7 +5,7 @@ import './mainpage.css'; // Importing the stylesheet
 import { useSpring, animated } from 'react-spring';
 // import NavBar from './components/navbar/navbar';
 // import Header from "./components/header/Header"
-import {Header, NavBar, Footer} from "../LandingPage"
+import {Header, NavBar, Footer, Section1} from "../LandingPage"
 
 // function LandingPage() {
 //   const [isVisible, setIsVisible] = useState(false);
@@ -53,6 +53,7 @@ function LandingPage(){
     <>
     <NavBar />
     <Header/>
+    <Section1/>
     <Footer/>
     </>
   )
