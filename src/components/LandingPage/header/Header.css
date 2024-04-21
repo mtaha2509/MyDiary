@@ -11,22 +11,14 @@ body {
 
 /* Header styles */
 .header {
-  background: linear-gradient(to bottom, #E0F8F2, #FFC0CB);
-  background-size: cover; /* Ensure the gradient covers the entire container */
-  animation: gradientAnimation 10s linear infinite alternate;
+  background-color: #D9F2F7;
+
   min-height: 100vh;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   color: #333;
 }
 
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 0%; /* Start position */
-  }
-  100% {
-    background-position: 100% 100%; /* End position */
-  }
-}
+
 
 
 .container {
