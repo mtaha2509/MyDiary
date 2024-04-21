@@ -54,7 +54,7 @@ import {Header, NavBar, Footer, Section1} from "../LandingPage"
 
 function LandingPage(){
 
-  const [ref, inView] = useInView({
+  /*const [ref, inView] = useInView({
     threshold: 0.5,
     triggerOnce: false
 });
@@ -62,14 +62,16 @@ function LandingPage(){
 const fadeIn = useSpring({
   opacity: inView ? 1 : 0,
   transform: inView ? 'translateY(0px)' : 'translateY(50px)',
-});
+});*/
+
   return(
     <div className='fadeIn'>
       <NavBar />
       <Header/>
-      <animated.div ref={ref} style={fadeIn}>
+      <Section1/>
+      {/* <animated.div ref={ref} style={fadeIn}>
         <Section1 />
-      </animated.div>
+      </animated.div> */}
       <Footer/>
       
     </div>
