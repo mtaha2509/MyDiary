@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {Footer_Design} from "../../../assets";
+import {Logo2} from "../../../assets";
 
 function Footer() {
 	return (
@@ -14,7 +14,7 @@ function Footer() {
 					<Container>
 						<Row>
 							<Col lg="3">
-								<img src={Footer_Design} alt="Footer Logo" />
+								<img src={Logo2} alt="Footer Logo" />
 							</Col>
 							<Col lg="3">
 								<div className="footer-column">

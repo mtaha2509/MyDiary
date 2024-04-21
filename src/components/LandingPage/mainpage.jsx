@@ -7,7 +7,7 @@ import { useInView } from 'react-intersection-observer';
 
 // import NavBar from './components/navbar/navbar';
 // import Header from "./components/header/Header"
-import {Header, NavBar, Footer, Section1} from "../LandingPage"
+import {Header, NavBar, Footer, Section1, Section2} from "../LandingPage"
 
 // function LandingPage() {
 //   const [isVisible, setIsVisible] = useState(false);
@@ -69,9 +69,11 @@ const fadeIn = useSpring({
       <NavBar />
       <Header/>
       <Section1/>
+      <Section2/>
       {/* <animated.div ref={ref} style={fadeIn}>
         <Section1 />
       </animated.div> */}
+      
       <Footer/>
       
     </div>

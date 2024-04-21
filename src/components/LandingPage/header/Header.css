@@ -11,11 +11,23 @@ body {
 
 /* Header styles */
 .header {
-  background: linear-gradient(to bottom, #32CD32, #20B2AA); /* Sea green gradient */
+  background: linear-gradient(to bottom, #E0F8F2, #FFC0CB);
+  background-size: cover; /* Ensure the gradient covers the entire container */
+  animation: gradientAnimation 10s linear infinite alternate;
   min-height: 100vh;
-  font-family: 'Comic Sans MS', cursive, sans-serif; /* Set a fun font */
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   color: #333;
 }
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0%; /* Start position */
+  }
+  100% {
+    background-position: 100% 100%; /* End position */
+  }
+}
+
 
 .container {
   max-width: 1200px;
@@ -30,7 +42,7 @@ body {
 .header-title {
   font-size: 48px;
   margin-bottom: 20px;
-  color: #fff; /* White text color */
+  color: black; /* White text color */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a text shadow for depth */
 }
 
@@ -41,7 +53,7 @@ body {
 .header-description {
   font-size: 20px;
   margin-bottom: 30px;
-  color: #fff; /* White text color */
+  color: black; /* White text color */
 }
 
 .demo-btn {

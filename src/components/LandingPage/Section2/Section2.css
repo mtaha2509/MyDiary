@@ -1,0 +1,49 @@
+.section2-container {
+    padding: 60px 0; /* Adjusted padding for better spacing */
+  }
+  
+  .section2-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center content horizontally */
+  }
+  
+  .section2-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+  }
+  
+  .section2-content p {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+  }
+  
+  .get-started-button {
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #FFFFFF;
+    color: #FF6D2C;
+    transition: all 0.3s ease;
+  }
+  
+  .get-started-button:hover {
+    background-color: #FF8C6B;
+    color: #FFFFFF;
+  }
+  
+  .section2-image {
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+  }
+  .content-div{
+    padding:10%;
+  }

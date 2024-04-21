@@ -38,7 +38,7 @@ const list=[
 },
 {
     id : 6,
-    color : "#EDF7DE",
+    color : "#EBFDEB",
     SVG : Weather2,
     title : "Mood & Weather Match?",
     desc: " See how your mood connects to the weather!  Real-time weather displayed alongside your entries."
