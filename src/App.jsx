@@ -4,6 +4,7 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/SignUp';
 // import LandingPage from './components/LandingPage/main/mainpage';
 import {LandingPage} from './components'
+import DiaryEntryPage from "./components/DiaryEntryPage/page"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       </Routes>
     </BrowserRouter> */}
       <LandingPage />
+      {/* <DiaryEntryPage /> */}
     </Router>
   );
 }
