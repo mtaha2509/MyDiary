@@ -5,6 +5,7 @@ import Signup from './components/Signup/SignUp';
 // import LandingPage from './components/LandingPage/main/mainpage';
 import {LandingPage} from './components'
 import DiaryEntryPage from "./components/DiaryEntryPage/page"
+import TimeCapsule from "./components/TimeCapsule/TimeCapsule"
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter> */}
+      <TimeCapsule/>
       {/* <LandingPage /> */}
-      <DiaryEntryPage />
+      {/* <DiaryEntryPage /> */}
     </Router>
   );
 }
