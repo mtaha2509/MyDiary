@@ -2,12 +2,20 @@
 
 import React from "react"
 import "./page.css"
-import {SideBar} from "../DiaryEntryPage"
+import {SideBar, MainNavBar} from "../DiaryEntryPage"
 function DiaryEntryPage(){
 return(
-    <div>
+    <>
+    <div className="page-container">
         <SideBar />
+        <div className="page-content">
+        <MainNavBar/>
+        <a href="#">Choose A template</a>
+        </div>
+        
     </div>
+        
+    </>
 )
 }
 
