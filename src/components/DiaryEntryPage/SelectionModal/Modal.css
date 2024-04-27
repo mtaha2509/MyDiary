@@ -1,0 +1,133 @@
+/* Modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure modal appears above sidebar */
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 20px; /* Rounded border */
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+  animation: modal-appear 0.3s ease; /* Animation for appearing */
+  width: 90%; /* Adjust width as needed */
+  max-width: 800px; /* Maximum width for responsiveness */
+  max-height: 70vh; /* Set maximum height and enable vertical scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  /* Add padding to accommodate scrollbar */
+  padding-right: 15px;
+  border-radius: 5px; /* Rounded border */
+}
+
+/* Style the scrollbar */
+.modal-content::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  border-radius: 10px;
+}
+
+/* Track */
+.modal-content::-webkit-scrollbar-track {
+  background: transparent; /* Make scrollbar track transparent */
+  border-radius: 10px; /* Rounded corners for scrollbar track */
+}
+
+/* Handle */
+.modal-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3); /* Color of the scrollbar handle */
+  border-radius: 10px; /* Rounded corners for scrollbar handle */
+}
+
+/* Handle on hover */
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); /* Darker color on handle hover */
+}
+
+
+@keyframes modal-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.template-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust thumbnail size and responsiveness */
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.template-thumbnail {
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+}
+
+.template-thumbnail:hover {
+  transform: translateY(-5px); /* Move thumbnail up on hover */
+}
+
+.template-thumbnail img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px; /* Add some border-radius to thumbnails */
+  transition: transform 0.3s ease;
+}
+
+.template-thumbnail:hover img {
+  transform: scale(1.05); /* Zoom effect on thumbnail image hover */
+}
+
+.template-name {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 18px;
+  color: #333; /* Darker text color */
+}
+
+.close-button {
+  display: block;
+  margin-top: 100px;
+  width: 100%;
+  padding: 15px 0;
+  background-color: #ff6b6b; /* Red color for close button */
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.close-button:hover {
+  background-color: #e74c3c; /* Darker red color on hover */
+}
+
+/* Modal.css */
+
+/* Style the heading */
+.choose-template-heading {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333; /* Dark text color */
+}
+
+
