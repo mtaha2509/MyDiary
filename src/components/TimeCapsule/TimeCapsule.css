@@ -1,170 +1,68 @@
-.bg-image {
-  position: relative;
-  background-image: url('https://www.michigandaily.com/wp-content/uploads/2023/05/Untitled_Artwork-84.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
+.diary-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.bg-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.5); /* Adjust the transparency as needed */
-  backdrop-filter: blur(2px); /* Apply blur effect */
-}
-  
-  .diary-entries-container {
-    background-color: rgba(249, 249, 249, 0.7); /* Add some transparency to the background color */
-    backdrop-filter: blur(8px); 
-    border-radius: 10px;
-    padding: 50px;
-    margin-bottom: 20px;
-  }
-
-  .page-title,
-.page-subtitle,h2 {
-  position: relative;
-  z-index: 1; /* Ensure headings are above the background overlay */
-}
-
-  .diary-entries {
-    display: flex;
-    flex-direction: column;
-    margin-left: -20px;
-    
-  }
-
-  .entry-box {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 10px;  
-    margin-bottom: 20px;
-
-  }
-
-  .entry-content p {
-    margin: 5px 0;
-  }
-
-  .entry-header {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
 .page-title {
   text-align: center;
   color: #ff6f61;
-  margin-bottom: 20px;
-  margin-right: -200px; /* Adjusted margin-right */
-  margin-top: 10px;
-  margin-left: 20px;
 }
 
 .page-subtitle {
+  text-align: center;
   color: #444;
   margin-bottom: 20px;
-  margin-right: -200px; /* Adjusted margin-right */
-  margin-top: 10px;
-  margin-left: 20px;
 }
-  
-  form {
-    margin-bottom: 20px;
-  }
-  
-  input[type="date"],
-  textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    margin-top: -5px;
-    border: none;
-    outline: none;
-  }
-  
-  button {
-    background-color: #ff6f61;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #e64943;
-  }
-  
-  h2 {
-    color: #444;
-  }
 
-  .entries{
-   
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-top: -150px;
-    margin-left: -20px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    top: -345px;
-  }
+form {
+  margin-bottom: 20px;
+}
 
-  .entries-container{
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .entries p{
-    margin-bottom: 35px;
-  }
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-  .time-capsule-page {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .time-capsule-header {
-    flex: 1;
-    padding: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  
-  .time-capsule-content {
-    flex: 3;
-    padding: 20px;
-  }
+button {
+  background-color: #ff6f61;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
 
-  @media (max-width: 768px) {
-    .time-capsule-page {
-      flex-direction: column;
-    }
-  
-    .time-capsule-header {
-      align-items: center;
-    }
-  
-    .page-subtitle {
-      text-align: center;
-      margin-left: 0;
-    }
+button:hover {
+  background-color: #e64943;
+}
 
-    .diary-entries-container {
-      margin-left: -20px;
-    }
-  
-    .entry-box {
-      margin-left: 20px;
-    }
+h2 {
+  color: #444;
+}
 
-  }
+.entries{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -150px;
+
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: -345px;
+}
+
+
+.diary-page {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+

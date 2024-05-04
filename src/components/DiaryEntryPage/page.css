@@ -15,3 +15,37 @@
     margin-left: 270px; /* Adjust margin when sidebar is expanded */
   }
   
+  /* page.css */
+
+/* page.css */
+
+/* page.css */
+
+/* Add styling for the template slot */
+.template-slot {
+  margin-top: 20px;
+  margin-right: 40px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f2f2f2; /* Greyish background color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+}
+
+/* Add styling for the empty slot */
+.empty-slot {
+  text-align: center;
+  color: #777; /* Lighter text color */
+  border: 2px dashed #ccc; /* Dotted line border */
+  padding: 50px; /* Padding to create space */
+  height: 400px; /* Increased height of the empty slot */
+  width: 80%; /* Slightly smaller width */
+  margin: 0 auto; /* Center the empty slot horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-slot p {
+  margin: 0;
+}

@@ -18,16 +18,16 @@ function SideBar() {
           {expanded && <span className="label">Close Sidebar</span>}
         </div>
         {expanded && (
-          <div className="entries">
-            <div className="entry">
+          <div className="sidebar-entries">
+            <div className="sidebar-entry">
               {/* <StickyNotesIcon className="entry-icon" /> */}
               <span className="entry-label">Sticky Notes</span>
             </div>
-            <div className="entry">
+            <div className="sidebar-entry">
               {/* <TodoListIcon className="entry-icon" /> */}
               <span className="entry-label">To-do List</span>
             </div>
-            <div className="entry">
+            <div className="sidebar-entry">
               {/* <TimeCapsuleIcon className="entry-icon" /> */}
               <span className="entry-label">Time Capsule</span>
             </div>

@@ -18,8 +18,8 @@ function App() {
       </Routes>
     </BrowserRouter> */}
       {/* <TimeCapsule/> */}
-      <LandingPage />
-      {/* <DiaryEntryPage /> */}
+      {/* <LandingPage /> */}
+      <DiaryEntryPage />
     </Router>
   );
 }
