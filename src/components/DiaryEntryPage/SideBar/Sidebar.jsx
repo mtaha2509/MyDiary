@@ -1,37 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import "./SideBar.css";
 import {ExpandIcon, ShrinkIcon} from "../../../assets";
 
-
-function SideBar() {
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleSidebar = () => {
-    setExpanded(!expanded);
-  };
-
+function SideBar({ toggleSidebar, sidebarExpanded }) {
   return (
-    <div className={`sidebar-container ${expanded ? 'expanded' : ''}`}>
+    <div className={`sidebar-container ${sidebarExpanded ? 'expanded' : ''}`}>
       <div className="side-bar">
         <div className="toggle-button" onClick={toggleSidebar}>
-          <span className="icon">{expanded ? <img src={ShrinkIcon} className="shrink-icon"/> : <img src={ExpandIcon} className="expand-icon"/>}</span>
-          {expanded && <span className="label">Close Sidebar</span>}
+          <span className="icon">{sidebarExpanded ? <img src={ShrinkIcon} className="shrink-icon"/> : <img src={ExpandIcon} className="expand-icon"/>}</span>
+          {sidebarExpanded && <span className="label">Close Sidebar</span>}
         </div>
-        {expanded && (
+        {sidebarExpanded && (
           <div className="entries">
             <div className="entry">
-              {/* <StickyNotesIcon className="entry-icon" /> */}
               <span className="entry-label">Sticky Notes</span>
             </div>
             <div className="entry">
-              {/* <TodoListIcon className="entry-icon" /> */}
               <span className="entry-label">To-do List</span>
             </div>
             <div className="entry">
-              {/* <TimeCapsuleIcon className="entry-icon" /> */}
               <span className="entry-label">Time Capsule</span>
             </div>
-            {/* Add more entries as needed */}
           </div>
         )}
       </div>

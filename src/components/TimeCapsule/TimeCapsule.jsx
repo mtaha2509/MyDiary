@@ -5,7 +5,8 @@ import timeCapsuleImage from '../../assets/TimeCapsule.svg';
 
 const TimeCapsule = () => {
   const [entries, setEntries] = useState([]);
-  const [newEntry, setNewEntry] = useState({ interval: '', messageToFutureSelf: '' });
+  const [newEntry, setNewEntry] = useState({ interval: '', messageToFutureSelf: '', uploadedImage: null });
+  const [dragging, setDragging] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 3;
 
@@ -17,6 +18,47 @@ const TimeCapsule = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setNewEntry(prevState => ({
+      ...prevState,
+      uploadedImage: file
+    }));
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    setDragging(false);
+    
+    const file = e.dataTransfer.files[0];
+    
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setNewEntry(prevState => ({
+          ...prevState,
+          uploadedImage: reader.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const currentDate = new Date().toLocaleDateString();
@@ -24,7 +66,7 @@ const TimeCapsule = () => {
       ...prevEntries,
       { ...newEntry, date: currentDate }
     ]);
-    setNewEntry({ interval: '', messageToFutureSelf: '' });
+    setNewEntry({ interval: '', messageToFutureSelf: '', uploadedImage: null });
   };
   
   const totalPages = Math.ceil(entries.length / entriesPerPage);
@@ -35,25 +77,25 @@ const TimeCapsule = () => {
 
   return (
     <div className='fadein'>
-    <div className="container-fluid">
-      <div className="col-lg-12 offset-lg-12" style={{ backgroundColor:'#b3b5ff' }}  >
-        <div className="time-capsule-header text-center" style={{ marginLeft:'250px', borderRadius:'80px' }} >
-          <h1 className="page-title" style={{ fontWeight: 'bold'}}>Welcome to Time Capsule</h1>
-          <p className="page-subtitle" style={{ fontWeight: 'bold' }}>Plant your Time Capsule and let it revive your beloved memories</p>
-        </div>
-        <div className="parent-container">
-          <img src="https://www.michigandaily.com/wp-content/uploads/2023/05/Untitled_Artwork-84.png" alt="Time Capsule" style={{ height:'500px', marginTop: '0px', width: '48%' }} />
+      <div className="container-fluid">
+        <div className="col-lg-12 offset-lg-12">
+          <div className="parent-container">
+            <img src="https://www.michigandaily.com/wp-content/uploads/2023/05/Untitled_Artwork-84.png" alt="Time Capsule" style={{ height:'500px', marginTop: '0px', width: '48%' }} />
+          </div>
+          <div className="time-capsule-header text-center">
+            <h1 className="page-title" style={{ fontWeight: 'bold'}}>Welcome to Time Capsule</h1>
+            <p className="page-subtitle" style={{ fontWeight: 'bold' }}>Plant your Time Capsule and let it revive your beloved memories</p>
+          </div>
         </div>
       </div>
-    </div>
       <div className="col-lg-6 offset-lg-3">
-        <div className="p-2" style={{ flex:3 }} >
+        <div className="p-2">
           <Sidebar currentPage="TimeCapsule" />
-            <div className="time-capsule-header" style={{ marginLeft:'200px', borderRadius:'80px' }} >
-              <h2 className="text-center" style={{ fontWeight: 'bold' }}>Plant a Time Capsule</h2>
-            </div>
+          <div className="time-capsule-header" style={{ marginLeft:'200px', borderRadius:'80px' }} >
+            <h2 className="text-center" style={{ fontWeight: 'bold' }}>Plant a Time Capsule</h2>
+          </div>
           <div className="card-body" style={{ backgroundColor: '#c1c1c1', padding:'20px', borderRadius:'20px' }}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDrop={handleDrop}>
               <select
                 name="interval"
                 value={newEntry.interval}
@@ -77,41 +119,53 @@ const TimeCapsule = () => {
                   rows="4"
                 />
               </div>
-              <div className="form-group mt-3" style={{ textAlign: 'center' }} >
+              <div className="form-group mt-3">
+                <input type="file" accept="image/*" onChange={handleImageChange} />
+                <div
+                  className={`drag-drop-area ${dragging ? 'active' : ''}`}
+                  onDragOver={handleDragOver}
+                  onDragEnter={handleDragEnter}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  Drag & Drop or Click to Upload
+                </div>
+              </div>
+              <div className="form-group mt-3" style={{ textAlign: 'center' }}>
                 <button type="submit" className="btn btn-primary">Set Time Capsule</button>
               </div>
             </form>
           </div>
         </div>
       </div>
-        <div className="col-lg-6 offset-lg-3">
-          <h2 className="text-center" style={{ fontWeight: 'bold' }}>Diary Entries</h2>
-          <div className="diary-entries" style={{ backgroundColor: '#c1c1c1', padding:'30px', borderRadius:'20px'}}>
-            {currentEntries.map((entry, index) => (
-              <div key={index} className="card mb-3">
-                <div className="card-body">
-                  <h5 className="card-title" style={{ fontWeight: 'bold' }}>Capsule {index + indexOfFirstEntry + 1}</h5>
-                  <p className="card-text">Capsule Planted Date: {entry.date}</p>
-                  <p className="card-text">Interval: {entry.interval}</p>
-                  <p className="card-text">Next Opening Date: {getNextOpeningDate(entry.date, entry.interval)}</p>
-                  <p className="card-text">Message: {entry.messageToFutureSelf}</p>
-                </div>
+      <div className="col-lg-6 offset-lg-3">
+        <h2 className="text-center" style={{ fontWeight: 'bold' }}>Diary Entries</h2>
+        <div className="diary-entries" style={{ backgroundColor: '#c1c1c1', padding:'30px', borderRadius:'20px'}}>
+          {currentEntries.map((entry, index) => (
+            <div key={index} className="card mb-3">
+              <div className="card-body">
+                <h5 className="card-title" style={{ fontWeight: 'bold' }}>Capsule {index + indexOfFirstEntry + 1}</h5>
+                <p className="card-text">Capsule Planted Date: {entry.date}</p>
+                <p className="card-text">Interval: {entry.interval}</p>
+                <p className="card-text">Next Opening Date: {getNextOpeningDate(entry.date, entry.interval)}</p>
+                <p className="card-text">Message: {entry.messageToFutureSelf}</p>
               </div>
-            ))}
-          </div>
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <nav aria-label="Page navigation">
-              <ul className="pagination justify-content-center">
-                {[...Array(totalPages).keys()].map(page => (
-                  <li key={page} className={`page-item ${page + 1 === currentPage ? 'active' : ''}`}>
-                    <button onClick={() => paginate(page + 1)} className="page-link">{page + 1}</button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )}
+            </div>
+          ))}
         </div>
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <nav aria-label="Page navigation">
+            <ul className="pagination justify-content-center">
+              {[...Array(totalPages).keys()].map(page => (
+                <li key={page} className={`page-item ${page + 1 === currentPage ? 'active' : ''}`}>
+                  <button onClick={() => paginate(page + 1)} className="page-link">{page + 1}</button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+      </div>
     </div>
   );
 };

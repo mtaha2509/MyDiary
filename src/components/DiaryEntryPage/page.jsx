@@ -1,22 +1,25 @@
+import React, { useState } from "react";
+import { SideBar, MainNavBar } from "../DiaryEntryPage";
+import "./page.css";
 
+function DiaryEntryPage() {
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
-import React from "react"
-import "./page.css"
-import {SideBar, MainNavBar} from "../DiaryEntryPage"
-function DiaryEntryPage(){
-return(
+  const toggleSidebar = () => {
+    setSidebarExpanded(!sidebarExpanded);
+  };
+
+  return (
     <>
-    <div className="page-container">
-        <SideBar />
+      <div className={`page-container ${sidebarExpanded ? 'expanded' : ''}`}>
+        <SideBar toggleSidebar={toggleSidebar} sidebarExpanded={sidebarExpanded} />
         <div className="page-content">
-        <MainNavBar/>
-        <a href="#">Choose A template</a>
+          <MainNavBar />
+          <a href="#">Choose A template</a>
         </div>
-        
-    </div>
-        
+      </div>
     </>
-)
+  );
 }
 
-export default DiaryEntryPage
+export default DiaryEntryPage;

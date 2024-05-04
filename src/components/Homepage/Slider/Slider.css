@@ -1,0 +1,52 @@
+.slider-wrapper {
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px; /* Adjust the padding as needed */
+  border-radius: 50px;
+  background-color: #F5FDFB;
+  margin-left: 75px;
+  width: 80%;
+  height: 800px;
+}
+
+
+
+.welcome-text {
+  font-size: 40px; /* Adjust font size as needed */
+  padding: 40px; /* Adjust padding as needed */
+  margin-left: 100px;
+  font-weight: bold;
+}
+
+.slideshow-container {
+  width: 50%;
+  height: 65%; /* Adjust height as needed */
+  overflow: hidden;
+  border: 3px solid black; /* Add border for the square-like padding */
+  border-radius: 10px; /* Add border-radius for the square-like padding */
+  margin-left: 25%;
+  margin-top: 10%;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+@keyframes slideAnimation {
+  from {
+    left: 100%; /* Start position */
+  }
+  to {
+    left: 0; /* End position */
+  }
+}
