@@ -17,9 +17,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter> */}
-      {/* <TimeCapsule/> */}
+      
       {/* <LandingPage /> */}
-      <DiaryEntryPage />
+      {/* <DiaryEntryPage /> */}
     </Router>
   );
 }
