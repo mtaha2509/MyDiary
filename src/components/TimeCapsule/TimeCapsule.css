@@ -1,17 +1,49 @@
-.diary-page {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+
+.diary-entries-container {
+  background-color: rgba(249, 249, 249, 0.7); /* Add some transparency to the background color */
+  backdrop-filter: blur(8px); 
+  border-radius: 10px;
+  padding: 50px;
+  margin-bottom: 20px;
+}
+
+.page-title,
+.page-subtitle,
+h2 {
+  position: relative;
+  z-index: 1; /* Ensure headings are above the background overlay */
+}
+
+.diary-entries {
+  display: flex;
+  flex-direction: column;
+  margin-left: -20px;
+}
+
+.entry-box {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;  
+  margin-bottom: 20px;
+}
+
+.entry-content p {
+  margin: 5px 0;
+}
+
+.entry-header {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .page-title {
   text-align: center;
-  color: #ff6f61;
+  color: black;
+  margin-bottom: 20px;
 }
 
 .page-subtitle {
-  text-align: center;
-  color: #444;
+  color: black;
   margin-bottom: 20px;
 }
 
@@ -24,6 +56,9 @@ textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
+  margin-top: -5px;
+  border: none;
+  outline: none;
 }
 
 button {
@@ -42,13 +77,10 @@ h2 {
   color: #444;
 }
 
-.entries{
-  display: flex;
+.entries {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: -150px;
-
 }
 
 .button-container {
@@ -58,11 +90,82 @@ h2 {
   top: -345px;
 }
 
-
-.diary-page {
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+.parent-container {
+  display: flex;
+  justify-content: flex-end;
 }
 
+.img {
+  position: absolute;
+  right: 0;
+}
+
+.entries p {
+  margin-bottom: 35px;
+}
+
+.time-capsule-header {
+  position: relative;
+  padding: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10%;
+}
+
+.time-capsule-header::before {
+  position: absolute;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  animation: draw-border 2s linear forwards;
+  animation-delay: 0.25s;
+}
+
+@media (max-width: 768px) {
+  .time-capsule-header {
+    align-items: flex-start;
+  }
+
+  .page-subtitle {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .diary-entries-container {
+    margin-left: -20px;
+  }
+
+  .entry-box {
+    margin-left: 20px;
+  }
+}
+
+@keyframes draw-border {
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.drag-drop-area {
+  border: 2px dashed #cccccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.drag-drop-area.active {
+  background-color: #f0f0f0;
+}
+
+.card-body {
+  position: relative;
+}
+
+.drag-drop-area.active:before {
+  content: 'Drop here';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #333333;
+}

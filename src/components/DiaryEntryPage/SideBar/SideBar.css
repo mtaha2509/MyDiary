@@ -1,13 +1,14 @@
 .sidebar-container {
   position: fixed;
-  top: 34px; /* Adjust the top margin as needed */
-  bottom: 20px; /* Add margin from the bottom */
+  top: 70px; /* Adjust the top margin as needed */
   left: 26px; /* Adjust the left margin as needed */
   width: 60px; /* Adjust the width as needed */
+  height: 100%;
   background-color: #120008;
+  /* transition: width 0.3s ease; */
   z-index: 300; /* Adjust the z-index as needed */
   border-radius: 10px; /* Add rounded edges */
-  transition: width 0.3s ease;
+  overflow: visible; /* Ensure the icons outside the container are visible */
   padding-left: 5px; /* Add padding to accommodate icons */
 }
 
@@ -37,27 +38,20 @@
   margin-right: 5px;
 }
 
-.sidebar-entries {
+.entries {
   flex: 1;
   display: flex;
   flex-direction: column;
-  opacity: 0; /* Initially hide the entries */
-  transition: opacity 0.9s ease 0.9s; /* Add transition for opacity changes with a delay */
 }
 
-.sidebar-container.expanded .sidebar-entries {
-  opacity: 1; /* Show the entries when sidebar is expanded */
-}
-
-
-.sidebar-entry {
+.entry {
   display: flex;
   align-items: center;
   padding: 10px;
   cursor: pointer;
 }
 
-.sidebar-entry:hover {
+.entry:hover {
   background-color: #444;
 }
 
@@ -67,11 +61,7 @@
 
 .expand-icon,
 .shrink-icon {
-    position: absolute;
-    right: -25px; /* Adjust the position of the icons */
-    top: 15%; /* Adjust the position of the icons vertically */
-    transform: translateY(-50%); /* Center the icons vertically */
-    z-index: 1; /* Ensure the icons appear above other content */
-    padding: 10px; /* Add padding to ensure the icons have enough space */
-    cursor: pointer; /* Add cursor pointer for interaction */
+position: absolute;
+right: -15px; /* Adjust the position of the icons */
+top: 25px; /* Adjust the position of the icons vertically */
 }

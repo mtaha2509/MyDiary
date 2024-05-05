@@ -1,0 +1,17 @@
+.homePage-container {
+    flex-grow: 1;
+    margin-left: 130px;
+    margin-top: 25px;
+}
+
+.homePage-container.expanded {
+  margin-left: 270px;
+}
+
+.homePage-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    left: -340px;
+  }
