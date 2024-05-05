@@ -9,6 +9,12 @@ function DiaryEntryPage() {
   // State for controlling modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarExpanded(!sidebarExpanded);
+  };
+
   // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
@@ -27,7 +33,7 @@ function DiaryEntryPage() {
   return (
     <>
       <div className="page-container">
-        <SideBar openModal={openModal} />
+        <SideBar  toggleSidebar={toggleSidebar} sidebarExpanded={sidebarExpanded} />
         <div className="page-content">
           <MainNavBar />
           <div>

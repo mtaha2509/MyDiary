@@ -1,17 +1,28 @@
 .homePage-container {
-    flex-grow: 1;
-    margin-left: 130px;
-    margin-top: 25px;
+  flex-grow: 1;
+  margin-left: 130px;
+  margin-top: 10px; /* Reduce the top margin */
+  transition: margin-left 0.3s ease; /* Add transition for smooth animation */
 }
 
+
 .homePage-container.expanded {
-  margin-left: 270px;
+  margin-left: 270px; /* Adjust margin when sidebar is expanded */
 }
 
 .homePage-content {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    padding-top: 100px;
-    left: -340px;
-  }
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px; /* Reduce the top padding */
+  width: calc(100vw - 130px); /* Adjust width to match NavBar */
+  margin-left: 130px; /* Adjust margin to match NavBar */
+  transition: width 0.3s ease, margin-left 0.3s ease; /* Add transition for smooth animation */
+}
+
+.homePage-container.expanded .homePage-content {
+  width: calc(100vw - 270px); /* Adjust width when sidebar is expanded */
+  margin-left: 270px; /* Adjust margin when sidebar is expanded */
+}
+
+

@@ -1,51 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { NavBar } from '../../LandingPage'; 
-import SideBar from '../../DiaryEntryPage/SideBar/Sidebar';
+import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import Card from './Cards/Card';
 import './Slider.css';
+import { Logo2 } from "../../../assets";
 
 const Slider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const totalCards = 10; // Total number of cards
+  const initialCards = 4; // Number of cards to display initially
 
-  const toggleSidebar = () => {
-    setSidebarExpanded(!sidebarExpanded);
+  const handleNext = () => {
+    setCurrentIndex(prevIndex => (prevIndex === totalCards - 1 ? 0 : prevIndex + 1));
   };
 
-  const images = [
-    "https://t3.ftcdn.net/jpg/02/59/31/70/360_F_259317013_nJJaBgGGzvXMd6cAyLd6yMJtbdnd61wk.jpg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnugd5Hb62LqUY7TNopEk-AEM6l5g505tmSLtKDOaqeQ&s",
-    "https://play-lh.googleusercontent.com/zG3Xs5iSUyjqpPjyj3b7PjtH5yHHiSD2vlv5FP5P5mWTOtxaIEz92_7QJs9AkIlsYg=w526-h296-rw"
-  ];
+  const handlePrev = () => {
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? totalCards - 1 : prevIndex - 1));
+  };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex(prevIndex => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
+  // Calculate the start and end indices based on the current index
+  const start = currentIndex;
+  const end = (currentIndex + initialCards - 1) % totalCards;
 
   return (
-    <>
-      <NavBar />
-      <div className={`homePage-container ${sidebarExpanded ? 'expanded' : ''}`}>
-        <SideBar toggleSidebar={toggleSidebar} sidebarExpanded={sidebarExpanded} />
-        <div className="slider-wrapper">
-          <div className="welcome-text">Welcome👋,<br /></div>
-          <p style={{ marginLeft: '11%', color: '#999F9E', fontSize: '20px', marginTop: '-38px' }}>How it's going on?</p>
-          <Container>
-            <Row>
-              {images.map((image, index) => (
-                <Col key={index}>
-                  <img src={image} alt={`Image ${index + 1}`} />
-                </Col>
-              ))}
-            </Row>
-          </Container>
-        </div>
+    <div className="slider-wrapper">
+      <div className="welcome-text">Welcome👋,<br /></div>
+      <p style={{ marginLeft: '5%', color: '#999F9E', fontSize: '20px', marginTop: '10px' }}>How's it going?</p>
+      <div className="slider-container">
+        <Row className="card-row">
+          {[...Array(initialCards)].map((_, index) => {
+            // Calculate the actual index based on the start index
+            const actualIndex = (start + index) % totalCards;
+            return (
+              <Col key={index}>
+                <Card
+                  imageUrl={Logo2}
+                  title={`Title ${actualIndex + 1}`}
+                  description="Description goes here"
+                />
+              </Col>
+            );
+          })}
+        </Row>
       </div>
-    </>
+      <div className="buttons">
+        <button className="prev-button" onClick={handlePrev}>Prev</button>
+        <button className="next-button" onClick={handleNext}>Next</button>
+      </div>
+    </div>
   );
 };
 

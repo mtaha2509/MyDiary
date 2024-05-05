@@ -1,0 +1,36 @@
+.card {
+    width: 100%; /* Ensure the card takes up the entire width */
+    max-width: 300px; /* Set a maximum width for the card */
+    margin: 10px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .description {
+    margin: 0;
+    font-size: 14px;
+  }
+  
