@@ -1,4 +1,5 @@
-.slider-wrapper {
+/* ToDoList.css */
+.todo-list-wrapper {
   padding: 40px;
   border-radius: 20px;
   background-color: #F5FDFB;
@@ -18,25 +19,25 @@
   font-weight: bold;
 }
 
-.slider-container {
+.todo-list-container {
   overflow: hidden;
   margin-top: 100px;
 }
 
-.card-row {
+.todo-card-row {
   display: flex;
   width: 100%;
   justify-content: space-between;
   transition: transform 0.5s ease;
 }
 
-.buttons {
+.todo-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.next-button, .prev-button {
+.todo-next-button, .todo-prev-button {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -45,7 +46,6 @@
   cursor: pointer;
 }
 
-.next-button:hover, .prev-button:hover {
+.todo-next-button:hover, .todo-prev-button:hover {
   background-color: #0056b3;
 }
-

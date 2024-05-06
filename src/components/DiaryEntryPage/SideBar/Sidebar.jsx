@@ -8,11 +8,11 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
       <div className="side-bar">
         <div className="toggle-button" onClick={toggleSidebar}>
           <span className="icon">{sidebarExpanded ? <img src={ShrinkIcon} className="shrink-icon"/> : <img src={ExpandIcon} className="expand-icon"/>}</span>
-          {sidebarExpanded && <span className="label">Close Sidebar</span>}
+          {sidebarExpanded && <span className="label" style={{ fontSize:'medium' }} >Close Sidebar</span>}
         </div>
         {sidebarExpanded && (
-          <div className="entries">
-            <div className="entry">
+          <div className="entries" style={{ fontSize:'medium' }} >
+            <div className="entry" >
               <span className="entry-label">Sticky Notes</span>
             </div>
             <div className="entry">

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Navbar } from "react-bootstrap";
 import SideBar from "../DiaryEntryPage/SideBar/Sidebar";
 import Slider from "./Slider/Slider";
+import ToDoList from "./ToDoList/ToDoList";
 import "./Homepage.css";
+import { Footer } from "../LandingPage";
 
 const Homepage = () => {
   const dummyImages = [
@@ -25,8 +27,14 @@ const Homepage = () => {
       <Navbar />
       <SideBar toggleSidebar={toggleSidebar} sidebarExpanded={sidebarExpanded} />
       <div className="homePage-content">
-        <Slider images={dummyImages} />
+        <div className="homePage-slider">
+          <Slider images={dummyImages} />
+        </div>
+        <div className="homePage-todoList">
+          <ToDoList images={dummyImages}/>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

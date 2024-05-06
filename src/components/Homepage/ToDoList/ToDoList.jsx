@@ -1,10 +1,11 @@
+// ToDoList.jsx
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import Card from './Cards/Card';
-import './Slider.css';
+import Card from '../Slider/Cards/Card';
+import './ToDoList.css'; // Import the new CSS file
 import { Logo2 } from "../../../assets";
 
-const Slider = () => {
+const ToDoList = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalCards = 10; // Total number of cards
   const initialCards = 4; // Number of cards to display initially
@@ -22,14 +23,14 @@ const Slider = () => {
   const end = (currentIndex + initialCards - 1) % totalCards;
 
   return (
-    <div className="slider-wrapper">
-      <div className="welcome-text">Welcome👋,<br /></div>
-      <p style={{ marginLeft: '5%', color: '#999F9E', fontSize: '20px', marginTop: '10px' }}>How's it going?</p>
-      <div className="slider-container">
+    <div className="todo-list-wrapper"> {/* Change the className */}
+      <div className="welcome-text">To-Do List<br /></div>
+      <p style={{ marginLeft: '5%', color: '#999F9E', fontSize: '25px', marginTop: '10px' }}>Woah, It seems you're a heavy do'er😮</p>
+      <div className="todo-list-container"> {/* Change the className */}
         <div className="Diaries">
-          My Diaries
+          My To-Do List
         </div>
-        <Row className="card-row">
+        <Row className="todo-card-row"> {/* Change the className */}
           {[...Array(initialCards)].map((_, index) => {
             const actualIndex = (start + index) % totalCards;
             return (
@@ -44,12 +45,12 @@ const Slider = () => {
           })}
         </Row>
       </div>
-      <div className="buttons">
-        <button className="prev-button" onClick={handlePrev}>Prev</button>
-        <button className="next-button" onClick={handleNext}>Next</button>
+      <div className="todo-buttons"> {/* Change the className */}
+        <button className="todo-prev-button" onClick={handlePrev}>Prev</button> {/* Change the className */}
+        <button className="todo-next-button" onClick={handleNext}>Next</button> {/* Change the className */}
       </div>
     </div>
   );
 };
 
-export default Slider;
+export default ToDoList;
