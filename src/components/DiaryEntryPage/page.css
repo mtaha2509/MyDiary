@@ -4,32 +4,27 @@
     display: flex;
   }
   
-  .page-content {
-    flex-grow: 1; /* Allow content to take up remaining space */
-    margin-left: 130px; /* Initial margin */
-    margin-top: 25px;
-    /* transition: margin-left 0.3s ease;  */
-  }
-  
-  .sidebar-container.expanded + .page-content {
-    margin-left: 270px; /* Adjust margin when sidebar is expanded */
-  }
-  
-  /* page.css */
+.page-content {
+  flex-grow: 1; /* Allow content to take up remaining space */
+  margin-left: 130px; /* Initial margin */
+  margin-top: 25px;
+  /* transition: margin-left 0.3s ease;  */
+}
 
-/* page.css */
-
-/* page.css */
+.sidebar-container.expanded + .page-content {
+  margin-left: 270px; /* Adjust margin when sidebar is expanded */
+}
+  
 
 /* Add styling for the template slot */
 .template-slot {
-  margin-top: 20px;
-  margin-right: 40px;
-  margin-bottom: 20px;
+  margin-top: 9%;
+  margin-left: 18%;
   padding: 20px;
   background-color: #f2f2f2; /* Greyish background color */
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+  width: 50%;
 }
 
 /* Add styling for the empty slot */
@@ -41,11 +36,11 @@
   height: 400px; /* Increased height of the empty slot */
   width: 80%; /* Slightly smaller width */
   margin: 0 auto; /* Center the empty slot horizontally */
-  display: flex;
+  display: flow;
   justify-content: center;
   align-items: center;
 }
 
 .empty-slot p {
-  margin: 0;
+  margin-top: 22%;
 }

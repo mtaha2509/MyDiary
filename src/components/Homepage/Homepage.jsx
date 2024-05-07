@@ -34,7 +34,6 @@ const Homepage = () => {
           <ToDoList images={dummyImages}/>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -10,4 +10,5 @@ import Weather2 from "./Weather.svg"
 import Logo2 from "./Logo2.svg"
 import ExpandIcon from "./ExpandIcon.svg"
 import ShrinkIcon from "./ShrinkIcon.svg"
-export {Diary, dropdown, logo1,Gratitude, drawing1, TimeCapsule, ToDoList, Weather1, Weather2, Logo2, ExpandIcon, ShrinkIcon}
+import Diary_temp1 from "./Diary_temp1.svg"
+export {Diary, dropdown, logo1,Gratitude, drawing1, TimeCapsule, ToDoList, Weather1, Weather2, Logo2, ExpandIcon, ShrinkIcon, Diary_temp1}

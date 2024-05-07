@@ -2,13 +2,15 @@
 import React from "react";
 import "./Modal.css"; // Add CSS for styling the modal
 import { TemplateCard } from "../../DiaryEntryPage";// Import the TemplateCard component
-import { Logo2, TimeCapsule } from "../../../assets";
+import { Diary_temp1, TimeCapsule } from "../../../assets";
+
+
 function SelectionModal({ onClose, onSelectTemplate }) {
   // List of templates (you can replace this with your actual template data)
   const templates = [
-    { id: 1, name: "Template 1", thumbnail: Logo2, description: "Description for Template 1" },
-    { id: 2, name: "Template 2", thumbnail: Logo2, description: "Description for Template 2" },
-    { id: 3, name: "Template 3", thumbnail: Logo2, description: "Description for Template 3" },
+    { id: 1, name: "Template 1", thumbnail: Diary_temp1, description: "Description for Template 1", backgroundImage: "url($(Diary_temp1))"},
+    { id: 2, name: "Template 2", thumbnail: Diary_temp1, description: "Description for Template 2" },
+    { id: 3, name: "Template 3", thumbnail: Diary_temp1, description: "Description for Template 3" },
     { id: 4, name: "Template 4", thumbnail: TimeCapsule, description: "Description for Template 4" },
     { id: 4, name: "Template 4", thumbnail: TimeCapsule, description: "Description for Template 4" },
     { id: 4, name: "Template 4", thumbnail: TimeCapsule, description: "Description for Template 4" },

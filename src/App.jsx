@@ -21,8 +21,8 @@ function App() {
       {/* <TimeCapsule/> */}
       {/* <Signup/> */}
       {/* <LandingPage /> */}
-      {/* <DiaryEntryPage /> */}
-      <Homepage />
+      <DiaryEntryPage />
+      {/* <Homepage /> */}
     </Router>
   );
 }

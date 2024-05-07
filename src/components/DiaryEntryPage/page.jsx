@@ -3,7 +3,7 @@ import "./page.css";
 import { SideBar, MainNavBar, SelectionModal } from "../DiaryEntryPage";
 
 function DiaryEntryPage() {
-  // State for tracking selected template ID
+  // State for tracking selected template
   const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   // State for controlling modal visibility
@@ -26,36 +26,48 @@ function DiaryEntryPage() {
   };
 
   // Function to handle template selection
-  const handleTemplateSelect = (templateId) => {
-    setSelectedTemplate(templateId);
+  const handleTemplateSelect = (template) => {
+    setSelectedTemplate(template);
   };
 
   return (
     <>
-      <div className="page-container">
-        <SideBar  toggleSidebar={toggleSidebar} sidebarExpanded={sidebarExpanded} />
+      <div
+        className="page-container"
+        style={{
+          backgroundImage: selectedTemplate
+            ? `url(${selectedTemplate.backgroundImage})`
+            : "none",
+        }}
+      >
+        <SideBar
+          toggleSidebar={toggleSidebar}
+          sidebarExpanded={sidebarExpanded}
+        />
         <div className="page-content">
           <MainNavBar />
-          <div>
-            <a href="#" onClick={openModal} className="choose-template-button">
-              Choose A template
-            </a>
-          </div>
+
           {/* Slot for the selected template */}
-          <div className="template-slot">
-            {selectedTemplate ? (
-              // Render the selected template here
-              <div>
-                {/* Replace this with your template component */}
-                <h3>Template {selectedTemplate}</h3>
-                {/* Additional content of the selected template */}
-              </div>
-            ) : (
-              // Render placeholder content if no template is selected
-              <div className="empty-slot">
-                <p>First you need to select a Template</p>
-              </div>
-            )}
+          <div className="className template-content">
+            <div className="template-slot">
+              {selectedTemplate ? (
+                // Render the selected template here
+                <div>
+                  <h3>Template {selectedTemplate.id}</h3>
+                  {/* Additional content of the selected template */}
+                </div>
+              ) : (
+                // Render placeholder content if no template is selected
+                <div className="empty-slot">
+                  <p>First you need to select a Template</p>
+                  <div>
+                    <button onClick={openModal} className="choose-template-button">
+                      Choose A template
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
