@@ -15,6 +15,10 @@
   margin-left: 270px; /* Adjust margin when sidebar is expanded */
 }
   
+.template{
+  width:20%;
+  height: 20%;
+}
 
 /* Add styling for the template slot */
 .template-slot {
