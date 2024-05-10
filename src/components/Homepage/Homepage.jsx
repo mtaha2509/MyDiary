@@ -3,6 +3,7 @@ import { Navbar } from "react-bootstrap";
 import SideBar from "../DiaryEntryPage/SideBar/Sidebar";
 import Slider from "./Slider/Slider";
 import ToDoList from "./ToDoList/ToDoList";
+import AIBot from "../Bot/AI/AI"
 import "./Homepage.css";
 import { Footer } from "../LandingPage";
 
@@ -34,6 +35,7 @@ const Homepage = () => {
           <ToDoList images={dummyImages}/>
         </div>
       </div>
+      <AIBot/>
     </div>
   );
 };

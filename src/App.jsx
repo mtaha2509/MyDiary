@@ -8,6 +8,7 @@ import DiaryEntryPage from "./components/DiaryEntryPage/page"
 import Homepage from './components/Homepage/Homepage';
 import TimeCapsule from "./components/TimeCapsule/TimeCapsule"
 import Slider from './components/Homepage/Slider/Slider';
+import AIBot from './components/Bot/AI/AI';
 function App() {
   return (
     <Router>
@@ -21,7 +22,7 @@ function App() {
       {/* <TimeCapsule/> */}
       {/* <Signup/> */}
       {/* <LandingPage /> */}
-      <DiaryEntryPage />
+      <Homepage/>
       {/* <Homepage /> */}
     </Router>
   );
