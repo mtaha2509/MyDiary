@@ -1,6 +1,6 @@
 .homePage-container {
   flex-grow: 1;
-  margin-left: 130px;
+  margin-left: 0px;
   margin-top: 10px; /* Reduce the top margin */
   transition: margin-left 0.3s ease; /* Add transition for smooth animation */
   overflow-x: hidden;
@@ -13,7 +13,7 @@
   justify-content: center;
   padding-top: 10px; /* Reduce the top padding */
   width: calc(100vw - 130px); /* Adjust width to match NavBar */
-  margin-left: 0px; /* Adjust margin to match NavBar */
+  margin-left: 130px; /* Adjust margin to match NavBar */
   transition: width 0.3s ease, margin-left 0.3s ease; /* Add transition for smooth animation */
 }
 
