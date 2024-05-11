@@ -1,0 +1,88 @@
+.sidebar-container {
+  position: fixed;
+  top: 70px; /* Adjust the top margin as needed */
+  left: 26px; /* Adjust the left margin as needed */
+  width: 60px; /* Adjust the width as needed */
+  height: 100%;
+  background-color: #120008;
+  transition: width 0.3s ease;
+  z-index: 300; /* Adjust the z-index as needed */
+  border-radius: 10px; /* Add rounded edges */
+  overflow: visible; /* Ensure the icons outside the container are visible */
+  padding-left: 5px; /* Add padding to accommodate icons */
+}
+
+.sidebar-container.expanded {
+  width: 200px;
+}
+
+/* .sidebar-container .side-bar-text {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.5s;
+}
+
+.sidebar-container.expanded .side-bar-text {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+} */
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+  position: relative; /* Ensure positioning context for absolute icons */
+}
+
+.toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #555;
+}
+
+.toggle-button .icon {
+  margin-right: 5px;
+}
+
+.entries {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.entry:hover {
+  background-color: white;
+  color:black;
+}
+
+.entry:hover .entry-label{
+  color:black;
+}
+
+.entry-label {
+  color: #fff;
+}
+
+.expand-icon,
+.shrink-icon {
+position: absolute;
+right: -15px; /* Adjust the position of the icons */
+top: 25px; /* Adjust the position of the icons vertically */
+}

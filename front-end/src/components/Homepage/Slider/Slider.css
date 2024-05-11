@@ -1,0 +1,51 @@
+.slider-wrapper {
+  padding: 40px;
+  border-radius: 20px;
+  background-color: #F5FDFB;
+  margin: 20px;
+  position: relative;
+  width: 80%;
+  height: 100%;
+}
+
+.Diaries {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.welcome-text {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.slider-container {
+  overflow: hidden;
+  margin-top: 100px;
+}
+
+.card-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  transition: transform 0.5s ease;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.next-button, .prev-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.next-button:hover, .prev-button:hover {
+  background-color: #0056b3;
+}
+

@@ -1,0 +1,119 @@
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    margin-top: 7.53px;
+    left: 0;
+    background-color: white; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 300;
+    padding: 8px 20px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+.Options {
+    display: flex;
+    align-items: center;
+}
+
+
+.menu {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin-right: 30px; 
+    position: relative;
+}
+
+.menu li img {
+    width: 20px;
+    margin-left: 5px;
+}
+
+
+.buttons {
+    display: flex;
+    align-items: center;
+}
+
+
+.buttons a {
+    text-decoration: none;
+    padding: 8px 16px; 
+    border: 2px solid #000000; 
+    border-radius: 8px; 
+    margin-left: 30px; 
+    font-weight: bold;
+    text-transform: uppercase; 
+    transition: all 0.3s ease; 
+    font-size: 14px; 
+}
+
+
+.login {
+    color: #2E2F35; 
+    background-color: #FFFFFF; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+}
+
+
+.create-account {
+    color: #FFFFFF; 
+    background-color: #FF6D2C;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+}
+
+
+.buttons a:hover {
+    background-color: #2E2F35; 
+    color: #FFFFFF; 
+}
+
+
+.toggle-menu {
+    display: none; 
+}
+
+@media (max-width: 768px) {
+    
+    .toggle-menu {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-left: 20px; 
+    }
+
+
+    .Options ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        padding: 10px 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 200;
+    }
+
+  
+    .Options.open ul {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .buttons a {
+        padding: 8px 12px; 
+        font-size: 12px;
+    }
+}

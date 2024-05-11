@@ -1,0 +1,82 @@
+/* Global styles */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* Header styles */
+.header {
+  background-color: #D9F2F7;
+
+  min-height: 100vh;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: #333;
+}
+
+
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.header-content {
+  text-align: center; /* Center the content */
+}
+
+.header-title {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: black; /* White text color */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a text shadow for depth */
+}
+
+.header-title span {
+  color: #20B2AA; /* Light sea green */
+}
+
+.header-description {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: black; /* White text color */
+}
+
+.demo-btn {
+  text-decoration: none;
+  background-color: #fff;
+  color: #20B2AA; /* Light sea green text color */
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  border: 2px solid #20B2AA; /* Light sea green border */
+}
+
+.demo-btn:hover {
+  background-color: #20B2AA; /* Light sea green */
+  color: #fff; /* White text color */
+}
+
+.header-image {
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+  max-width: 300px; /* Increase the size of the image */
+  width: 100%; /* Ensure image responsiveness */
+  height: auto; /* Maintain aspect ratio */
+  margin-top: 50px; /* Adjust as needed */
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); /* Add a shadow effect to the image */
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .header-image {
+    margin-top: 30px; /* Adjust margin-top for smaller screens */
+  }
+}

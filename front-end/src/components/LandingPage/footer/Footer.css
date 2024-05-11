@@ -1,0 +1,140 @@
+.Box {
+    padding: 5% 2.5%;
+    background: black;
+    /* position: absolute; */
+    bottom: 0;
+    width: 95%;
+}
+
+.FooterContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.Column {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 60px;
+}
+
+.Row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+    grid-gap: 20px;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+.FooterLink {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.FooterLink:hover {
+    color: green;
+    transition: 200ms ease-in;
+}
+
+.Heading {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.footer-column h2{
+    margin-bottom: 10px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 50px 100px;
+    margin-bottom: 10px;
+}
+
+.footer-column h2, .footer-column ul {
+    text-align: left;
+}
+
+.footer-column ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-list li a:hover {
+    color: black;
+    margin-bottom: 5px;
+}
+
+.h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+
+.ul {
+    padding-left: '10px';
+}
+
+.footer-column h2 {
+    margin-bottom: 5px;
+  }
+
+  .footer-column a{
+    text-decoration: none;
+    color: grey;
+  }
+  
+li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    color: #000000;
+  }
+
+.FB {
+    width: 30%;
+    height: auto;
+}
+
+.FB-Hover:hover {
+    opacity: 0.6;
+}
+
+.IG-Hover:hover {
+    opacity: 0.6;
+}
+
+.LI-Hover:hover {
+    opacity: 0.6;
+}
+
+.T-Hover:hover {
+    opacity: 0.6;
+}

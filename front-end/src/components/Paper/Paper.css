@@ -1,0 +1,51 @@
+.paper-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.paper {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 200px; /* Adjust height as needed */
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.line {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 50%;
+  border-top: 1px solid #ccc;
+}
+
+.line:first-child {
+  top: 20%;
+}
+
+.line:last-child {
+  top: 80%;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.interval {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.message {
+  font-style: italic;
+}
+
