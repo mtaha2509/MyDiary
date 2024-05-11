@@ -140,7 +140,7 @@ function App() {
   return (
     <>
       <div
-        className="slider-toggle"
+        className="slider-open"
         ref={buttonRef}
         style={{
           position: "fixed",
@@ -163,7 +163,7 @@ function App() {
       </div>
       {sliderVisible && (
         <div
-          className="slider"
+          className="slider-visible"
           ref={sliderRef}
           style={{
             position: "fixed",
@@ -199,7 +199,7 @@ function SliderContent({
   data,
 }) {
   return (
-    <div className="slider-content">
+    <div className="container-Slider">
       <input type="file" style={{ marginBottom: "10px" }} />
       <input
         type="text"
@@ -226,9 +226,9 @@ function SliderContent({
         {loading2 ? "Loading..." : "Image to Text"}
       </button>
       <hr />
-      <div className="response-container">
+      <div className="container">
         <p>Response:</p>
-        <div className="response-text">{data}</div>
+        <div className="container-text">{data}</div>
       </div>
     </div>
   );
