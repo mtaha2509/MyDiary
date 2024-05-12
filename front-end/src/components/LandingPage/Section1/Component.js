@@ -13,7 +13,7 @@ const list=[
     color : "#E0F8F2",
     SVG : ToDoList,
     title : "Do more, stress less",
-    desc: "Built-in to-dos & planners for peak productivity"
+    desc: "Built-in to-dos & planners for peak productivity. We have all the tools to boost your productivity"
 },
 {
     id : 3,

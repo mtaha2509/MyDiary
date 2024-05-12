@@ -15,37 +15,37 @@
 }
 
 
-.Options {
+.Navbar-Options {
     display: flex;
     align-items: center;
 }
 
 
-.menu {
+.navbar-menu {
     display: flex;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.menu li {
+.navbar-menu li {
     margin-right: 30px; 
     position: relative;
 }
 
-.menu li img {
+.navbar-menu li img {
     width: 20px;
     margin-left: 5px;
 }
 
 
-.buttons {
+.navbar-buttons {
     display: flex;
     align-items: center;
 }
 
 
-.buttons a {
+.navbar-buttons a {
     text-decoration: none;
     padding: 8px 16px; 
     border: 2px solid #000000; 
@@ -58,33 +58,33 @@
 }
 
 
-.login {
+.navbar-login {
     color: #2E2F35; 
     background-color: #FFFFFF; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
 }
 
 
-.create-account {
+.navbar-create-account {
     color: #FFFFFF; 
     background-color: #FF6D2C;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
 }
 
 
-.buttons a:hover {
+.navbar-buttons a:hover {
     background-color: #2E2F35; 
     color: #FFFFFF; 
 }
 
 
-.toggle-menu {
+.navbar-toggle-menu {
     display: none; 
 }
 
 @media (max-width: 768px) {
     
-    .toggle-menu {
+    .navbar-toggle-menu {
         display: block;
         background: none;
         border: none;
@@ -93,7 +93,7 @@
     }
 
 
-    .Options ul {
+    .Navbar-Options ul {
         display: none;
         position: absolute;
         top: 100%;
@@ -106,7 +106,7 @@
     }
 
   
-    .Options.open ul {
+    .Navbar-Options.open ul {
         display: flex;
         flex-direction: column;
     }
