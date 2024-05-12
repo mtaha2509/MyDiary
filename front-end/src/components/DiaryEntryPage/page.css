@@ -74,6 +74,10 @@
   color: white;
 }
 
+.ql-editor{
+  margin-top: 10%;
+}
+
 /* page.css */
 .ql-toolbar.ql-snow {
   margin-top: -23%;
@@ -81,4 +85,12 @@
 
 .ql-toolbar.ql-snow + .ql-container.ql-snow {
   border: none;
+}
+.diary-title{
+  outline: none;
+}
+
+.diary-title::placeholder,
+.diary-content::placeholder {
+  font-weight: bolder;
 }
