@@ -23,18 +23,18 @@ function NavBar() {
             <div>
                 <img src={logo1} alt="Logo" />
             </div>
-            <div className={`Options ${isMenuOpen ? 'open' : ''}`}>
-                <ul className="menu">
+            <div className={`Navbar-Options ${isMenuOpen ? 'open' : ''}`}>
+                <ul className="navbar-menu">
                     <li>About <img src={dropdown} alt="Dropdown" /></li>
                     <li>Resources <img src={dropdown} alt="Dropdown" /></li>
                     <li>Company <img src={dropdown} alt="Dropdown" /></li>
                     <li>Prices <img src={dropdown} alt="Dropdown" /></li>
                 </ul>
-                <div className="buttons">
-                    {showCreateAccount &&<a href="#" className="login" onClick={handleLoginClick}>Login</a>}
-                    {showCreateAccount && <a href="#" className="create-account">Create free account</a>}
+                <div className="navbar-buttons">
+                    <a href="#" className="navbar-login" onClick={handleLoginClick}>Login</a>
+                   <a href="#" className="navbar-create-account">Create free account</a>
                 </div>
-                <button className="toggle-menu" onClick={toggleMenu}>
+                <button className="navbar-toggle-menu" onClick={toggleMenu}>
                     Toggle<i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
                 </button>
             </div>
