@@ -19,14 +19,13 @@ function App() {
       <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter> */}
-      {/* <TimeCapsule/> */}
+      <TimeCapsule/>
       {/* <Signup/> */}
-      <LandingPage />
+      {/* <LandingPage /> */}
       {/* <DiaryEntryPage/> */}
       {/* <Homepage/> */}
+
       {/* <LandingPage /> */}
-       {/* <Homepage/> */}
-      {/* <Homepage /> */}
       {/* <DiaryEntryPage/> */}
     </Router>
   );
