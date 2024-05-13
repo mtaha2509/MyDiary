@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Navbar } from "react-bootstrap";
+// import { Navbar } from "react-bootstrap";
+import { NavBar } from "../LandingPage";
 import SideBar from "../DiaryEntryPage/SideBar/Sidebar";
 import Slider from "./Slider/Slider";
 import ToDoList from "./ToDoList/ToDoList";
-import AIBot from "../Bot/AI/AI"
+import AIBot from "../Bot/AI/AI";
 import "./Homepage.css";
 import { Footer } from "../LandingPage";
 
@@ -25,17 +26,20 @@ const Homepage = () => {
 
   return (
     <div className={`homePage-container ${sidebarExpanded ? "expanded" : ""}`}>
-      <Navbar />
-      <SideBar toggleSidebar={toggleSidebar} sidebarExpanded={sidebarExpanded} />
+      <NavBar />
+      <SideBar
+        toggleSidebar={toggleSidebar}
+        sidebarExpanded={sidebarExpanded}
+      />
       <div className="homePage-content">
         <div className="homePage-slider">
           <Slider images={dummyImages} />
         </div>
         <div className="homePage-todoList">
-          <ToDoList images={dummyImages}/>
+          <ToDoList images={dummyImages} />
         </div>
       </div>
-      <AIBot/>
+      <AIBot />
     </div>
   );
 };

@@ -1,11 +1,11 @@
-import React from 'react';
-import './Header.css';
-import { Diary } from '../../../assets';
+import React from "react";
+import "./Header.css";
+import { Diary } from "../../../assets";
 
 function Header() {
   return (
     <header className="header">
-      <div className="container">
+      <div className="header-container container">
         <div className="row align-items-center">
           <div className="col-md-6">
             <div className="header-content">

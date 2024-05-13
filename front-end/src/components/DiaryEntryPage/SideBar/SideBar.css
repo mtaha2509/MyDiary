@@ -1,64 +1,53 @@
 .sidebar-container {
   position: fixed;
-  top: 70px; /* Adjust the top margin as needed */
-  left: 26px; /* Adjust the left margin as needed */
-  width: 60px; /* Adjust the width as needed */
-  height: 100%;
-  background-color: #120008;
+  top: 70px;
+  left: 26px;
+  width: 60px;
+  height: calc(100vh - 70px);
+  background: linear-gradient(180deg, #120008 0%, #27003D 100%);
   transition: width 0.3s ease;
-  z-index: 300; /* Adjust the z-index as needed */
-  border-radius: 10px; /* Add rounded edges */
-  overflow: visible; /* Ensure the icons outside the container are visible */
-  padding-left: 5px; /* Add padding to accommodate icons */
+  z-index: 300;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
-.sidebar-container.expanded {
+.sidebar-expanded {
   width: 200px;
 }
 
-/* .sidebar-container .side-bar-text {
-  opacity: 0;
-  transition: opacity 0.5s ease 0.5s;
-}
-
-.sidebar-container.expanded .side-bar-text {
-  opacity: 1;
-}
-
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-} */
-
-.side-bar {
+.sidebar {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 10px;
-  position: relative; /* Ensure positioning context for absolute icons */
+  position: relative;
 }
 
-.toggle-button {
+.sidebar-toggle-button {
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   cursor: pointer;
   padding: 10px;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
 }
 
-.toggle-button .icon {
+.sidebar-toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Darken on hover */
+}
+
+.sidebar-toggle-button .sidebar-icon {
   margin-right: 5px;
 }
 
-.entries {
+.sidebar-entries {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 
-.entry {
+.sidebar-entry {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -67,22 +56,28 @@
   transition: background-color 0.3s ease;
 }
 
-.entry:hover {
-  background-color: white;
-  color:black;
+.sidebar-entry:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Darken on hover */
 }
 
-.entry:hover .entry-label{
-  color:black;
+.sidebar-entry:hover .sidebar-entry-label {
+  color: #fff; /* Change text color on hover */
 }
 
-.entry-label {
-  color: #fff;
+.sidebar-entry-label {
+  color: #ccc;
+  margin-left: 10px; /* Add some space between icon and label */
 }
 
-.expand-icon,
-.shrink-icon {
-position: absolute;
-right: -15px; /* Adjust the position of the icons */
-top: 25px; /* Adjust the position of the icons vertically */
+.sidebar-expand-icon,
+.sidebar-shrink-icon {
+  position: absolute;
+  right: -15px;
+  top: 25px;
+  transition: transform 0.3s ease; /* Add smooth transition */
+}
+
+.sidebar-expand-icon:hover,
+.sidebar-shrink-icon:hover {
+  transform: scale(1.1); /* Scale up on hover */
 }
