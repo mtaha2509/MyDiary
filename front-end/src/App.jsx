@@ -22,6 +22,7 @@ function App() {
           <Route path="/register" element={<Signup />} />
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/timecapsule" element={<TimeCapsule />} />
+          <Route path="/diarypage" element={<DiaryEntryPage />} />
         </Routes>
       </BrowserRouter>
       {/* <TimeCapsule /> */}
