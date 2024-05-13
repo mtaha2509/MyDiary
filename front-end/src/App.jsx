@@ -21,8 +21,8 @@ function App() {
     </BrowserRouter> */}
       {/* <TimeCapsule/> */}
       {/* <Signup/> */}
-      {/* <LandingPage /> */}
-      <DiaryEntryPage/>
+      <LandingPage />
+      {/* <DiaryEntryPage/> */}
       {/* <Homepage/> */}
       {/* <Homepage /> */}
     </Router>

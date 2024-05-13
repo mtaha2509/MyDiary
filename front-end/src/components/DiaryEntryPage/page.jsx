@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./page.css";
 import { SideBar, MainNavBar } from "../DiaryEntryPage"; // Import SideBar and MainNavBar
 import { Diary_temp1, TimeCapsule } from "./../../assets"; // Import templates
@@ -27,6 +27,17 @@ function DiaryEntryPage() {
   // State for diary title and content
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryContent, setDiaryContent] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [charLimit, setCharLimit] = useState(200); // Character limit per page
+  const [remainingChars, setRemainingChars] = useState(charLimit);
+  const [diaryPages, setDiaryPages] = useState([{ pageNumber: 1, title: "", content: "" }]);
+
+  useEffect(() => {
+    // Calculate remaining characters
+    const contentLength = diaryContent.length;
+    const remaining = charLimit - (currentPage - 1) * charLimit - contentLength;
+    setRemainingChars(remaining);
+  }, [currentPage, diaryContent, charLimit]);
 
   const toggleSidebar = () => {
     setSidebarExpanded(!sidebarExpanded);
@@ -54,6 +65,47 @@ function DiaryEntryPage() {
     setSelectedTemplate(null); // Clear selected template
     // No need to clear userInput state
     openModal(); // Open modal for selecting a new template
+  };
+
+  // Function to handle typing in the diary content
+  const handleDiaryContentChange = (e) => {
+    const content = e.target.value;
+    const contentLength = content.length;
+    
+    // Calculate the remaining characters on the current page
+    const remainingOnCurrentPage = charLimit - (contentLength % charLimit);
+  
+    if (contentLength <= charLimit * currentPage) {
+      setDiaryContent(content);
+      setRemainingChars(remainingOnCurrentPage);
+    } else {
+      // Save content of the current page before moving to the next
+      const updatedPages = diaryPages.map(page => {
+        if (page.pageNumber === currentPage) {
+          return { ...page, content: content.slice(0, charLimit) };
+        }
+        return page;
+      });
+      setDiaryPages(updatedPages);
+
+      // Move to the next page
+      setCurrentPage(currentPage + 1);
+      const remainingOnNextPage = charLimit - (contentLength % charLimit);
+      setDiaryContent(content.slice(0, contentLength - remainingOnNextPage));
+      setRemainingChars(remainingOnNextPage);
+    }
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(Math.min(currentPage + 1, totalPages));
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage(Math.max(currentPage - 1, 1));
+  };
+
+  const handleBackButtonClick = () => {
+    setCurrentPage(Math.max(1, currentPage - 1));
   };
 
   return (
@@ -100,7 +152,7 @@ function DiaryEntryPage() {
                     className="diary-content"
                     placeholder="Content"
                     value={diaryContent}
-                    onChange={(e) => setDiaryContent(e.target.value)}
+                    onChange={handleDiaryContentChange}
                     style={{
                       position: "absolute",
                       top: "55%",
@@ -115,6 +167,23 @@ function DiaryEntryPage() {
                       resize: "none"
                     }}
                   />
+                  <p style={{ position: "absolute", bottom: "10%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                    {remainingChars >= 0 ? `Remaining characters: ${remainingChars}` : ""}
+                  </p>
+                  <div className="pagination-buttons">
+                    <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                      &lt; Prev
+                    </button>
+                    <span>Page {currentPage}</span>
+                    <button onClick={handleNextPage} disabled={remainingChars <= 0}>
+                      Next &gt;
+                    </button>
+                  </div>
+                  {currentPage > 1 && (
+                    <button onClick={handleBackButtonClick} style={{ position: "absolute", top: "90%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                      Go Back
+                    </button>
+                  )}
                 </div>
               ) : (
                 // Render placeholder content if no template is selected
