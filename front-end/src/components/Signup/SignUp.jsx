@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './signup.css'; // Importing the stylesheet
+import "./signup.css"; // Importing the stylesheet
 import { Logo2 } from "../../assets"; // Importing the logo image
 
 function SignUp() {
@@ -30,21 +30,23 @@ function SignUp() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const body = { first_name: firstName, last_name: lastName, username, password };
+      const body = {
+        first_name: firstName,
+        last_name: lastName,
+        username,
+        password,
+      };
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       });
+      console.log("Response status:", response.status); // Add this line to check response status
+
       if (response.ok) {
-        setError("");
-        alert("Registration successful!");
-        // Redirect to login page or any other page after successful registration
-        navigate('/login');
+        navigate("/login");
       } else {
-        // Handle server errors or validation errors
-        const errorMessage = await response.text();
-        setError(errorMessage);
+        alert("Error");
       }
     } catch (err) {
       console.error("Error during registration:", err);
@@ -56,7 +58,12 @@ function SignUp() {
     <div className="signup-container">
       <div className="left-half">
         <div className="logo-container">
-          <img src={Logo2} alt="Logo" className="logo" style={{height:"500px"}} />
+          <img
+            src={Logo2}
+            alt="Logo"
+            className="logo"
+            style={{ height: "500px" }}
+          />
         </div>
       </div>
       <div className="right-half">
@@ -97,8 +104,15 @@ function SignUp() {
             required
           />
           {error && <p className="signup-error-message">{error}</p>}
-          <button type="submit" className="signup-button">Sign Up</button>
-          <p className="signup-login-link">Already have an account? <a onClick={() => navigate('/login')} className="signup-login-link-anchor">Log In</a></p>
+          <button type="submit" className="signup-button">
+            Sign Up
+          </button>
+          <p className="signup-login-link">
+            Already have an account?{" "}
+            <a href="/login" className="signup-login-link-anchor">
+              Log In
+            </a>
+          </p>
         </form>
       </div>
     </div>

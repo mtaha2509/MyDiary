@@ -1,62 +1,88 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './Login.css'; // Importing the stylesheet
+import "./Login.css"; // Importing the stylesheet
+import { Logo2 } from "../../assets"; // Importing the logo image
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  function handleUsernameChange(event) {
-    setUsername(event.target.value);
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
   }
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    // Here you can perform validation and authentication logic
-    if (username === "demo" && password === "password") {
-      // Successful login logic
-      setError("");
-      alert("Login successful!");
-    } else {
-      // Failed login logic
-      setError("Invalid username or password");
+    try {
+      const body = { email, password };
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (response.ok) {
+        setError("");
+        navigate("/homepage");
+      } else {
+        // Handle server errors or authentication errors
+        const errorMessage = await response.text();
+        setError(errorMessage);
+      }
+    } catch (err) {
+      console.error("Error during login:", err);
+      setError("Internal Server Error");
     }
   }
 
   return (
     <div className="login-container">
-      <h1 className="login-title">Log In</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="username" className="login-label">Username</label>
-        <input
-          id="username"
-          type="text"
-          placeholder="Enter your username"
-          value={username}
-          onChange={handleUsernameChange}
-          className="login-input"
-          required
-        />
-        <label htmlFor="password" className="login-label">Password</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={handlePasswordChange}
-          className="login-input"
-          required
-        />
-        {error && <p className="login-error-message">{error}</p>}
-        <button type="submit" className="login-button">Log In</button>
-        <p className="login-signup-link">Don't have an account? <a onClick={()=> navigate('/signup')} className="login-signup-link-anchor">Sign Up</a></p>
-      </form>
+      <div className="left-half">
+        <div className="logo-container">
+          <img
+            src={Logo2}
+            alt="Logo"
+            className="logo"
+            style={{ height: "500px" }}
+          />
+        </div>
+      </div>
+      <div className="right-half">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h1 className="login-title">Login</h1>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={handleEmailChange}
+            className="login-input"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={handlePasswordChange}
+            className="login-input"
+            required
+          />
+          {error && <p className="login-error-message">{error}</p>}
+          <button type="submit" className="login-button">
+            Login
+          </button>
+          <p className="login-signup-link">
+            Don't have an account?{" "}
+            <a href="/register" className="login-signup-link-anchor">
+              Sign Up
+            </a>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }

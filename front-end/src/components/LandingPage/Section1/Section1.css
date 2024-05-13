@@ -1,25 +1,24 @@
 .section1 {
-    background-color: #f8f9fa;
-    padding: 50px 0;
-  }
-  
-  .section1-content {
-    text-align: center;
-  }
-  
-  .section1-content h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
-  }
-  
-  .section1-content h2 span {
-    font-size: 20px;
-    color: #6c757d;
-  }
-  
-  .entry-column {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-  }
-  
+  background-color: #f8f9fa;
+  padding: 50px 0;
+}
+
+.section1-content {
+  text-align: center;
+}
+
+.section1-content h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.section1-content h2 span {
+  font-size: 20px;
+  color: #6c757d;
+}
+
+.entry-column {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
