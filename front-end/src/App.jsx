@@ -27,7 +27,7 @@ function App() {
       {/* <LandingPage /> */}
        {/* <Homepage/> */}
       {/* <Homepage /> */}
-      <DiaryEntryPage/>
+      {/* <DiaryEntryPage/> */}
     </Router>
   );
 }
