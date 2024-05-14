@@ -9,6 +9,7 @@ import Homepage from "./components/Homepage/Homepage";
 import TimeCapsule from "./components/TimeCapsule/TimeCapsule";
 import Slider from "./components/Homepage/Slider/Slider";
 import AIBot from "./components/Bot/AI/AI";
+import Notes from "./components/Notes/notes";
 function App() {
   return (
     // <div>
@@ -23,8 +24,10 @@ function App() {
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/timecapsule" element={<TimeCapsule />} />
           <Route path="/diarypage" element={<DiaryEntryPage />} />
+          <Route path="/notes" element={<Notes />} />
         </Routes>
       </BrowserRouter>
+      {/* <Notes /> */}
       {/* <TimeCapsule /> */}
       {/* <Login /> */}
       {/* <Signup /> */}
