@@ -16,7 +16,7 @@ function App() {
     //   <Login />
     // </div>
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
@@ -26,9 +26,9 @@ function App() {
           <Route path="/diarypage" element={<DiaryEntryPage />} />
           <Route path="/notes" element={<Notes />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
       {/* <Notes /> */}
-      {/* <TimeCapsule /> */}
+      <TimeCapsule />
       {/* <Login /> */}
       {/* <Signup /> */}
       {/* <LandingPage /> */}

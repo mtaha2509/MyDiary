@@ -7,7 +7,7 @@ const TimeCapsule = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState({
-    interval: "",
+    overview: "",
     messageToFutureSelf: "",
     uploadedImage: null,
   });
@@ -22,9 +22,11 @@ const TimeCapsule = () => {
       [name]: value,
     }));
   };
+
   const toggleSidebar = () => {
     setSidebarExpanded(!sidebarExpanded);
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setNewEntry((prevState) => ({
@@ -66,14 +68,19 @@ const TimeCapsule = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const currentDate = new Date().toLocaleDateString();
-    setEntries((prevEntries) => [
-      ...prevEntries,
-      { ...newEntry, date: currentDate },
-    ]);
-    setNewEntry({ interval: "", messageToFutureSelf: "", uploadedImage: null });
-  };
+  e.preventDefault();
+  const currentDate = new Date().toLocaleDateString();
+  setEntries((prevEntries) => [
+    ...prevEntries,
+    { ...newEntry, date: currentDate },
+  ]);
+
+  setNewEntry({
+    overview: "",
+    messageToFutureSelf: "",
+    uploadedImage: null,
+  });
+};
 
   const totalPages = Math.ceil(entries.length / entriesPerPage);
   const indexOfLastEntry = currentPage * entriesPerPage;
@@ -131,19 +138,18 @@ const TimeCapsule = () => {
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
             >
-              <select
-                name="interval"
-                value={newEntry.interval}
-                onChange={handleInputChange}
-                required
-                className="form-select"
-              >
-                <option value="">Select Interval</option>
-                <option value="Daily">Daily</option>
-                <option value="Weekly">Weekly</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
-              </select>
+              <input
+                type="text"
+                placeholder="Type"
+                value={newEntry.overview}
+                onChange={(e)=> {
+                  const overview = e.target.value;
+                  setNewEntry((prevState) => ({
+                    ...prevState,
+                    overview,
+                  }));
+                }}
+              />
               <div className="form-group mt-3">
                 <textarea
                   name="messageToFutureSelf"
@@ -191,24 +197,24 @@ const TimeCapsule = () => {
             borderRadius: "20px",
           }}
         >
-          {currentEntries.map((entry, index) => (
-            <div key={index} className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title" style={{ fontWeight: "bold" }}>
-                  Capsule {index + indexOfFirstEntry + 1}
-                </h5>
-                <p className="card-text">Capsule Planted Date: {entry.date}</p>
-                <p className="card-text">Interval: {entry.interval}</p>
-                <p className="card-text">
-                  Next Opening Date:{" "}
-                  {getNextOpeningDate(entry.date, entry.interval)}
-                </p>
-                <p className="card-text">
-                  Message: {entry.messageToFutureSelf}
-                </p>
-              </div>
+        {currentEntries.map((entry, index) => (
+          <div key={index} className="card mb-3">
+            <div className="card-body">
+              <h5 className="card-title" style={{ fontWeight: "bold" }}>
+                Capsule {index + indexOfFirstEntry + 1}
+              </h5>
+              <p className="card-text">Overview: {entry.overview}</p>
+              <p className="card-text">Message: {entry.messageToFutureSelf}</p>
+              {entry.uploadedImage && (
+                <img
+                  src={URL.createObjectURL(entry.uploadedImage)}
+                  alt="Uploaded"
+                  className="img-fluid"
+                />
+              )}
             </div>
-          ))}
+          </div>
+        ))}
         </div>
         {/* Pagination */}
         {totalPages > 1 && (
