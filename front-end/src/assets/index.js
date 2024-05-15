@@ -12,6 +12,7 @@ import ExpandIcon from "./ExpandIcon.svg";
 import ShrinkIcon from "./ShrinkIcon.svg";
 import Diary_temp1 from "./Diary_temp1.svg";
 import TimeCapsule2 from "./TimeCapsule2.svg";
+import cartoon from "./TimeCapsule.svg";
 export {
   Diary,
   dropdown,
@@ -27,4 +28,5 @@ export {
   ShrinkIcon,
   Diary_temp1,
   TimeCapsule2,
+  cartoon,
 };

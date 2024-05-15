@@ -25,6 +25,7 @@
     "bootstrap-container": "^1.0.0",
     "carousel": "^0.0.3",
     "click": "^0.1.0",
+    "html2pdf.js": "^0.10.1",
     "lottie-react": "^2.4.0",
     "markdown-to-jsx": "^7.4.7",
     "react": "^18.2.0",

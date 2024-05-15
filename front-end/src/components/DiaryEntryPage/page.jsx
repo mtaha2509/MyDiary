@@ -100,6 +100,30 @@ function DiaryEntryPage() {
     setIsModalOpen(true);
   };
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    let yPos = 10;
+
+    // Iterate over diary entries and add them to the PDF
+    diaryEntries.forEach((entry) => {
+      doc.setFontSize(16);
+      doc.text(20, yPos, `Page ${entry.pageNumber}`);
+      yPos += 10;
+
+      doc.setFontSize(14);
+      doc.text(20, yPos, `Title: ${entry.title}`);
+      yPos += 10;
+
+      doc.setFontSize(12);
+      const splitContent = doc.splitTextToSize(entry.content, 170);
+      doc.text(20, yPos, splitContent);
+      yPos += splitContent.length * 5 + 10; // Adjust line spacing
+    });
+
+    // Save the PDF
+    doc.save("diary.pdf");
+  };
+
   // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
@@ -125,7 +149,6 @@ function DiaryEntryPage() {
     const contentLength = content.length;
 
     if (contentLength <= charLimit) {
-      // Update content of the current page
       const updatedEntries = diaryEntries.map((entry) => {
         if (entry.pageNumber === currentPage) {
           return { ...entry, content };
@@ -136,7 +159,6 @@ function DiaryEntryPage() {
       setDiaryContent(content);
       setRemainingChars(charLimit - contentLength);
     } else {
-      // Save content of the current page
       const updatedEntries = diaryEntries.map((entry) => {
         if (entry.pageNumber === currentPage) {
           return { ...entry, content: content.slice(0, charLimit) };
@@ -283,19 +305,6 @@ function DiaryEntryPage() {
                       Next &gt;
                     </button>
                   </div>
-                  {currentPage > 1 && (
-                    <button
-                      onClick={handleBackButtonClick}
-                      style={{
-                        position: "absolute",
-                        top: "90%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                      }}
-                    >
-                      Go Back
-                    </button>
-                  )}
                 </div>
               ) : (
                 // Render placeholder content if no template is selected
@@ -317,6 +326,7 @@ function DiaryEntryPage() {
                 <button onClick={handleReplaceTemplate}>
                   Replace Template
                 </button>
+                <button onClick={handleDownloadPDF}>Download Diary</button>
               </div>
             )}
           </div>

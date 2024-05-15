@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./TimeCapsule.css";
 import Sidebar from "../DiaryEntryPage/SideBar/Sidebar";
-import timeCapsuleImage from "../../assets/TimeCapsule.svg";
+import cartoon from "../../assets/cartoon.svg";
 
 const TimeCapsule = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -11,6 +11,7 @@ const TimeCapsule = () => {
     messageToFutureSelf: "",
     uploadedImage: null,
   });
+
   const [dragging, setDragging] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 3;
@@ -72,7 +73,7 @@ const TimeCapsule = () => {
   const currentDate = new Date().toLocaleDateString();
   setEntries((prevEntries) => [
     ...prevEntries,
-    { ...newEntry, date: currentDate },
+    { ...newEntry },
   ]);
 
   setNewEntry({
@@ -92,21 +93,14 @@ const TimeCapsule = () => {
     <div className="fadein">
       <div className="container-fluid">
         <div className="col-lg-12 offset-lg-12">
-          <div className="parent-container">
-            <img
-              src="https://www.michigandaily.com/wp-content/uploads/2023/05/Untitled_Artwork-84.png"
-              alt="Time Capsule"
-              style={{ height: "500px", marginTop: "0px", width: "48%" }}
-            />
-          </div>
-          <div className="time-capsule-header text-center">
-            <h1 className="page-title" style={{ fontWeight: "bold" }}>
-              Welcome to Time Capsule
-            </h1>
-            <p className="page-subtitle" style={{ fontWeight: "bold" }}>
-              Plant your Time Capsule and let it revive your beloved memories
-            </p>
-          </div>
+        <div className="time-capsule">
+          <h1 className="page-title" style={{ fontWeight: "bold" }}>
+            Welcome to Time Capsule 💊
+          </h1>
+          <p className="page-subtitle" style={{ fontWeight: "bold", color: "grey" }}>
+            Plant your Time Capsule and let it revive your beloved memories
+          </p>
+        </div>
         </div>
       </div>
       <div className="col-lg-6 offset-lg-3">
