@@ -8,10 +8,10 @@
   flex-grow: 1; /* Allow content to take up remaining space */
   margin-left: 130px; /* Initial margin */
   margin-top: 25px;
-  /* transition: margin-left 0.3s ease;  */
+  transition: margin-left 0.3s ease;
 }
 
-.sidebar-container.expanded + .page-content {
+.sidebar-expanded + .page-content {
   margin-left: 270px; /* Adjust margin when sidebar is expanded */
 }
   

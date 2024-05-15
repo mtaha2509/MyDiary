@@ -244,9 +244,23 @@ const saltRounds = 10;
 app.use(cors());
 app.use(express.json());
 
+app.use(
+  session({
+    secret: "SECRET",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get("/", async (req, res) => {
   try {
-    res.json("Hell");
+    res.json("Hello");
   } catch (error) {
     res.json(error);
   }
@@ -272,10 +286,15 @@ app.post("/register", async (req, res) => {
           res.status(500).send("Error hashing password");
         } else {
           const result = await db.query(
-            "INSERT INTO users (first_name, last_name, username, password) VALUES ($1, $2, $3, $4)",
+            "INSERT INTO users (first_name, last_name, username, password) VALUES ($1, $2, $3, $4) RETURNING *",
             [first_name, last_name, email, hash]
           );
-          res.sendStatus(200); // Sending 200 OK for successful registration
+          const user = result.rows[0];
+          console.log(user);
+          req.login(user, (err) => {
+            console.log(err);
+          });
+          res.sendStatus(200);
         }
       });
     }
@@ -285,37 +304,63 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
-  const email = req.body.email;
-  const loginpassword = req.body.password;
+app.get("/login", async (req, res) => {
+  res.json("bye");
+});
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/diarypage",
+    failureRedirect: "/login",
+  })
+);
 
-  try {
-    const result = await db.query("SELECT * FROM users WHERE username = $1", [
-      email,
-    ]);
-    if (result.rows.length > 0) {
-      const user = result.rows[0];
-      const storedHashPassword = user.password;
-      bcrypt.compare(loginpassword, storedHashPassword, (err, result) => {
-        if (err) {
-          res.status(500).json({ error: "Internal Server Error" });
-        } else {
-          if (result) {
-            console.log("LoggedIn");
-            res.sendStatus(200); // Sending 200 OK for successful login
-          } else {
-            console.log("error");
-            res.status(401).json({ error: "Invalid credentials" });
-          }
-        }
-      });
-    } else {
-      res.status(404).json({ error: "User not found" });
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Internal Server Error" });
+app.post("/diarypage", (req, res) => {
+  console.log(req.user);
+  if (req.isAuthenticated()) {
+    console.log("auth");
+  } else {
+    console.log("bye");
   }
+});
+
+passport.use(
+  new Strategy(async function verify(email, password, cb) {
+    console.log(email);
+    console.log(password);
+    try {
+      const result = await db.query("SELECT * FROM users WHERE username = $1", [
+        email,
+      ]);
+      if (result.rows.length > 0) {
+        const user = result.rows[0];
+        const storedHashPassword = user.password;
+        bcrypt.compare(password, storedHashPassword, (err, result) => {
+          if (err) {
+            return cb(err);
+          } else {
+            if (result) {
+              return cb(null, user);
+            } else {
+              return cb(null, false);
+            }
+          }
+        });
+      } else {
+        return cb("User not found");
+      }
+    } catch (err) {
+      return cb(err);
+    }
+  })
+);
+
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+
+passport.deserializeUser((user, cb) => {
+  cb(null, user);
 });
 
 app.listen(port, () => {
