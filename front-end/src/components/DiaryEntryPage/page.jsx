@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./page.css";
 import { SideBar, MainNavBar } from "../DiaryEntryPage"; // Import SideBar and MainNavBar
-import { Diary_temp1, TimeCapsule } from "./../../assets"; // Import templates
+import {
+  Diary_temp1,
+  TimeCapsule,
+  phool,
+  horrortheme,
+  lighttheme,
+} from "./../../assets"; // Import templates
 
 function DiaryEntryPage() {
   // Define templates array with IDs starting from 1
@@ -9,15 +15,13 @@ function DiaryEntryPage() {
     {
       id: 1,
       name: "Template 1",
-      image:
-        "https://img.freepik.com/free-photo/abstract-uv-ultraviolet-light-composition_23-2149243965.jpg?t=st=1715459506~exp=1715463106~hmac=5e664728824588fd753a23dbf3836488c146aad664f6f2108d1c6e8d828586f7&w=1380",
+      image: horrortheme,
       description: "Description for Template 1",
     },
     {
       id: 2,
       name: "Template 2",
-      image:
-        "https://img.freepik.com/free-photo/blue-smooth-wall-textured-background_53876-106133.jpg?t=st=1715459690~exp=1715463290~hmac=8207a29193ae4dfe44b85d8cc8c1399016bd1cf6b464c0040e2a4eb9c1e99de7&w=1380",
+      image: lighttheme,
       description: "Description for Template 2",
     },
     {
