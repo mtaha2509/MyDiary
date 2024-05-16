@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./TimeCapsule.css";
 import Sidebar from "../DiaryEntryPage/SideBar/Sidebar";
+import BoxComponent from "./Time-Capsule/BoxComponent";
 import cartoon from "../../assets/cartoon.svg";
 
 const TimeCapsule = () => {
@@ -93,14 +94,15 @@ const TimeCapsule = () => {
     <div className="fadein">
       <div className="container-fluid">
         <div className="col-lg-12 offset-lg-12">
-        <div className="time-capsule">
-          <h1 className="page-title" style={{ fontWeight: "bold" }}>
-            Welcome to Time Capsule 💊
-          </h1>
-          <p className="page-subtitle" style={{ fontWeight: "bold", color: "grey" }}>
-            Plant your Time Capsule and let it revive your beloved memories
-          </p>
-        </div>
+          <div className="time-capsule">
+            <h1 className="page-title" style={{ fontWeight: "bold" }}>
+              Welcome to Time Capsule 💊
+            </h1>
+            <p className="page-subtitle" style={{ fontWeight: "bold", color: "grey" }}>
+              Plant your Time Capsule and let it revive your beloved memories
+            </p>
+            {/* <BoxComponent /> */}
+          </div>
         </div>
       </div>
       <div className="col-lg-6 offset-lg-3">
@@ -109,153 +111,136 @@ const TimeCapsule = () => {
             toggleSidebar={toggleSidebar}
             sidebarExpanded={sidebarExpanded}
           />
-          <div
-            className="time-capsule-header"
-            style={{ marginLeft: "200px", borderRadius: "80px" }}
-          >
-            <h2 className="text-center" style={{ fontWeight: "bold" }}>
-              Plant a Time Capsule
-            </h2>
+          <div className="planting-contain" style={{ backgroundColor:"#d9f2f7" }} >
+            <div
+              className="time-capsule-header"
+              style={{borderRadius: "80px" }}
+            >
+              <h2 className="text-center" style={{ fontWeight: "bold" }}>
+                Plant a Time Capsule
+              </h2>
+            </div>
+            <div
+              className="card-body"
+              style={{
+                backgroundColor: "#c1c1c1",
+                padding: "20px",
+                borderRadius: "20px",
+              }}
+            >
+              <form
+                onSubmit={handleSubmit}
+                onDragOver={handleDragOver}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                <input
+                  type="text"
+                  placeholder="Type"
+                  value={newEntry.overview}
+                  onChange={(e)=> {
+                    const overview = e.target.value;
+                    setNewEntry((prevState) => ({
+                      ...prevState,
+                      overview,
+                    }));
+                  }}
+                />
+                <div className="form-group mt-3">
+                  <textarea
+                    name="messageToFutureSelf"
+                    placeholder="A message to your future self..."
+                    value={newEntry.messageToFutureSelf}
+                    onChange={handleInputChange}
+                    className="form-control"
+                    rows="4"
+                  />
+                </div>
+                <div className="form-group mt-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                  <div
+                    className={`drag-drop-area ${dragging ? "active" : ""}`}
+                    onDragOver={handleDragOver}
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                  >
+                    Drag & Drop or Click to Upload
+                  </div>
+                </div>
+                <div className="form-group mt-3" style={{ textAlign: "center" }}>
+                  <button type="submit" className="btn btn-primary">
+                    Set Time Capsule
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
+        </div>
+      </div>
+      <div className="diary-entry" >
+        <div className="col-lg-6 offset-lg-3">
+          <h2 className="text-center" style={{ fontWeight: "bold", marginTop:"10%" }}>
+            Diary Entries
+          </h2>
           <div
-            className="card-body"
+            className="diary-entries"
             style={{
               backgroundColor: "#c1c1c1",
-              padding: "20px",
+              padding: "30px",
               borderRadius: "20px",
             }}
           >
-            <form
-              onSubmit={handleSubmit}
-              onDragOver={handleDragOver}
-              onDragEnter={handleDragEnter}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              <input
-                type="text"
-                placeholder="Type"
-                value={newEntry.overview}
-                onChange={(e)=> {
-                  const overview = e.target.value;
-                  setNewEntry((prevState) => ({
-                    ...prevState,
-                    overview,
-                  }));
-                }}
-              />
-              <div className="form-group mt-3">
-                <textarea
-                  name="messageToFutureSelf"
-                  placeholder="A message to your future self..."
-                  value={newEntry.messageToFutureSelf}
-                  onChange={handleInputChange}
-                  className="form-control"
-                  rows="4"
-                />
+          {currentEntries.map((entry, index) => (
+            <div key={index} className="card mb-3">
+              <div className="card-body">
+                <h5 className="card-title" style={{ fontWeight: "bold" }}>
+                  Capsule {index + indexOfFirstEntry + 1}
+                </h5>
+                <p className="card-text">Overview: {entry.overview}</p>
+                <p className="card-text">Message: {entry.messageToFutureSelf}</p>
+                {entry.uploadedImage && (
+                  <img
+                    src={URL.createObjectURL(entry.uploadedImage)}
+                    alt="Uploaded"
+                    className="img-fluid"
+                  />
+                )}
               </div>
-              <div className="form-group mt-3">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
-                <div
-                  className={`drag-drop-area ${dragging ? "active" : ""}`}
-                  onDragOver={handleDragOver}
-                  onDragEnter={handleDragEnter}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                >
-                  Drag & Drop or Click to Upload
-                </div>
-              </div>
-              <div className="form-group mt-3" style={{ textAlign: "center" }}>
-                <button type="submit" className="btn btn-primary">
-                  Set Time Capsule
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-6 offset-lg-3">
-        <h2 className="text-center" style={{ fontWeight: "bold" }}>
-          Diary Entries
-        </h2>
-        <div
-          className="diary-entries"
-          style={{
-            backgroundColor: "#c1c1c1",
-            padding: "30px",
-            borderRadius: "20px",
-          }}
-        >
-        {currentEntries.map((entry, index) => (
-          <div key={index} className="card mb-3">
-            <div className="card-body">
-              <h5 className="card-title" style={{ fontWeight: "bold" }}>
-                Capsule {index + indexOfFirstEntry + 1}
-              </h5>
-              <p className="card-text">Overview: {entry.overview}</p>
-              <p className="card-text">Message: {entry.messageToFutureSelf}</p>
-              {entry.uploadedImage && (
-                <img
-                  src={URL.createObjectURL(entry.uploadedImage)}
-                  alt="Uploaded"
-                  className="img-fluid"
-                />
-              )}
             </div>
+          ))}
           </div>
-        ))}
-        </div>
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <nav aria-label="Page navigation">
-            <ul className="pagination justify-content-center">
-              {[...Array(totalPages).keys()].map((page) => (
-                <li
-                  key={page}
-                  className={`page-item ${
-                    page + 1 === currentPage ? "active" : ""
-                  }`}
-                >
-                  <button
-                    onClick={() => paginate(page + 1)}
-                    className="page-link"
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <nav aria-label="Page navigation">
+              <ul className="pagination justify-content-center">
+                {[...Array(totalPages).keys()].map((page) => (
+                  <li
+                    key={page}
+                    className={`page-item ${
+                      page + 1 === currentPage ? "active" : ""
+                    }`}
                   >
-                    {page + 1}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
+                    <button
+                      onClick={() => paginate(page + 1)}
+                      className="page-link"
+                    >
+                      {page + 1}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+        </div>
       </div>
     </div>
   );
-};
-
-const getNextOpeningDate = (plantedDate, interval) => {
-  const date = new Date(plantedDate);
-  switch (interval) {
-    case "Daily":
-      date.setDate(date.getDate() + 1);
-      break;
-    case "Weekly":
-      date.setDate(date.getDate() + 7);
-      break;
-    case "Monthly":
-      date.setMonth(date.getMonth() + 1);
-      break;
-    case "Yearly":
-      date.setFullYear(date.getFullYear() + 1);
-      break;
-    default:
-      break;
-  }
-  return date.toLocaleDateString();
 };
 
 export default TimeCapsule;

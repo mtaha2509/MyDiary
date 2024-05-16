@@ -29,24 +29,26 @@ function App() {
   const authState = useSelector((state) => state.auth);
 
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/" element={<LandingPage />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
 
-    //     <Route element={<PrivateRoutes authState={authState} />}>
-    //       <Route path="/homepage" element={<Homepage />} />
-    //       <Route path="/timecapsule" element={<TimeCapsule />} />
-    //       <Route path="/diarypage" element={<DiaryEntryPage />} />
-    //       <Route path="/notes" element={<Notes />} />
-    //     </Route>
+        <Route element={<PrivateRoutes authState={authState} />}>
+          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/timecapsule" element={<TimeCapsule />} />
+          <Route path="/diarypage" element={<DiaryEntryPage />} />
+          <Route path="/notes" element={<Notes />} />
+        </Route>
 
-    //     <Route element={<RestrictedRoutes authState={authState} />}>
-    //       <Route path="/login" element={<Login />} />
-    //       <Route path="/register" element={<Signup />} />
-    //     </Route>
-    //   </Routes>
-    // </BrowserRouter>
-    <TimeCapsule />
+        <Route element={<RestrictedRoutes authState={authState} />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    //<TimeCapsule />
+    //<DiaryEntryPage/>
+    
   );
 }
 export default App;

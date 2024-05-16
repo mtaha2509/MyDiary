@@ -8,6 +8,7 @@ import {
   horrortheme,
   lighttheme,
 } from "./../../assets"; // Import templates
+import jsPDF from "jspdf";
 
 function DiaryEntryPage() {
   // Define templates array with IDs starting from 1
@@ -68,15 +69,12 @@ function DiaryEntryPage() {
     },
   ];
 
-  // State for tracking selected template
   const [selectedTemplate, setSelectedTemplate] = useState(null);
 
-  // State for controlling modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
 
-  // State for diary title and content
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryContent, setDiaryContent] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,26 +105,41 @@ function DiaryEntryPage() {
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     let yPos = 10;
-
-    // Iterate over diary entries and add them to the PDF
-    diaryEntries.forEach((entry) => {
+  
+    diaryEntries.forEach((entry, index) => {
+      if (index !== 0) {
+        doc.addPage(); // Add a new page for each diary entry except the first one
+      }
+  
+      // Add page number
       doc.setFontSize(16);
       doc.text(20, yPos, `Page ${entry.pageNumber}`);
       yPos += 10;
-
+  
+      // Add title
       doc.setFontSize(14);
       doc.text(20, yPos, `Title: ${entry.title}`);
       yPos += 10;
-
+  
+      // Add selected template image
+      if (selectedTemplate && selectedTemplate.image) {
+        console.log("Whaa")
+        doc.addImage(selectedTemplate.image, "JPEG", 20, yPos, 170, 100);
+        yPos += 110;
+      }
+  
       doc.setFontSize(12);
       const splitContent = doc.splitTextToSize(entry.content, 170);
       doc.text(20, yPos, splitContent);
-      yPos += splitContent.length * 5 + 10; // Adjust line spacing
+      yPos += splitContent.length * 5 + 10;
+  
+      yPos = 10;
     });
-
-    // Save the PDF
+  
     doc.save("diary.pdf");
   };
+  
+
 
   // Function to close the modal
   const closeModal = () => {
@@ -217,8 +230,14 @@ function DiaryEntryPage() {
         />
         <div className="page-content">
           <MainNavBar />
-
-          {/* Slot for the selected template */}
+          <div className="entry-header">
+            <h1 style={{ fontWeight:"bold" }}>
+              Welcome to your Diary 📚
+             </h1>
+             <p className="entry-subtitle" style={{ fontWeight: "bold", color: "grey" }}>
+              Write your most cherished memories here
+            </p>
+          </div>
           <div className="template-content">
             <div
               className="template-slot"
