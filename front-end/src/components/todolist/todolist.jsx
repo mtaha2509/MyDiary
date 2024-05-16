@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 
-const addItem = (inputText) => {
-  setItems(prevItems => [...prevItems, { id: prevItems.length, text: inputText }]);
-};
-
-
 const ToDoList = () => {
   const [items, setItems] = useState([]);
+
+  const addItem = (inputText) => {
+    setItems(prevItems => [...prevItems, { id: prevItems.length, text: inputText }]);
+  };
+  
+  const deleteItem = (id) => {
+    setItems(prevItems => prevItems.filter(item => item.id !== id));
+  };
 
   return (
     <div className="container">
