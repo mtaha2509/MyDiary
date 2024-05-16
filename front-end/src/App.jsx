@@ -16,6 +16,7 @@ import Slider from "./components/Homepage/Slider/Slider";
 import AIBot from "./components/Bot/AI/AI";
 import Notes from "./components/Notes/notes";
 import { useSelector } from "react-redux";
+import About from "./components/About/about";
 
 function PrivateRoutes({ authState }) {
   return <>{authState.isAuth ? <Outlet /> : <Navigate to="/login" />}</>;
@@ -43,6 +44,7 @@ function App() {
         <Route element={<RestrictedRoutes authState={authState} />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
+          <Route path="/about" element={<About />} />
         </Route>
       </Routes>
     </BrowserRouter>
