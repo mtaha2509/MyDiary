@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { dropdown, logo1 } from "../../../assets";
 import "./navbar.css";
+import "../../About/about"
 import { useNavigate, useLocation } from "react-router-dom";
 
 function NavBar() {
@@ -23,6 +24,7 @@ function NavBar() {
   const showCreateAccount = location.pathname !== "/";
 
   return (
+    <div className="fadeIn about-nav">
     <nav className="navbar">
       <div className="logo">
         <img src={logo1} alt="Logo" />
@@ -55,6 +57,7 @@ function NavBar() {
         </button>
       </div>
     </nav>
+    </div>
   );
 }
 
