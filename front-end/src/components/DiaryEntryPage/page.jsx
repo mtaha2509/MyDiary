@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./page.css";
 import { SideBar, MainNavBar } from "../DiaryEntryPage"; // Import SideBar and MainNavBar
-import { Diary_temp1, TimeCapsule } from "./../../assets"; // Import templates
+import {
+  Diary_temp1,
+  TimeCapsule,
+  phool,
+  horrortheme,
+  lighttheme,
+} from "./../../assets"; // Import templates
 
 function DiaryEntryPage() {
   // Define templates array with IDs starting from 1
@@ -9,15 +15,13 @@ function DiaryEntryPage() {
     {
       id: 1,
       name: "Template 1",
-      image:
-        "https://img.freepik.com/free-photo/abstract-uv-ultraviolet-light-composition_23-2149243965.jpg?t=st=1715459506~exp=1715463106~hmac=5e664728824588fd753a23dbf3836488c146aad664f6f2108d1c6e8d828586f7&w=1380",
+      image: horrortheme,
       description: "Description for Template 1",
     },
     {
       id: 2,
       name: "Template 2",
-      image:
-        "https://img.freepik.com/free-photo/blue-smooth-wall-textured-background_53876-106133.jpg?t=st=1715459690~exp=1715463290~hmac=8207a29193ae4dfe44b85d8cc8c1399016bd1cf6b464c0040e2a4eb9c1e99de7&w=1380",
+      image: lighttheme,
       description: "Description for Template 2",
     },
     {
@@ -100,6 +104,30 @@ function DiaryEntryPage() {
     setIsModalOpen(true);
   };
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    let yPos = 10;
+
+    // Iterate over diary entries and add them to the PDF
+    diaryEntries.forEach((entry) => {
+      doc.setFontSize(16);
+      doc.text(20, yPos, `Page ${entry.pageNumber}`);
+      yPos += 10;
+
+      doc.setFontSize(14);
+      doc.text(20, yPos, `Title: ${entry.title}`);
+      yPos += 10;
+
+      doc.setFontSize(12);
+      const splitContent = doc.splitTextToSize(entry.content, 170);
+      doc.text(20, yPos, splitContent);
+      yPos += splitContent.length * 5 + 10; // Adjust line spacing
+    });
+
+    // Save the PDF
+    doc.save("diary.pdf");
+  };
+
   // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
@@ -125,7 +153,6 @@ function DiaryEntryPage() {
     const contentLength = content.length;
 
     if (contentLength <= charLimit) {
-      // Update content of the current page
       const updatedEntries = diaryEntries.map((entry) => {
         if (entry.pageNumber === currentPage) {
           return { ...entry, content };
@@ -136,7 +163,6 @@ function DiaryEntryPage() {
       setDiaryContent(content);
       setRemainingChars(charLimit - contentLength);
     } else {
-      // Save content of the current page
       const updatedEntries = diaryEntries.map((entry) => {
         if (entry.pageNumber === currentPage) {
           return { ...entry, content: content.slice(0, charLimit) };
@@ -283,19 +309,6 @@ function DiaryEntryPage() {
                       Next &gt;
                     </button>
                   </div>
-                  {currentPage > 1 && (
-                    <button
-                      onClick={handleBackButtonClick}
-                      style={{
-                        position: "absolute",
-                        top: "90%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                      }}
-                    >
-                      Go Back
-                    </button>
-                  )}
                 </div>
               ) : (
                 // Render placeholder content if no template is selected
@@ -317,6 +330,7 @@ function DiaryEntryPage() {
                 <button onClick={handleReplaceTemplate}>
                   Replace Template
                 </button>
+                <button onClick={handleDownloadPDF}>Download Diary</button>
               </div>
             )}
           </div>

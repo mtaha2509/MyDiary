@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./signup.css"; // Importing the stylesheet
 import { Logo2 } from "../../assets"; // Importing the logo image
+import { useDispatch } from "react-redux";
+import { authenticateUser } from "../../redux/slices/authSlice";
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -27,6 +29,7 @@ function SignUp() {
     setPassword(event.target.value);
   }
 
+  const dispatch = useDispatch();
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -44,7 +47,7 @@ function SignUp() {
       console.log("Response status:", response.status); // Add this line to check response status
 
       if (response.ok) {
-        navigate("/login");
+        dispatch(authenticateUser());
       } else {
         alert("Error");
       }

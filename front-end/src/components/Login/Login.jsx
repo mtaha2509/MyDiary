@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"; // Importing the stylesheet
 import { Logo2 } from "../../assets"; // Importing the logo image
+import { useDispatch } from "react-redux";
+import { authenticateUser } from "../../redux/slices/authSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -16,7 +18,7 @@ function Login() {
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
-
+  const dispatch = useDispatch();
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -27,10 +29,8 @@ function Login() {
         body: JSON.stringify(body),
       });
       if (response.ok) {
-        setError("");
-        navigate("/homepage");
+        dispatch(authenticateUser());
       } else {
-        // Handle server errors or authentication errors
         const errorMessage = await response.text();
         setError(errorMessage);
       }
@@ -56,6 +56,7 @@ function Login() {
         <form className="login-form" onSubmit={handleSubmit}>
           <h1 className="login-title">Login</h1>
           <input
+            name="email"
             type="email"
             placeholder="Email"
             value={email}
@@ -64,6 +65,7 @@ function Login() {
             required
           />
           <input
+            name="password"
             type="password"
             placeholder="Password"
             value={password}
