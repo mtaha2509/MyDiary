@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { dropdown, logo1 } from "../../../assets";
 import "./navbar.css";
+import "../../About/about"
 import { useNavigate, useLocation } from "react-router-dom";
 
 function NavBar() {
@@ -15,18 +16,23 @@ function NavBar() {
   const handleLoginClick = () => {
     nav("/login");
   };
+  
+  const handleAboutClick = () => {
+    nav("/about");
+  };
 
   const showCreateAccount = location.pathname !== "/";
 
   return (
+    <div className="fadeIn about-nav">
     <nav className="navbar">
-      <div>
+      <div className="logo">
         <img src={logo1} alt="Logo" />
       </div>
       <div className={`Navbar-Options ${isMenuOpen ? "open" : ""}`}>
         <ul className="navbar-menu">
           <li>
-            About <img src={dropdown} alt="Dropdown" />
+            <a href="/about" onClick={handleAboutClick}>About</a>
           </li>
           <li>
             Resources <img src={dropdown} alt="Dropdown" />
@@ -51,6 +57,7 @@ function NavBar() {
         </button>
       </div>
     </nav>
+    </div>
   );
 }
 
