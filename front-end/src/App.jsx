@@ -46,7 +46,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/about" element={<About />} />
-          
+          <Route path="/todolist" element={<ToDoList />} />
         </Route>
       </Routes>
     </BrowserRouter>

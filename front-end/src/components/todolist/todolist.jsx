@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 
+const addItem = (inputText) => {
+  setItems(prevItems => [...prevItems, { id: prevItems.length, text: inputText }]);
+};
+
+
 const ToDoList = () => {
   const [items, setItems] = useState([]);
 
