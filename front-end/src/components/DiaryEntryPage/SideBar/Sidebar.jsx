@@ -4,6 +4,8 @@ import { ExpandIcon, ShrinkIcon } from "../../../assets";
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import "../../todolist/todolist"
+
 
 function SideBar({ toggleSidebar, sidebarExpanded }) {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
               </a>
             </div>
             <div className="sidebar-entry">
-              <a href="#" onClick={() => handleNavigation("/to-do-list")}>
+              <a href="/todolist" onClick={() => handleNavigation("/todolist")}>
                 <span className="sidebar-entry-label">To-do List</span>
               </a>
             </div>
