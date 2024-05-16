@@ -6,6 +6,7 @@ import Slider from "./Slider/Slider";
 import ToDoList from "./ToDoList/ToDoList";
 import AIBot from "../Bot/AI/AI";
 import "./Homepage.css";
+import "../About/about"
 import { Footer } from "../LandingPage";
 
 const Homepage = () => {

@@ -4,7 +4,7 @@ const db = new pg.Pool({
     user: "postgres",
     host: "localhost",
     database: "MyDiary",
-    password: "Allah Is One",
+    password: "katymother",
     port: "5432",
 });
 

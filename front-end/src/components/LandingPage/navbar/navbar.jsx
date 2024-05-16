@@ -15,18 +15,22 @@ function NavBar() {
   const handleLoginClick = () => {
     nav("/login");
   };
+  
+  const handleAboutClick = () => {
+    nav("/about");
+  };
 
   const showCreateAccount = location.pathname !== "/";
 
   return (
     <nav className="navbar">
-      <div>
+      <div className="logo">
         <img src={logo1} alt="Logo" />
       </div>
       <div className={`Navbar-Options ${isMenuOpen ? "open" : ""}`}>
         <ul className="navbar-menu">
           <li>
-            About <img src={dropdown} alt="Dropdown" />
+            <a href="/about" onClick={handleAboutClick}>About</a>
           </li>
           <li>
             Resources <img src={dropdown} alt="Dropdown" />
