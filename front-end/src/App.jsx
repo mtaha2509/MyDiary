@@ -10,6 +10,7 @@ import TimeCapsule from "./components/TimeCapsule/TimeCapsule";
 import Slider from "./components/Homepage/Slider/Slider";
 import AIBot from "./components/Bot/AI/AI";
 import Notes from "./components/Notes/notes";
+import About from "./components/About/about";
 function App() {
   return (
     // <div>
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<About />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/timecapsule" element={<TimeCapsule />} />
