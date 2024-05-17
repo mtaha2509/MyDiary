@@ -5,7 +5,7 @@ import "./Section2.css";
 function Section2() {
   return (
     <section className="section2-container" style={{ backgroundColor: "#FF6D2C" }}>
-      <div className="container">
+      <div className="section2-contain">
         <div className="row">
           <div className="col-md-6 content-div">
             <div className="section2-content">

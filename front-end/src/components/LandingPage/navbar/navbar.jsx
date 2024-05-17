@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { dropdown, logo1 } from "../../../assets";
 import "./navbar.css";
+import "../../About/about"
 import { useNavigate, useLocation } from "react-router-dom";
 import { onLogout } from "../../../../api/auth";
 import { unauthenticateUser } from "../../../redux/slices/authSlice";
@@ -36,6 +37,7 @@ function NavBar() {
   };
 
   return (
+    <div className="fadeIn about-nav">
     <nav className="navbar">
       <div className="logo">
         <img src={logo1} alt="Logo" />
@@ -86,6 +88,7 @@ function NavBar() {
         </button>
       </div>
     </nav>
+    </div>
   );
 }
 

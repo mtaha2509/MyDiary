@@ -14,6 +14,8 @@ import Homepage from "./components/Homepage/Homepage";
 import TimeCapsule from "./components/TimeCapsule/TimeCapsule";
 import Notes from "./components/Notes/notes";
 import About from "./components/About/about";
+import ToDoList from "./components/todolist/todolist";
+
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProtectedInfo } from "../api/auth";
 import { unauthenticateUser } from "./redux/slices/authSlice";

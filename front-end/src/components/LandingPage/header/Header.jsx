@@ -5,9 +5,9 @@ import { Diary } from "../../../assets";
 function Header() {
   return (
     <header className="header">
-      <div className="header-container container">
+      <div className="container">
         <div className="row align-items-center">
-          <div className="col-md-6">
+          <div className="col-md-6 text-center text-md-start">
             <div className="header-content">
               <h1 className="header-title">
                 Write Your Story: <br />
@@ -22,7 +22,7 @@ function Header() {
               </a>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 text-center">
             <img src={Diary} alt="MyDiary+ Logo" className="header-image" />
           </div>
         </div>
