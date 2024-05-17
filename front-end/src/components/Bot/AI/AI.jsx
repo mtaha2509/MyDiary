@@ -158,9 +158,7 @@ function App() {
         }}
         onMouseDown={handleDoubleClick}
         onClick={handleButtonClick}
-      >
-        iSee
-      </div>
+      >iSee</div>
       {sliderVisible && (
         <div
           className="slider-visible"

@@ -9,10 +9,11 @@ import {
   lighttheme,
 } from "./../../assets"; // Import templates
 import jsPDF from "jspdf";
-import Navbar from "../DiaryEntryPage/NavBar/NavBar"
+import { useSelector } from "react-redux";
+import { DiaryEntry } from "../../../api/auth";
 
 function DiaryEntryPage() {
-  // Define templates array with IDs starting from 1
+  const authState = useSelector((state) => state.auth);
   const templates = [
     {
       id: 1,
@@ -51,7 +52,7 @@ function DiaryEntryPage() {
       id: 6,
       name: "Template 6",
       image:
-        "https://img.freepik.com/free-vector/yellow-comic-zoom-lines-background_1017-15136.jpg?t=st=1715464965~exp=1715468565~hmac=34c4e8c67651b95461462c80385b56fd1a4b4c84d764c07d05acad3ecfe116b0&w=740",
+        "https://img.freepik.com/free-vector/yellow-comic-zoom-lines-background_1017-15136.jpg?t=st=1715464965~exp=1715468565~hmac=34c4e8c67651b95461462c80385b56fd1a4b4c84d764c07d05acad3ec6d65c36&w=740",
       description: "Description for Template 6",
     },
     {
@@ -106,41 +107,39 @@ function DiaryEntryPage() {
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     let yPos = 10;
-  
+
     diaryEntries.forEach((entry, index) => {
       if (index !== 0) {
         doc.addPage(); // Add a new page for each diary entry except the first one
       }
-  
+
       // Add page number
       doc.setFontSize(16);
       doc.text(20, yPos, `Page ${entry.pageNumber}`);
       yPos += 10;
-  
+
       // Add title
       doc.setFontSize(14);
       doc.text(20, yPos, `Title: ${entry.title}`);
       yPos += 10;
-  
+
       // Add selected template image
       if (selectedTemplate && selectedTemplate.image) {
-        console.log("Whaa")
+        console.log("Whaa");
         doc.addImage(selectedTemplate.image, "JPEG", 20, yPos, 170, 100);
         yPos += 110;
       }
-  
+
       doc.setFontSize(12);
       const splitContent = doc.splitTextToSize(entry.content, 170);
       doc.text(20, yPos, splitContent);
       yPos += splitContent.length * 5 + 10;
-  
+
       yPos = 10;
     });
-  
+
     doc.save("diary.pdf");
   };
-  
-
 
   // Function to close the modal
   const closeModal = () => {
@@ -222,6 +221,18 @@ function DiaryEntryPage() {
     setCurrentPage(Math.max(1, currentPage - 1));
   };
 
+  // Function to save diary entries
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const values = {
+        diaryEntries,
+        selectedTemplate,
+      };
+      await DiaryEntry(values);
+    } catch (error) {}
+  };
+
   return (
     <>
       <div className="page-container">
@@ -232,10 +243,11 @@ function DiaryEntryPage() {
         <div className="page-content">
           <Navbar/>
           <div className="entry-header">
-            <h1 style={{ fontWeight:"bold" }}>
-              Welcome to your Diary 📚
-             </h1>
-             <p className="entry-subtitle" style={{ fontWeight: "bold", color: "grey" }}>
+            <h1 style={{ fontWeight: "bold" }}>Welcome to your Diary 📚</h1>
+            <p
+              className="entry-subtitle"
+              style={{ fontWeight: "bold", color: "grey" }}
+            >
               Write your most cherished memories here
             </p>
           </div>
@@ -254,7 +266,7 @@ function DiaryEntryPage() {
             >
               {selectedTemplate ? (
                 // Render the selected template here
-                <div>
+                <form onSubmit={handleSubmit}>
                   <input
                     type="text"
                     className="diary-title"
@@ -316,6 +328,7 @@ function DiaryEntryPage() {
                   </p>
                   <div className="pagination-buttons">
                     <button
+                      type="button"
                       onClick={handlePreviousPage}
                       disabled={currentPage === 1}
                     >
@@ -323,13 +336,17 @@ function DiaryEntryPage() {
                     </button>
                     <span>Page {currentPage}</span>
                     <button
+                      type="button"
                       onClick={handleNextPage}
                       disabled={currentPage >= diaryEntries.length}
                     >
                       Next &gt;
                     </button>
                   </div>
-                </div>
+                  <div className="replace-template-button">
+                    <button type="submit">Save Diary</button>
+                  </div>
+                </form>
               ) : (
                 // Render placeholder content if no template is selected
                 <div className="empty-slot">
