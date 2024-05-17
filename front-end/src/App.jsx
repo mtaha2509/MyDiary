@@ -67,6 +67,7 @@ function App() {
           <Route path="/timecapsule" element={<TimeCapsule />} />
           <Route path="/diarypage" element={<DiaryEntryPage />} />
           <Route path="/notes" element={<Notes />} />
+          <Route path="/todolist" element={<ToDoList />} />
         </Route>
 
         <Route element={<RestrictedRoutes />}>
