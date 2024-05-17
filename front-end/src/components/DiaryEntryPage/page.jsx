@@ -9,6 +9,7 @@ import {
   lighttheme,
 } from "./../../assets"; // Import templates
 import jsPDF from "jspdf";
+import Navbar from "../DiaryEntryPage/NavBar/NavBar"
 
 function DiaryEntryPage() {
   // Define templates array with IDs starting from 1
@@ -229,7 +230,7 @@ function DiaryEntryPage() {
           sidebarExpanded={sidebarExpanded}
         />
         <div className="page-content">
-          <MainNavBar />
+          <Navbar/>
           <div className="entry-header">
             <h1 style={{ fontWeight:"bold" }}>
               Welcome to your Diary 📚
