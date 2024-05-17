@@ -10,7 +10,7 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
-    dispatch(authenticateUser());
+    // dispatch(authenticateUser());
     navigate(path);
   };
 
@@ -50,6 +50,11 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
             <div className="sidebar-entry">
               <a href="#" onClick={() => handleNavigation("/timecapsule")}>
                 <span className="sidebar-entry-label">Time Capsule</span>
+              </a>
+            </div>
+            <div className="sidebar-entry">
+              <a href="#" onClick={() => handleNavigation("/diarypage")}>
+                <span className="sidebar-entry-label">Diary Entry</span>
               </a>
             </div>
           </div>
