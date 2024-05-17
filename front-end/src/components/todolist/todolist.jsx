@@ -1,34 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import "./todolist.css"; // Import the CSS file
+import { Footer } from '../LandingPage';
+import NavBar from '../LandingPage/navbar/navbar';
 
 const ToDoList = () => {
   const [items, setItems] = useState([]);
+  const timeoutsRef = useRef({}); // Use ref to store timeout IDs
 
   const addItem = (inputText) => {
-    setItems(prevItems => [...prevItems, { id: prevItems.length, text: inputText }]);
+    if (inputText.trim() !== "") {
+      setItems(prevItems => [{ id: Date.now(), text: inputText, completed: false }, ...prevItems]);
+    }
   };
-  
-  const deleteItem = (id) => {
-    setItems(prevItems => prevItems.filter(item => item.id !== id));
+
+  const toggleItemCompletion = (id) => {
+    setItems(prevItems => {
+      const updatedItems = prevItems.map(item => 
+        item.id === id ? { ...item, completed: !item.completed } : item
+      );
+
+      const item = updatedItems.find(item => item.id === id);
+
+      if (item.completed) {
+        const timeoutId = setTimeout(() => {
+          setItems(prevItems => prevItems.filter(item => item.id !== id));
+          delete timeoutsRef.current[id]; // Clean up the timeout ID reference
+        }, 15000); // 15 seconds delay
+        timeoutsRef.current[id] = timeoutId;
+      } else {
+        clearTimeout(timeoutsRef.current[id]); // Clear the timeout if unmarked
+        delete timeoutsRef.current[id]; // Clean up the timeout ID reference
+      }
+
+      const incompleteItems = updatedItems.filter(item => !item.completed);
+      const completedItems = updatedItems.filter(item => item.completed);
+
+      return [...incompleteItems, ...completedItems];
+    });
   };
 
   return (
-    <div className="container">
-      <div className="heading">
-        <h1>To-Do List</h1>
+    <div className="todo-body">
+      <NavBar className="fadeIn about-nav" />
+      <div className="todo-content">
+        <div className="todo-container">
+          <div className="todo-heading">
+            <h1>To-Do List</h1>
+          </div>
+          <InputArea onAdd={addItem} />
+          <div className="todo-list-container">
+            <ul className="todo-list">
+              {items.map((todoItem) => (
+                <ToDoItem
+                  key={todoItem.id}
+                  id={todoItem.id}
+                  text={todoItem.text}
+                  completed={todoItem.completed}
+                  onToggle={toggleItemCompletion}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-      <InputArea onAdd={addItem} />
-      <div>
-        <ul>
-          {items.map((todoItem) => (
-            <ToDoItem
-              key={todoItem.id}
-              id={todoItem.id}
-              text={todoItem.text}
-              onChecked={deleteItem}
-            />
-          ))}
-        </ul>
-      </div>
+      <Footer className="fadeIn about-footer" />
     </div>
   );
 };
@@ -41,12 +76,14 @@ const InputArea = (props) => {
   };
 
   return (
-    <div className="form">
-      <input onChange={handleChange} type="text" value={inputText} />
-      <button
+    <div className="todo-form">
+      <input className="todo-input" onChange={handleChange} type="text" value={inputText} placeholder="Enter a task"/>
+      <button className="todo-add-button"
         onClick={() => {
-          props.onAdd(inputText);
-          setInputText("");
+          if (inputText.trim() !== "") {
+            props.onAdd(inputText);
+            setInputText("");
+          }
         }}
       >
         <span>Add</span>
@@ -57,9 +94,10 @@ const InputArea = (props) => {
 
 const ToDoItem = (props) => {
   return (
-    <div
+    <div 
+      className={`todo-item ${props.completed ? "completed" : "new-item"}`}
       onClick={() => {
-        props.onChecked(props.id);
+        props.onToggle(props.id);
       }}
     >
       <li>{props.text}</li>
