@@ -2,6 +2,10 @@
   padding: 60px 0; /* Adjusted padding for better spacing */
 }
 
+.section2-contain{
+  background-color: #FF6D2C;
+}
+
 .section2-content {
   text-align: center;
   display: flex;
@@ -40,9 +44,10 @@
 
 .section2-image {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   display: block;
   margin: 0 auto;
+  margin-top: 96px;
 }
 .content-div{
   padding:10%;
