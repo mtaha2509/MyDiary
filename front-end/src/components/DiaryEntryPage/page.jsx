@@ -241,7 +241,7 @@ function DiaryEntryPage() {
           sidebarExpanded={sidebarExpanded}
         />
         <div className="page-content">
-          <Navbar/>
+          {/* <Navbar/> */}
           <div className="entry-header">
             <h1 style={{ fontWeight: "bold" }}>Welcome to your Diary 📚</h1>
             <p

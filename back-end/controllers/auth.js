@@ -27,21 +27,22 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  const { email, password } = req.body;
+  const { first_name, last_name, username, password } = req.body;
+
   try {
     const hashedPassword = await hash(password, 10);
 
-    await db.query("insert into users(username,password) values ($1 , $2)", [
-      email,
-      hashedPassword,
-    ]);
+    await db.query(
+      "INSERT INTO users (first_name, last_name, username, password) VALUES ($1, $2, $3, $4)",
+      [first_name, last_name, username, hashedPassword]
+    );
 
     return res.status(201).json({
       success: true,
-      message: "The registraion was succefull",
+      message: "The registration was successful",
     });
   } catch (error) {
-    console.log(error.message);
+    console.error("Error during user registration:", error.message);
     return res.status(500).json({
       error: error.message,
     });
