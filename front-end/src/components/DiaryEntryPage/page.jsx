@@ -80,7 +80,7 @@ function DiaryEntryPage() {
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryContent, setDiaryContent] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [charLimit, setCharLimit] = useState(200); // Character limit per page
+  const [charLimit, setCharLimit] = useState(500);
   const [remainingChars, setRemainingChars] = useState(charLimit);
 
   // State for diary entries
@@ -155,7 +155,7 @@ function DiaryEntryPage() {
 
   // Function to handle replacing the template
   const handleReplaceTemplate = () => {
-    setSelectedTemplate(null); // Clear selected template
+    setSelectedTemplate(false); // Clear selected template
     // No need to clear userInput state
     openModal(); // Open modal for selecting a new template
   };
@@ -216,11 +216,6 @@ function DiaryEntryPage() {
       setDiaryTitle(diaryEntries[currentPage - 2].title);
     }
   };
-
-  const handleBackButtonClick = () => {
-    setCurrentPage(Math.max(1, currentPage - 1));
-  };
-
   // Function to save diary entries
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -251,7 +246,6 @@ function DiaryEntryPage() {
               Write your most cherished memories here
             </p>
           </div>
-          <div className="template-content">
             <div
               className="template-slot"
               style={{
@@ -262,6 +256,9 @@ function DiaryEntryPage() {
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 position: "relative", // Ensure the positioning context for the text input
+                height:"140%",
+                width:"63%",
+
               }}
             >
               {selectedTemplate ? (
@@ -285,8 +282,8 @@ function DiaryEntryPage() {
                     }}
                     style={{
                       position: "absolute",
-                      top: "10%",
-                      left: "50%",
+                      top: "26%",
+                      left: "55%",
                       transform: "translate(-50%, -50%)",
                       backgroundColor: "transparent",
                       border: "none",
@@ -302,16 +299,16 @@ function DiaryEntryPage() {
                     onChange={handleDiaryContentChange}
                     style={{
                       position: "absolute",
-                      top: "55%",
-                      left: "50%",
+                      top: "49%",
+                      left: "51%",
                       transform: "translate(-50%, -50%)",
-                      width: "70%",
-                      height: "70%",
+                      width: "49%",
+                      height: "31%",
                       backgroundColor: "transparent",
                       border: "none",
                       fontSize: "1.5rem",
                       color: "white",
-                      resize: "none",
+                      resize: "auto",
                     }}
                   />
                   <p
@@ -370,7 +367,6 @@ function DiaryEntryPage() {
                 <button onClick={handleDownloadPDF}>Download Diary</button>
               </div>
             )}
-          </div>
         </div>
       </div>
       {isModalOpen && (
