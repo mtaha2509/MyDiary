@@ -1,4 +1,3 @@
-
 .navbar {
     position: fixed;
     width: 100%;
@@ -14,12 +13,10 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-
 .Navbar-Options {
     display: flex;
     align-items: center;
 }
-
 
 .navbar-menu {
     display: flex;
@@ -38,12 +35,10 @@
     margin-left: 5px;
 }
 
-
 .navbar-buttons {
     display: flex;
     align-items: center;
 }
-
 
 .navbar-buttons a {
     text-decoration: none;
@@ -57,13 +52,11 @@
     font-size: 14px; 
 }
 
-
 .navbar-login {
     color: #2E2F35; 
     background-color: #FFFFFF; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
 }
-
 
 .navbar-create-account {
     color: #FFFFFF; 
@@ -71,19 +64,16 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
 }
 
-
 .navbar-buttons a:hover {
     background-color: #2E2F35; 
     color: #FFFFFF; 
 }
-
 
 .navbar-toggle-menu {
     display: none; 
 }
 
 @media (max-width: 768px) {
-    
     .navbar-toggle-menu {
         display: block;
         background: none;
@@ -91,7 +81,6 @@
         cursor: pointer;
         margin-left: 20px; 
     }
-
 
     .Navbar-Options ul {
         display: none;
@@ -105,12 +94,10 @@
         z-index: 200;
     }
 
-  
     .Navbar-Options.open ul {
         display: flex;
         flex-direction: column;
     }
-
 
     .buttons a {
         padding: 8px 12px; 

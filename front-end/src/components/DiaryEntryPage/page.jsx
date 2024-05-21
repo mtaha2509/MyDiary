@@ -12,13 +12,17 @@ import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
 import { DiaryEntry } from "../../../api/auth";
 
+import { NavBar } from "../LandingPage";
+import TemplateCard from "./Template-Card/TemplateCard"; // Import TemplateCard component
+
 function DiaryEntryPage() {
   const authState = useSelector((state) => state.auth);
   const templates = [
     {
       id: 1,
       name: "Template 1",
-      image: horrortheme,
+      image:
+        "https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg?t=st=1716304359~exp=1716307959~hmac=9ea04bf2aac38d80398687c37510c8e7b90a76c58a809c08ef53f11a9de84d5d&w=826",
       description: "Description for Template 1",
     },
     {
@@ -231,12 +235,15 @@ function DiaryEntryPage() {
   return (
     <>
       <div className="page-container">
+        <div>
+          <NavBar />
+        </div>
+
         <SideBar
           toggleSidebar={toggleSidebar}
           sidebarExpanded={sidebarExpanded}
         />
         <div className="page-content">
-          {/* <Navbar/> */}
           <div className="entry-header">
             <h1 style={{ fontWeight: "bold" }}>Welcome to your Diary 📚</h1>
             <p
@@ -246,127 +253,124 @@ function DiaryEntryPage() {
               Write your most cherished memories here
             </p>
           </div>
-            <div
-              className="template-slot"
-              style={{
-                backgroundImage: selectedTemplate
-                  ? `url(${selectedTemplate.image})`
-                  : "none",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                position: "relative", // Ensure the positioning context for the text input
-                height:"140%",
-                width:"63%",
-
-              }}
-            >
-              {selectedTemplate ? (
-                // Render the selected template here
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    className="diary-title"
-                    placeholder="Title"
-                    value={diaryTitle}
-                    onChange={(e) => {
-                      const title = e.target.value;
-                      setDiaryTitle(title);
-                      const updatedEntries = diaryEntries.map((entry) => {
-                        if (entry.pageNumber === currentPage) {
-                          return { ...entry, title };
-                        }
-                        return entry;
-                      });
-                      setDiaryEntries(updatedEntries);
-                    }}
-                    style={{
-                      position: "absolute",
-                      top: "26%",
-                      left: "55%",
-                      transform: "translate(-50%, -50%)",
-                      backgroundColor: "transparent",
-                      border: "none",
-                      fontSize: "2rem",
-                      fontWeight: "bold",
-                      color: "white",
-                    }}
-                  />
-                  <textarea
-                    className="diary-content"
-                    placeholder="Content"
-                    value={diaryContent}
-                    onChange={handleDiaryContentChange}
-                    style={{
-                      position: "absolute",
-                      top: "49%",
-                      left: "51%",
-                      transform: "translate(-50%, -50%)",
-                      width: "49%",
-                      height: "31%",
-                      backgroundColor: "transparent",
-                      border: "none",
-                      fontSize: "1.5rem",
-                      color: "white",
-                      resize: "auto",
-                    }}
-                  />
-                  <p
-                    style={{
-                      position: "absolute",
-                      bottom: "10%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                    }}
+          <div
+            className="template-slot"
+            style={{
+              backgroundImage: selectedTemplate
+                ? `url(${selectedTemplate.image})`
+                : "none",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              position: "relative", // Ensure the positioning context for the text input
+              height: "140%",
+              width: "63%",
+            }}
+          >
+            {selectedTemplate ? (
+              // Render the selected template here
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  className="diary-title"
+                  placeholder="Title"
+                  value={diaryTitle}
+                  onChange={(e) => {
+                    const title = e.target.value;
+                    setDiaryTitle(title);
+                    const updatedEntries = diaryEntries.map((entry) => {
+                      if (entry.pageNumber === currentPage) {
+                        return { ...entry, title };
+                      }
+                      return entry;
+                    });
+                    setDiaryEntries(updatedEntries);
+                  }}
+                  style={{
+                    position: "absolute",
+                    top: "26%",
+                    left: "55%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                />
+                <textarea
+                  className="diary-content"
+                  placeholder="Content"
+                  value={diaryContent}
+                  onChange={handleDiaryContentChange}
+                  style={{
+                    position: "absolute",
+                    top: "49%",
+                    left: "51%",
+                    transform: "translate(-50%, -50%)",
+                    width: "49%",
+                    height: "31%",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    fontSize: "1.5rem",
+                    color: "white",
+                    resize: "auto",
+                  }}
+                />
+                <p
+                  style={{
+                    position: "absolute",
+                    bottom: "10%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  {remainingChars >= 0
+                    ? `Remaining characters: ${remainingChars}`
+                    : ""}
+                </p>
+                <div className="pagination-buttons">
+                  <button
+                    type="button"
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 1}
                   >
-                    {remainingChars >= 0
-                      ? `Remaining characters: ${remainingChars}`
-                      : ""}
-                  </p>
-                  <div className="pagination-buttons">
-                    <button
-                      type="button"
-                      onClick={handlePreviousPage}
-                      disabled={currentPage === 1}
-                    >
-                      &lt; Prev
-                    </button>
-                    <span>Page {currentPage}</span>
-                    <button
-                      type="button"
-                      onClick={handleNextPage}
-                      disabled={currentPage >= diaryEntries.length}
-                    >
-                      Next &gt;
-                    </button>
-                  </div>
-                  <div className="replace-template-button">
-                    <button type="submit">Save Diary</button>
-                  </div>
-                </form>
-              ) : (
-                // Render placeholder content if no template is selected
-                <div className="empty-slot">
-                  <p>First you need to select a Template</p>
-                  <div>
-                    <button
-                      onClick={openModal}
-                      className="choose-template-button"
-                    >
-                      Choose A template
-                    </button>
-                  </div>
+                    &lt; Prev
+                  </button>
+                  <span>Page {currentPage}</span>
+                  <button
+                    type="button"
+                    onClick={handleNextPage}
+                    disabled={currentPage >= diaryEntries.length}
+                  >
+                    Next &gt;
+                  </button>
                 </div>
-              )}
-            </div>
-            {selectedTemplate && ( // Render the replace button only if a template is selected
-              <div className="replace-template-button">
-                <button onClick={handleReplaceTemplate}>
-                  Replace Template
-                </button>
-                <button onClick={handleDownloadPDF}>Download Diary</button>
+                <div className="replace-template-button">
+                  <button type="submit">Save Diary</button>
+                </div>
+              </form>
+            ) : (
+              // Render placeholder content if no template is selected
+              <div className="empty-slot">
+                <p>First you need to select a Template</p>
+                <div>
+                  <button
+                    onClick={openModal}
+                    className="choose-template-button"
+                  >
+                    Choose A template
+                  </button>
+                </div>
               </div>
             )}
+          </div>
+          {selectedTemplate && ( // Render the replace button only if a template is selected
+            <div className="replace-template-button">
+              <button onClick={handleReplaceTemplate}>Replace Template</button>
+              <button onClick={handleDownloadPDF}>Download Diary</button>
+            </div>
+          )}
         </div>
       </div>
       {isModalOpen && (
@@ -376,14 +380,13 @@ function DiaryEntryPage() {
             <div className="template-thumbnails">
               {/* Map through the templates and render a TemplateCard for each */}
               {templates.map((template) => (
-                <div key={template.id} className="template-card">
-                  <img src={template.image} alt={template.name} />
-                  <h3>{template.name}</h3>
-                  <p>{template.description}</p>
-                  <button onClick={() => handleTemplateSelect(template)}>
-                    Select
-                  </button>
-                </div>
+                <TemplateCard
+                  key={template.id}
+                  thumbnail={template.image}
+                  name={template.name}
+                  description={template.description}
+                  onSelect={() => handleTemplateSelect(template)}
+                />
               ))}
             </div>
             <button onClick={closeModal}>Close</button>
