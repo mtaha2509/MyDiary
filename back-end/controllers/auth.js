@@ -108,8 +108,6 @@ exports.diarypage = async (req, res) => {
     }
 
     const { id, email } = decodedPayload;
-    console.log("User ID:", id);
-    console.log("User Email:", email);
 
     const { diaryEntries, selectedTemplate } = req.body;
 
@@ -142,5 +140,38 @@ exports.diarypage = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.getDiary = async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT de.diary_entry_id, de.template_url, dp.title, dp.content
+      FROM DiaryEntries de
+      JOIN DiaryPages dp ON de.diary_entry_id = dp.diary_entry_id
+      ORDER BY de.created_at DESC, dp.page_number ASC
+    `);
+
+    // Group the pages by diary_entry_id and concatenate content
+    const diaryEntriesMap = {};
+    result.rows.forEach((row) => {
+      if (!diaryEntriesMap[row.diary_entry_id]) {
+        diaryEntriesMap[row.diary_entry_id] = {
+          diary_entry_id: row.diary_entry_id,
+          template_url: row.template_url,
+          title: row.title, // assuming the title is the same across pages for an entry
+          content: "",
+        };
+      }
+      diaryEntriesMap[row.diary_entry_id].content += row.content;
+    });
+
+    // Convert the map to an array
+    const entries = Object.values(diaryEntriesMap);
+
+    res.json(entries);
+  } catch (err) {
+    console.error("Error fetching diary entries:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

@@ -1,36 +1,65 @@
 .card {
-    width: 100%; /* Ensure the card takes up the entire width */
-    max-width: 300px; /* Set a maximum width for the card */
-    margin: 10px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-color: #fff; /* Set background color */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adjust box shadow */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  color: #fff;
+  z-index: 1;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-description {
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
   }
-  
-  .image {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-  }
-  
-  .content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    padding: 10px;
-  }
-  
-  .title {
-    margin: 0;
-    font-size: 18px;
-  }
-  
-  .description {
-    margin: 0;
-    font-size: 14px;
-  }
-  
+}

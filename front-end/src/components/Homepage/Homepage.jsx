@@ -27,15 +27,15 @@ const Homepage = () => {
     setSidebarExpanded(!sidebarExpanded);
   };
 
-  const logout = () => {
-    try {
-      dispatch(unauthenticateUser());
-      localStorage.removeItem("isAuth");
-      localStorage.removeItem("user");
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+  // const logout = () => {
+  //   try {
+  //     dispatch(unauthenticateUser());
+  //     localStorage.removeItem("isAuth");
+  //     localStorage.removeItem("user");
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
 
   return (
     <div className={`homePage-container ${sidebarExpanded ? "expanded" : ""}`}>
