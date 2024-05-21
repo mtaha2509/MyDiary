@@ -1,0 +1,127 @@
+.todo-body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #fef9f6;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .about-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+  }
+  
+  .todo-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+  .todo-container {
+    margin-top: 10rem;
+    background-color: #ffffff;
+    border: 2px solid #ffc1a1;
+    border-radius: 15px;
+    padding: 20px;
+    width: 320px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .todo-heading h1 {
+    color: #ff6347;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 0;
+    padding-bottom: 20px;
+  }
+  
+  .todo-form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+  
+  .todo-input {
+    border: 2px solid #ff6347;
+    border-radius: 10px;
+    padding: 10px;
+    flex: 1;
+    margin-right: 10px;
+    font-size: 1rem;
+  }
+  
+  .todo-add-button {
+    background-color: #ff6347;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .todo-add-button:hover {
+    background-color: #ff4500;
+  }
+  
+  .todo-list-container {
+    width: 100%;
+    padding-right: 5px;
+    margin-top: 0;
+  }
+  
+  .todo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .todo-item {
+    border: 2px solid #ffc1a1;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+  }
+  
+  .todo-item.new-item {
+    background-color: #afeeee;
+    border-color: #20b2aa;
+  }
+  
+  .todo-item.new-item:hover {
+    background-color: #b0e0e6;
+  }
+  
+  .todo-item:hover {
+    background-color: #ffdab9;
+  }
+  
+  .todo-item.completed {
+    text-decoration: line-through;
+    background-color: #ffe4e1;
+  }
+  
+  .todo-item li {
+    font-size: 1.2rem;
+    margin: 0;
+    color: inherit;
+  }
+  
+  .about-footer {
+    margin: 0;
+  }
+  
