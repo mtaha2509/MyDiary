@@ -4,6 +4,7 @@ import "./signup.css"; // Importing the stylesheet
 import { Logo2 } from "../../assets"; // Importing the logo image
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../../redux/slices/authSlice";
+import { onRegistration } from "../../../api/auth";
 
 function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -12,25 +13,9 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  function handleFirstNameChange(event) {
-    setFirstName(event.target.value);
-  }
-
-  function handleLastNameChange(event) {
-    setLastName(event.target.value);
-  }
-
-  function handleUsernameChange(event) {
-    setUsername(event.target.value);
-  }
-
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
-  }
-
   const dispatch = useDispatch();
-  async function handleSubmit(event) {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const body = {
@@ -39,23 +24,26 @@ function SignUp() {
         username,
         password,
       };
-      const response = await fetch("http://localhost:3000/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      console.log("Response status:", response.status); // Add this line to check response status
-
-      if (response.ok) {
-        dispatch(authenticateUser());
-      } else {
-        alert("Error");
-      }
+      await onRegistration(body);
+      navigate("/login");
     } catch (err) {
       console.error("Error during registration:", err);
-      setError("Internal Server Error");
+      let errorMessage = "Internal Server Error";
+      if (err.response && err.response.data) {
+        if (
+          Array.isArray(err.response.data.errors) &&
+          err.response.data.errors.length > 0
+        ) {
+          errorMessage = err.response.data.errors[0].msg;
+        } else if (err.response.data.message) {
+          errorMessage = err.response.data.message;
+        }
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      setError(errorMessage);
     }
-  }
+  };
 
   return (
     <div className="signup-container">
@@ -77,7 +65,7 @@ function SignUp() {
               type="text"
               placeholder="First Name"
               value={firstName}
-              onChange={handleFirstNameChange}
+              onChange={(e) => setFirstName(e.target.value)}
               className="signup-input"
               required
             />
@@ -85,7 +73,7 @@ function SignUp() {
               type="text"
               placeholder="Last Name"
               value={lastName}
-              onChange={handleLastNameChange}
+              onChange={(e) => setLastName(e.target.value)}
               className="signup-input"
               required
             />
@@ -94,7 +82,7 @@ function SignUp() {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={handleUsernameChange}
+            onChange={(e) => setUsername(e.target.value)}
             className="signup-input"
             required
           />
@@ -102,7 +90,7 @@ function SignUp() {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             className="signup-input"
             required
           />

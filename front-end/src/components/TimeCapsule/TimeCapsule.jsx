@@ -186,7 +186,7 @@ const TimeCapsule = () => {
       <div className="diary-entry" >
         <div className="col-lg-6 offset-lg-3">
           <h2 className="text-center" style={{ fontWeight: "bold", marginTop:"10%" }}>
-            Diary Entries
+            Time Capsules
           </h2>
           <div
             className="diary-entries"

@@ -16,6 +16,7 @@ import phool from "./phool.png";
 import lighttheme from "./lighttheme.svg";
 import horrortheme from "./horrortheme.svg";
 import cartoon from "./TimeCapsule.svg";
+import theme from "./theme.svg";
 export {
   Diary,
   dropdown,
@@ -35,4 +36,5 @@ export {
   horrortheme,
   lighttheme,
   cartoon,
+  theme,
 };

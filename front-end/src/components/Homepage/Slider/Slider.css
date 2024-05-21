@@ -19,14 +19,13 @@
 }
 
 .slider-container {
-  overflow: hidden;
-  margin-top: 100px;
+  /* overflow: hidden; */
+  margin-top: 40px; /* Decreased margin top for better visual */
 }
 
 .card-row {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
+  width: calc(100% + 20px); /* Adjusted width for better spacing */
   transition: transform 0.5s ease;
 }
 
@@ -43,6 +42,7 @@
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
+  transition: background-color 0.3s ease; /* Added transition for smoother hover effect */
 }
 
 .next-button:hover, .prev-button:hover {

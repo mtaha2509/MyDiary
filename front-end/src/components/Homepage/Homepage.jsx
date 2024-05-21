@@ -6,17 +6,19 @@ import Slider from "./Slider/Slider";
 import ToDoList from "./ToDoList/ToDoList";
 import AIBot from "../Bot/AI/AI";
 import "./Homepage.css";
-import "../About/about"
+import "../About/about";
 import { Footer } from "../LandingPage";
+import { useDispatch } from "react-redux";
 
 const Homepage = () => {
+  const dispatch = useDispatch();
+  const [protectedData, setProtectedData] = useState(null);
   const dummyImages = [
     "https://via.placeholder.com/300",
     "https://via.placeholder.com/300",
     "https://via.placeholder.com/300",
     "https://via.placeholder.com/300",
     "https://via.placeholder.com/300",
-    // Add more placeholder URLs as needed
   ];
 
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -25,9 +27,20 @@ const Homepage = () => {
     setSidebarExpanded(!sidebarExpanded);
   };
 
+  // const logout = () => {
+  //   try {
+  //     dispatch(unauthenticateUser());
+  //     localStorage.removeItem("isAuth");
+  //     localStorage.removeItem("user");
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
+
   return (
     <div className={`homePage-container ${sidebarExpanded ? "expanded" : ""}`}>
       <NavBar />
+      {/* <button onClick={() => logout()} className="btn btn-primary"></button> */}
       <SideBar
         toggleSidebar={toggleSidebar}
         sidebarExpanded={sidebarExpanded}
