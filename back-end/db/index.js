@@ -3,7 +3,7 @@ const pool = new Pool({
   user: "postgres",
   host: "localhost",
   database: "MyDiary",
-  password: "ostrich2509",
+  password: "Allah Is One",
   port: 5432,
 });
 
