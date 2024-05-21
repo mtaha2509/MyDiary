@@ -5,14 +5,6 @@ import { Diary_temp1, TimeCapsule } from "../../../assets";
 
 function SelectionModal({ onClose, onSelectTemplate, selectedTemplateId }) {
   // List of templates (you can replace this with your actual template data)
-  const templates = [
-    { id: 1, name: "Template 1", thumbnail: Diary_temp1, description: "Description for Template 1" },
-    { id: 2, name: "Template 2", thumbnail: Diary_temp1, description: "Description for Template 2" },
-    { id: 3, name: "Template 3", thumbnail: Diary_temp1, description: "Description for Template 3" },
-    { id: 4, name: "Template 4", thumbnail: TimeCapsule, description: "Description for Template 4" },
-    { id: 5, name: "Template 5", thumbnail: TimeCapsule, description: "Description for Template 5" },
-    // Add more templates as needed
-  ];
 
   // Function to handle template selection
   const handleTemplateSelect = (templateId) => {

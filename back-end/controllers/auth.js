@@ -104,17 +104,12 @@ exports.diarypage = async (req, res) => {
     if (!token) {
       return res.status(401).json({ error: "Unauthorized: No token provided" });
     }
-
     const decodedPayload = verifyToken(token);
     if (!decodedPayload) {
       return res.status(401).json({ error: "Unauthorized: Invalid token" });
     }
-
     const { id, email } = decodedPayload;
-
     const { diaryEntries, selectedTemplate } = req.body;
-
-    // Insert a single record into the DiaryEntries table
     const diaryEntryInsertQuery = `
       INSERT INTO DiaryEntries (user_id, template_url)
       VALUES ($1, $2)
@@ -124,7 +119,6 @@ exports.diarypage = async (req, res) => {
     const { rows } = await db.query(diaryEntryInsertQuery, diaryEntryValues);
     const diaryEntryId = rows[0].diary_entry_id;
 
-    // Insert diary pages using the retrieved diary_entry_id
     for (const entry of diaryEntries) {
       const { title, content, pageNumber } = entry;
 
@@ -148,12 +142,28 @@ exports.diarypage = async (req, res) => {
 
 exports.getDiary = async (req, res) => {
   try {
-    const result = await db.query(`
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: userId } = decodedPayload;
+
+    const result = await db.query(
+      `
       SELECT de.diary_entry_id, de.template_url, dp.title, dp.content
       FROM DiaryEntries de
       JOIN DiaryPages dp ON de.diary_entry_id = dp.diary_entry_id
+      WHERE de.user_id = $1
       ORDER BY de.created_at DESC, dp.page_number ASC
-    `);
+    `,
+      [userId]
+    );
 
     // Group the pages by diary_entry_id and concatenate content
     const diaryEntriesMap = {};

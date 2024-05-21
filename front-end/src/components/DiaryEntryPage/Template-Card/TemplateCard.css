@@ -1,42 +1,54 @@
 /* TemplateCard.css */
 .template-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .template-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .template-image img {
-    width: 100%;
-    height: auto;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  
-  .template-details {
-    padding: 15px;
-    background-color: #f9f9f9;
-  }
-  
-  .template-name {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .template-description {
-    margin: 10px 0 0;
-    font-size: 14px;
-    color: #666;
-  }
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
 
-  .img{
-    filter:none;
+.template-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.template-image {
+  height: 70%;
+  background-size: cover;
+  background-position: center;
+}
+
+.template-content {
+  padding: 10px;
+  text-align: center;
+}
+
+.template-name {
+  margin: 10px 0 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.template-description {
+  font-size: 14px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .template-card {
+    width: 150px;
+    height: 225px;
   }
-  
+  .template-name {
+    font-size: 14px;
+  }
+  .template-description {
+    font-size: 12px;
+  }
+}

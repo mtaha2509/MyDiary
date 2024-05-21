@@ -25,7 +25,6 @@ const usernameExists = check("username").custom(async (value) => {
 
 // Login validation
 const loginFieldsCheck = check("email").custom(async (value, { req }) => {
-  console.log(value);
   const user = await db.query("SELECT * from users WHERE username = $1", [
     value,
   ]);
@@ -35,7 +34,6 @@ const loginFieldsCheck = check("email").custom(async (value, { req }) => {
   }
 
   const validPassword = await compare(req.body.password, user.rows[0].password);
-
   if (!validPassword) {
     throw new Error("Wrong password");
   }
