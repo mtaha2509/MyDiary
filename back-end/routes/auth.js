@@ -7,8 +7,8 @@ const {
   logout,
   diarypage,
   getDiary,
-  getBlogPosts,
-  postBlogPosts,
+  getPosts,
+  postPost,
 } = require("../controllers/auth");
 const {
   validationMiddleware,
@@ -24,7 +24,7 @@ router.post("/login", loginValidation, validationMiddleware, login);
 router.get("/logout", logout);
 router.post("/diarypage", diarypage);
 router.get("/diarypage", getDiary);
-router.get("/getBlogPosts", getBlogPosts)
-router.post("/postBlogPost", postBlogPosts)
+router.get("/getPosts", getPosts)
+router.post("/postPost", postPost)
 
 module.exports = router;

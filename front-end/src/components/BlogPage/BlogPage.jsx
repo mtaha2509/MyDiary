@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import './BlogPage.css';
-import { getBlogPosts, postBlogPosts } from '../../../api/auth';
+import { getPosts, postPost } from '../../../api/auth';
 
 function BlogPage() {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchPosts();
   }, []);
 
   const fetchPosts = async () => {
+    setLoading(true);
     try {
-      const data = await getBlogPosts();
+      const data = await getPosts();
       setPosts(data);
     } catch (error) {
-      console.error('Error fetching posts', error);
+      handleError('Error fetching posts', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,37 +35,54 @@ function BlogPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      await postBlogPosts({ title, content });
-      setTitle('');
-      setContent('');
+      await postPost({ title, content });
       fetchPosts();
     } catch (error) {
-      console.error('Error creating post', error);
+      handleError('Error creating post', error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const clearForm = () => {
+    setTitle('');
+    setContent('');
+  };
+
+  const handleError = (message, error) => {
+    console.error(message, error);
+    setError(message);
   };
 
   return (
     <div className="BlogPage">
       <h1>My Blog</h1>
+      {error && <p className="error-message">{error}</p>}
       <form className="blog-form" onSubmit={handleSubmit}>
+        <label htmlFor="title">Title:</label>
         <input
           type="text"
+          id="title"
           placeholder="Title"
           value={title}
           onChange={handleTitleChange}
           className="blog-input"
           required
         />
+        <label htmlFor="content">Content:</label>
         <textarea
+          id="content"
           placeholder="Content"
           value={content}
           onChange={handleContentChange}
           className="blog-input"
           required
         ></textarea>
-        <button type="submit" className="blog-button">Submit</button>
+        <button type="submit" className="blog-button" disabled={loading}>Submit</button>
       </form>
+      {loading && <p>Loading...</p>}
       <div className="blog-posts">
         {posts.map((post) => (
           <div key={post.id} className="blog-post">

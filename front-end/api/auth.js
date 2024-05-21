@@ -24,10 +24,10 @@ export async function DiaryEntry(diarydata) {
   return await axios.post("http://localhost:3000/api/diarypage", diarydata);
 }
 
-export async function getBlogPosts() {
-  return await axios.get("http://localhost:3000/api/getBlogPosts")
+export async function getPosts() {
+  return await axios.get("http://localhost:3000/api/getPosts")
 }
 
-export async function postBlogPosts(BlogPost) {
-  return await axios.post("http://localhost:3000/api/postBlogPosts", BlogPost)
+export async function postPost(BlogPosts) {
+  return await axios.post("http://localhost:3000/api/postPost", BlogPosts)
 }

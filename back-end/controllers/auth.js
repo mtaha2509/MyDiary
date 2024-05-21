@@ -189,12 +189,13 @@ exports.getDiary = async (req, res) => {
   }
 };
 
-exports.getBlogPosts = async (req, res) => {
+exports.getPosts = async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT id, title, content, created_at
-      FROM blogs
-      ORDER BY created_at DESC
+    const result = await db.query(`
+      SELECT b.id, b.title, b.content, b.created_at, u.username
+      FROM blogs b
+      JOIN users u ON b.user_id = u.id
+      ORDER BY b.created_at DESC
     `);
 
     const blogPosts = result.rows.map((row) => ({
@@ -202,6 +203,7 @@ exports.getBlogPosts = async (req, res) => {
       title: row.title,
       content: row.content,
       created_at: row.created_at,
+      username: row.username,
     }));
 
     res.json(blogPosts);
@@ -211,12 +213,12 @@ exports.getBlogPosts = async (req, res) => {
   }
 };
 
-exports.postBlogPosts = async (req, res) => {
-  const { title, content } = req.body;
+exports.postPost = async (req, res) => {
+  const { title, content, user_id } = req.body;
   try {
-    await pool.query(
-      'INSERT INTO blogs (title, content) VALUES ($1, $2)',
-      [title, content]
+    await db.query(
+      'INSERT INTO blogs (title, content, user_id) VALUES ($1, $2, $3)',
+      [title, content, user_id]
     );
     res.status(201).json({ message: 'Post created successfully' });
   } catch (error) {

@@ -15,7 +15,7 @@ import TimeCapsule from "./components/TimeCapsule/TimeCapsule";
 import Notes from "./components/Notes/notes";
 import About from "./components/About/about";
 import ToDoList from "./components/todolist/todolist";
-import BlogPage from "./components/BlogPage/BlogPage"
+import Blog from "./components/BlogPage/BlogPage"
 
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProtectedInfo } from "../api/auth";
@@ -70,7 +70,7 @@ function App() {
           <Route path="/diarypage" element={<DiaryEntryPage />} />
           <Route path="/notes" element={<Notes />} />
           <Route path="/todolist" element={<ToDoList />} />
-          <Route path="/BlogPage" element={<BlogPage />} />
+          <Route path="/BlogPage" element={<Blog />} />
         </Route>
 
         <Route element={<RestrictedRoutes />}>
