@@ -214,20 +214,31 @@ exports.getPosts = async (req, res) => {
 };
 
 exports.postPost = async (req, res) => {
-  const { title, content, user_id } = req.body;
-
-  if (!title || !content || !user_id) {
-    return res.status(400).json({ error: 'Title, content, and user_id are required' });
+  const { title, content } = req.body;
+  if (!title || !content) {
+    return res
+      .status(400)
+      .json({ error: "Title, content, and user_id are required" });
   }
-
   try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
     await db.query(
-      'INSERT INTO blogs (title, content, user_id) VALUES ($1, $2, $3)',
+      "INSERT INTO blogs (title, content, user_id) VALUES ($1, $2, $3)",
       [title, content, user_id]
     );
-    res.status(201).json({ message: 'Post created successfully' });
+    res.status(201).json({ message: "Post created successfully" });
   } catch (error) {
-    console.error('Error creating post', error);
-    res.status(500).json({ error: 'Error creating post' });
+    console.error("Error creating post", error);
+    res.status(500).json({ error: "Error creating post" });
   }
 };

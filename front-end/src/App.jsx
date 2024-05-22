@@ -71,7 +71,6 @@ function App() {
           <Route path="/todolist" element={<ToDoList />} />
           <Route path="/BlogPage" element={<Blog />} />
         </Route>
-
         <Route element={<RestrictedRoutes />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
