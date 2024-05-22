@@ -4,7 +4,7 @@ import Sidebar from "../DiaryEntryPage/SideBar/Sidebar";
 import BoxComponent from "./Time-Capsule/BoxComponent";
 import cartoon from "../../assets/cartoon.svg";
 import { Timecapsule } from "../../../api/auth";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import Firebase Storage modules
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const TimeCapsule = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -12,14 +12,13 @@ const TimeCapsule = () => {
   const [newEntry, setNewEntry] = useState({
     overview: "",
     messageToFutureSelf: "",
-    uploadedImage: null,
+    imageURL: "", // Change from uploadedImage to imageURL
   });
-
+  const [selectedFile, setSelectedFile] = useState(null); // Separate state for the selected file
   const [dragging, setDragging] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 3;
 
-  // Create a reference to Firebase Storage bucket
   const storage = getStorage();
 
   const handleInputChange = (e) => {
@@ -37,10 +36,7 @@ const TimeCapsule = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     console.log(file);
-    setNewEntry((prevState) => ({
-      ...prevState,
-      uploadedImage: file,
-    }));
+    setSelectedFile(file); // Store the file in the separate state
   };
 
   const handleDragOver = (e) => {
@@ -66,10 +62,7 @@ const TimeCapsule = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setNewEntry((prevState) => ({
-          ...prevState,
-          uploadedImage: reader.result,
-        }));
+        setSelectedFile(file); // Store the file in the separate state
       };
       reader.readAsDataURL(file);
     }
@@ -78,31 +71,40 @@ const TimeCapsule = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const storageRef = ref(storage, `images/${newEntry.uploadedImage.name}`);
-    await uploadBytes(storageRef, newEntry.uploadedImage);
+    if (selectedFile) {
+      const storageRef = ref(storage, `images/${selectedFile.name}`);
+      await uploadBytes(storageRef, selectedFile);
 
-    const downloadURL = await getDownloadURL(storageRef);
+      const downloadURL = await getDownloadURL(storageRef);
 
-    setNewEntry((prevState) => ({
-      ...prevState,
-      uploadedImage: downloadURL,
-    }));
+      setNewEntry((prevState) => ({
+        ...prevState,
+        imageURL: downloadURL, // Update the newEntry with the image URL
+      }));
 
-    setEntries((prevEntries) => [...prevEntries, { ...newEntry }]);
+      setEntries((prevEntries) => [
+        ...prevEntries,
+        { ...newEntry, imageURL: downloadURL }, // Include the image URL in the new entry
+      ]);
 
-    try {
-      const formData = {
-        newEntry,
-      };
-      console.log(formData);
-      await Timecapsule(formData);
-    } catch (err) {}
+      try {
+        const formData = {
+          ...newEntry,
+          imageURL: downloadURL, // Include the image URL in the formData
+        };
+        console.log(formData);
+        await Timecapsule(formData);
+      } catch (err) {
+        console.error(err);
+      }
 
-    setNewEntry({
-      overview: "",
-      messageToFutureSelf: "",
-      uploadedImage: null,
-    });
+      setNewEntry({
+        overview: "",
+        messageToFutureSelf: "",
+        imageURL: "",
+      });
+      setSelectedFile(null); // Clear the selected file
+    }
   };
 
   const totalPages = Math.ceil(entries.length / entriesPerPage);
@@ -239,9 +241,9 @@ const TimeCapsule = () => {
                   <p className="card-text">
                     Message: {entry.messageToFutureSelf}
                   </p>
-                  {entry.uploadedImage && (
+                  {entry.imageURL && (
                     <img
-                      src={entry.uploadedImage}
+                      src={entry.imageURL}
                       alt="Uploaded"
                       className="img-fluid"
                     />

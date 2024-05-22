@@ -29,8 +29,7 @@ function BlogPage() {
   const fetchCurrentUser = async () => {
     try {
       const user = await getUser();
-
-      setCurrentUser(user.data);
+      setCurrentUser(user);
     } catch (error) {
       handleError("Error fetching current user", error);
     }
@@ -41,7 +40,6 @@ function BlogPage() {
     setError("");
     try {
       const data = await getPosts();
-      console.log(data);
       if (Array.isArray(data)) {
         setPosts(data);
       } else {

@@ -2,8 +2,8 @@ const db = require("../db");
 const { hash } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { verify } = require("jsonwebtoken");
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
 const verifyToken = (token) => {
@@ -51,7 +51,24 @@ exports.register = async (req, res) => {
     });
   }
 };
-
+exports.getUser = async (req, res) => {
+  try {
+    console.log("In backend");
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+    const { id, email } = decodedPayload;
+    res.json(id);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 exports.login = async (req, res) => {
   let user = req.user;
   let payload = {
@@ -209,8 +226,8 @@ exports.getPosts = async (req, res) => {
 
     res.json(blogPosts);
   } catch (err) {
-    console.error('Error fetching blog posts:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching blog posts:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -247,13 +264,16 @@ exports.postPost = async (req, res) => {
 exports.editBlog = async (req, res) => {
   const { title, content, blog_id } = req.body;
   if (!title || !content || !blog_id) {
-    return res.status(400).json({ error: "Title, content, and blog_id are required" });
+    return res
+      .status(400)
+      .json({ error: "Title, content, and blog_id are required" });
   }
   try {
-    await db.query(
-      "UPDATE blogs SET title = $1, content = $2 WHERE id = $3",
-      [title, content, blog_id]
-    );
+    await db.query("UPDATE blogs SET title = $1, content = $2 WHERE id = $3", [
+      title,
+      content,
+      blog_id,
+    ]);
     res.status(200).json({ message: "Blog updated successfully" });
   } catch (error) {
     console.error("Error updating blog", error);
@@ -294,10 +314,10 @@ exports.createTodo = async (req, res) => {
     }
 
     const { id: user_id } = decodedPayload;
-    await db.query(
-      "INSERT INTO todos (text, user_id) VALUES ($1, $2)",
-      [text, user_id]
-    );
+    await db.query("INSERT INTO todos (text, user_id) VALUES ($1, $2)", [
+      text,
+      user_id,
+    ]);
     res.status(201).json({ message: "Post created successfully" });
   } catch (error) {
     console.error("Error creating post", error);
@@ -318,7 +338,9 @@ exports.getTodos = async (req, res) => {
     }
 
     const { id: user_id } = decodedPayload;
-    const { rows } = await db.query("SELECT * FROM todos WHERE user_id = $1", [user_id]);
+    const { rows } = await db.query("SELECT * FROM todos WHERE user_id = $1", [
+      user_id,
+    ]);
     res.status(200).json(rows);
   } catch (error) {
     console.error("Error fetching todos", error);
@@ -341,7 +363,10 @@ exports.deleteTodo = async (req, res) => {
     const { id: user_id } = decodedPayload;
     const { id } = req.params;
 
-    const { rowCount } = await db.query("DELETE FROM todos WHERE id = $1 AND user_id = $2", [id, user_id]);
+    const { rowCount } = await db.query(
+      "DELETE FROM todos WHERE id = $1 AND user_id = $2",
+      [id, user_id]
+    );
 
     if (rowCount === 0) {
       return res.status(404).json({ error: "Todo not found" });
