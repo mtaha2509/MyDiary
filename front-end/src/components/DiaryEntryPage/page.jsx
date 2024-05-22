@@ -11,7 +11,6 @@ import {
 import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
 import { DiaryEntry } from "../../../api/auth";
-
 import { NavBar } from "../LandingPage";
 import TemplateCard from "./Template-Card/TemplateCard"; // Import TemplateCard component
 
@@ -77,16 +76,14 @@ function DiaryEntryPage() {
   ];
 
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
-
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryContent, setDiaryContent] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [charLimit, setCharLimit] = useState(500);
   const [remainingChars, setRemainingChars] = useState(charLimit);
+  const [diarySaved, setDiarySaved] = useState(false);
 
   // State for diary entries
   const [diaryEntries, setDiaryEntries] = useState([
@@ -109,30 +106,52 @@ function DiaryEntryPage() {
     setIsModalOpen(true);
   };
 
-  const handleDownloadPDF = () => {
+  const getBase64ImageFromURL = (url) => {
+    return new Promise((resolve, reject) => {
+      let img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.onload = () => {
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        let dataURL = canvas.toDataURL("image/jpeg");
+        resolve(dataURL);
+      };
+      img.onerror = (error) => {
+        reject(error);
+      };
+      img.src = url;
+    });
+  };
+
+  const handleDownloadPDF = async () => {
     const doc = new jsPDF();
     let yPos = 10;
 
-    diaryEntries.forEach((entry, index) => {
+    for (let index = 0; index < diaryEntries.length; index++) {
+      const entry = diaryEntries[index];
       if (index !== 0) {
         doc.addPage();
       }
 
-      // Add page number
       doc.setFontSize(16);
       doc.text(20, yPos, `Page ${entry.pageNumber}`);
       yPos += 10;
 
-      // Add title
       doc.setFontSize(14);
       doc.text(20, yPos, `Title: ${entry.title}`);
       yPos += 10;
 
-      // Add selected template image
       if (selectedTemplate && selectedTemplate.image) {
-        console.log("Whaa");
-        doc.addImage(selectedTemplate.image, "JPEG", 20, yPos, 170, 100);
-        yPos += 110;
+        try {
+          const imgData = await getBase64ImageFromURL(selectedTemplate.image);
+          doc.addImage(imgData, "JPEG", 20, yPos, 170, 100);
+          yPos += 110;
+        } catch (error) {
+          console.error("Error adding image:", error);
+        }
       }
 
       doc.setFontSize(12);
@@ -141,7 +160,7 @@ function DiaryEntryPage() {
       yPos += splitContent.length * 5 + 10;
 
       yPos = 10;
-    });
+    }
 
     doc.save("diary.pdf");
   };
@@ -160,7 +179,7 @@ function DiaryEntryPage() {
 
   // Function to handle replacing the template
   const handleReplaceTemplate = () => {
-    setSelectedTemplate(false); // Clear selected template
+    setSelectedTemplate(null); // Clear selected template
     // No need to clear userInput state
     openModal(); // Open modal for selecting a new template
   };
@@ -230,7 +249,11 @@ function DiaryEntryPage() {
         selectedTemplate,
       };
       await DiaryEntry(values);
-    } catch (error) {}
+      setDiarySaved(true);
+      setTimeout(() => {
+        setDiarySaved(false);
+      }, 2000);
+    } catch (error) {console.log("What")}
   };
 
   return (
@@ -371,6 +394,7 @@ function DiaryEntryPage() {
               <button type="submit">Save Diary</button>
             </div>
           )}
+          {diarySaved && <p>Diary Saved</p>}
         </div>
       </div>
       {isModalOpen && (
