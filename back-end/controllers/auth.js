@@ -393,16 +393,11 @@ exports.timecapsule = async (req, res) => {
     }
 
     const id = decodedPayload.id;
-    const { overview, messageToFutureSelf, uploadedImage } = req.body;
-
+    const { overview, messageToFutureSelf, imageURL } = req.body;
+    console.log(id);
     const timeCapsuleinsertQuery =
-      "INSERT INTO timecapsules (user_id, title, message_to_future_self, image_url) VALUES ($1,$2, $3, $4, $5)";
-    const timeCapsuleValues = [
-      id,
-      overview,
-      messageToFutureSelf,
-      uploadedImage,
-    ];
+      "INSERT INTO timecapsules (user_id, title, message_to_future_self, image_url) VALUES ($1,$2, $3, $4)";
+    const timeCapsuleValues = [id, overview, messageToFutureSelf, imageURL];
 
     await db.query(timeCapsuleinsertQuery, timeCapsuleValues);
 
