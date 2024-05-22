@@ -58,7 +58,7 @@
 }
 
 .dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+  background-color: #5edabf;
 }
 
 .about-nav .logo img {
@@ -144,19 +144,21 @@
 
 .team-members {
   display: flex;
-  gap: 35rem; /* Adjust spacing between team members as needed */
-  margin-top: 1rem;
-  margin-left: 15%;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 .member {
+  margin: 20px;
   text-align: center;
+  flex: 0 0 200px;
 }
 
 .member img {
-  width: 170%; /* Adjust image size as needed */
-  height: 220px; /* Adjust image size as needed */
-  border-radius: 50px; /* Make images circular */
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
