@@ -6,6 +6,7 @@ const {
   protected,
   logout,
   diarypage,
+  timecapsule,
 } = require("../controllers/auth");
 const {
   validationMiddleware,
@@ -20,5 +21,6 @@ router.post("/register", registerValidation, validationMiddleware, register);
 router.post("/login", loginValidation, validationMiddleware, login);
 router.get("/logout", logout);
 router.post("/diarypage", diarypage);
+router.post("/timecapsule", timecapsule);
 
 module.exports = router;

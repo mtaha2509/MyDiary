@@ -113,17 +113,15 @@ exports.diarypage = async (req, res) => {
 
     const { diaryEntries, selectedTemplate } = req.body;
 
-    // Insert a single record into the DiaryEntries table
     const diaryEntryInsertQuery = `
       INSERT INTO DiaryEntries (user_id, template_url)
       VALUES ($1, $2)
       RETURNING diary_entry_id
     `;
-    const diaryEntryValues = [id, selectedTemplate.image]; // Assuming 'selectedTemplate.image' corresponds to 'template_url'
+    const diaryEntryValues = [id, selectedTemplate.image];
     const { rows } = await db.query(diaryEntryInsertQuery, diaryEntryValues);
     const diaryEntryId = rows[0].diary_entry_id;
 
-    // Insert diary pages using the retrieved diary_entry_id
     for (const entry of diaryEntries) {
       const { title, content, pageNumber } = entry;
 
@@ -144,3 +142,33 @@ exports.diarypage = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.timecapsule = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const id=decodedPayload.id;
+    const { overview, messageToFutureSelf, uploadedImage } = req.body;
+
+    const timeCapsuleinsertQuery = 'INSERT INTO TimeCapsule (user_id,timecapsule_id, title, message_to_future_self, image_url) VALUES ($1,$2, $3, $4, $5)';
+    const timeCapsuleValues = [id, overview, messageToFutureSelf, uploadedImage];
+
+    await db.query(timeCapsuleinsertQuery, timeCapsuleValues);
+
+    return res.status(200).json({
+      success: true,
+      message: "Time Capsule entry inserted successfully",
+    });
+  }
+  catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}

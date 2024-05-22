@@ -110,7 +110,7 @@ function DiaryEntryPage() {
 
     diaryEntries.forEach((entry, index) => {
       if (index !== 0) {
-        doc.addPage(); // Add a new page for each diary entry except the first one
+        doc.addPage();
       }
 
       // Add page number
@@ -216,7 +216,7 @@ function DiaryEntryPage() {
       setDiaryTitle(diaryEntries[currentPage - 2].title);
     }
   };
-  // Function to save diary entries
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -345,7 +345,6 @@ function DiaryEntryPage() {
                   </div>
                 </form>
               ) : (
-                // Render placeholder content if no template is selected
                 <div className="empty-slot">
                   <p>First you need to select a Template</p>
                   <div>

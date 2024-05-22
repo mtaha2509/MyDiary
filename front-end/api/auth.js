@@ -23,3 +23,7 @@ export async function fetchProtectedInfo() {
 export async function DiaryEntry(diarydata) {
   return await axios.post("http://localhost:3000/api/diarypage", diarydata);
 }
+
+export async function Timecapsule(timecapsuledata) {
+  return await axios.post("http://localhost:3000/api/timecapsule", timecapsuledata);
+}
