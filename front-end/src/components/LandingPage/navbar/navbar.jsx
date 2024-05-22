@@ -25,6 +25,10 @@ function NavBar() {
     nav("/about");
   };
 
+  const handleBlogClick = () => {
+    nav("/BlogPage");
+  };
+
   const handleLogoutClick = async () => {
     try {
       await onLogout();
@@ -46,22 +50,16 @@ function NavBar() {
           <img src={logo1} alt="Logo" />
         </div>
         <div className={`Navbar-Options ${isMenuOpen ? "open" : ""}`}>
-          <ul className="navbar-menu">
-            <li>
-              <a href="/about" onClick={handleAboutClick}>
+          <div className="navbar-buttons">
+              <a href="/about" className="navbar-create-account" onClick={handleAboutClick}>
                 About
               </a>
-            </li>
-            <li>
-              Resources <img src={dropdown} alt="Dropdown" />
-            </li>
-            <li>
-              Company <img src={dropdown} alt="Dropdown" />
-            </li>
-            <li>
-              Prices <img src={dropdown} alt="Dropdown" />
-            </li>
-          </ul>
+              </div>
+          <div className="navbar-buttons">
+              <a href="/BlogPage" className="navbar-create-account" onClick={handleBlogClick}>
+                Blog
+              </a>
+              </div>
           <div className="navbar-buttons">
             {!authState.isAuth && (
               <>

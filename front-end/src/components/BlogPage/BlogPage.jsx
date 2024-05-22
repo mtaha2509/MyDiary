@@ -33,6 +33,7 @@ function BlogPage() {
   const fetchCurrentUser = async () => {
     try {
       const user = await getUser();
+      console.log("Fetched current user:", user); // Debug log
       setCurrentUser(user);
     } catch (error) {
       handleError("Error fetching current user", error);
@@ -74,7 +75,7 @@ function BlogPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim() /* || !image */) { 
+    if (!title.trim() || !content.trim() /* || !image */) {
       setError("Title and content are required");
       return;
     }
@@ -252,16 +253,18 @@ function BlogPage() {
               </span>
               <span> | {new Date(selectedPost.created_at).toLocaleString()}</span>
             </p>
-            {currentUser && currentUser === selectedPost.user_id && (
-              <>
-                <button onClick={() => handleEditClick(selectedPost)}>
-                  Edit
-                </button>
-                <button onClick={() => handleDelete(selectedPost.id)}>
-                  Delete
-                </button>
-              </>
-            )}
+            {currentUser && currentUser.id === selectedPost.user_id && ( // Ensure the current user matches the post creator
+  <>
+    <button onClick={() => handleEditClick(selectedPost)}>
+      Edit
+    </button>
+    <p></p>
+    <button onClick={() => handleDelete(selectedPost.id)}>
+      Delete
+    </button>
+  </>
+)}
+
             {isEditing && (
               <div className="edit-form">
                 <label htmlFor="editedTitle">Title:</label>

@@ -118,7 +118,7 @@ const About = () => {
         />
       </div>
       
-      {/* <div className='fadeIn about-footer'><Footer/></div> */}
+      <div className='fadeIn about-footer'><Footer/></div>
     </div>
   );
 };
