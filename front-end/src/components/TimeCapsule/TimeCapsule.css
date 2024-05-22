@@ -42,7 +42,7 @@
 
 /* Time Capsule container */
 .time-capsule, .planting-contain {
-  background-color: #e0f8f2; /* Fun mint green */
+  background: linear-gradient(135deg, #c3ecf1, #f1f5f8); /* Gradient background for a modern look */
   padding: 4rem; /* Converted to rem for consistency */
   border-radius: 1.5rem; /* Slightly reduced border radius */
   margin-top: 2rem; /* Converted to rem for consistency */
@@ -50,7 +50,7 @@
 }
 
 .card-body {
-  background-color: #94e7d2; /* Fun yellow */
+  background: linear-gradient(135deg, #e6f7ff, #fff); /* Light gradient for cards */
   padding: 2rem; /* Converted to rem for consistency */
   border-radius: 1rem; /* Slightly reduced border radius */
 }
@@ -59,40 +59,57 @@
   margin-bottom: 2rem; /* Converted to rem for consistency */
 }
 
-input[type="text"], input[type="file"], textarea {
+input[type="text"], input[type="file"], input[type="date"], input[type="datetime-local"], textarea {
   width: 100%;
   padding: 1.5rem; /* Increased padding for better input appearance */
   margin-top: 1.5rem; /* Converted to rem for consistency */
   outline: none;
+  border: 2px solid #ddd; /* Subtle border */
   border-radius: 1rem; /* Rounded border radius */
-  transition: border-color 0.3s ease; /* Added transition for smoother hover effect */
+  background: rgba(255, 255, 255, 0.6); /* Slightly transparent background for a modern look */
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.05); /* Light shadow */
+  transition: border-color 0.3s ease, background 0.3s ease; /* Added transition for smoother hover effect */
 }
 
-input[type="text"]:focus, input[type="file"]:focus, textarea:focus {
-  border-color: #ff6d2c; /* Vibrant orange border color on focus */
+input[type="text"]:focus, input[type="file"]:focus, input[type="date"]:focus, input[type="datetime-local"]:focus, textarea:focus {
+  border-color: #007bff; /* Blue border color on focus */
+  background: rgba(255, 255, 255, 0.8); /* Slightly more opaque background on focus */
 }
 
 .timecapsule-button {
-  background-color: #ff6d2c; /* Vibrant orange */
-
+  background-color: #007bff; /* Blue button color */
   color: white;
   padding: 1.5rem 3rem; /* Increased padding for better button appearance */
   border: none;
   cursor: pointer;
   border-radius: 0.5rem;
-  transition: background-color 0.3s ease; /* Added transition for smoother hover effect */
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1); /* Button shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Added transition for smoother hover effect */
 }
 
 .timecapsule-button:hover {
-  background-color: black; /* Darker shade of orange on hover */
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
 }
 
-/* Pagination */
-.pagination {
-  margin-top: 2rem; /* Converted to rem for consistency */
+/* Success Message */
+.success-message {
+  text-align: center;
+  color: green;
+  font-size: 1.5rem;
+  margin-top: 2rem;
 }
 
-.page-item.active .page-link {
-  background-color: #ff6d2c; /* Vibrant orange */
-  border-color: #ff6d2c; /* Vibrant orange */
+.fringe-animation {
+  font-size: 2rem;
+  animation: fringe 1s infinite;
+}
+
+@keyframes fringe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }

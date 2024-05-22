@@ -393,11 +393,17 @@ exports.timecapsule = async (req, res) => {
     }
 
     const id = decodedPayload.id;
-    const { overview, messageToFutureSelf, imageURL } = req.body;
+    const { overview, messageToFutureSelf, imageURL, openDate } = req.body;
     console.log(id);
     const timeCapsuleinsertQuery =
-      "INSERT INTO timecapsules (user_id, title, message_to_future_self, image_url) VALUES ($1,$2, $3, $4)";
-    const timeCapsuleValues = [id, overview, messageToFutureSelf, imageURL];
+      "INSERT INTO timecapsules (user_id, title, message_to_future_self, image_url, openDateTime) VALUES ($1,$2, $3, $4, $5)";
+    const timeCapsuleValues = [
+      id,
+      overview,
+      messageToFutureSelf,
+      imageURL,
+      openDate,
+    ];
 
     await db.query(timeCapsuleinsertQuery, timeCapsuleValues);
 
@@ -408,5 +414,38 @@ exports.timecapsule = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.getTimeCapsule = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: userId } = decodedPayload;
+
+    const result = await db.query(
+      `
+      SELECT tc.timecapsule_id, tc.title, tc.message_to_future_self, tc.image_url, tc.openDateTime
+      FROM timecapsules tc
+      WHERE tc.user_id = $1
+      ORDER BY tc.openDateTime DESC
+    `,
+      [userId]
+    );
+
+    const timeCapsules = result.rows;
+
+    res.json(timeCapsules);
+  } catch (err) {
+    console.error("Error fetching time capsules:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

@@ -7,16 +7,15 @@ import "./TimeCapsule.css";
 
 const TimeCapsule = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
-  const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState({
     overview: "",
     messageToFutureSelf: "",
     imageURL: "",
+    openDate: "", // Updated to store date and time
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [dragging, setDragging] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 3;
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   const storage = getStorage();
 
@@ -72,10 +71,9 @@ const TimeCapsule = () => {
         imageURL: downloadURL,
       };
 
-      setEntries((prevEntries) => [...prevEntries, updatedEntry]);
-
       try {
         await Timecapsule(updatedEntry);
+        setSuccessMessage("Successfully set!"); // Show success message
       } catch (err) {
         console.error(err);
       }
@@ -84,16 +82,11 @@ const TimeCapsule = () => {
         overview: "",
         messageToFutureSelf: "",
         imageURL: "",
+        openDate: "",
       });
       setSelectedFile(null);
     }
   };
-
-  const totalPages = Math.ceil(entries.length / entriesPerPage);
-  const indexOfLastEntry = currentPage * entriesPerPage;
-  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-  const currentEntries = entries.slice(indexOfFirstEntry, indexOfLastEntry);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div
@@ -129,6 +122,7 @@ const TimeCapsule = () => {
                 name="overview"
                 value={newEntry.overview}
                 onChange={handleInputChange}
+                className="fun-input"
               />
               <div className="form-group mt-3">
                 <textarea
@@ -136,7 +130,7 @@ const TimeCapsule = () => {
                   placeholder="A message to your future self..."
                   value={newEntry.messageToFutureSelf}
                   onChange={handleInputChange}
-                  className="form-control"
+                  className="form-control fun-input"
                   rows="4"
                 />
               </div>
@@ -145,6 +139,16 @@ const TimeCapsule = () => {
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
+                  className="fun-input"
+                />
+              </div>
+              <div className="form-group mt-3">
+                <input
+                  type="datetime-local"
+                  name="openDate"
+                  value={newEntry.openDate}
+                  onChange={handleInputChange}
+                  className="fun-input"
                 />
               </div>
               <div className="form-group mt-3 text-center">
@@ -155,52 +159,13 @@ const TimeCapsule = () => {
             </form>
           </div>
         </div>
-        <div className="diary-entry">
-          <h2 className="text-center">Time Capsules</h2>
-          <div className="diary-entries">
-            {currentEntries.map((entry, index) => (
-              <div key={index} className="card mb-3">
-                <div className="card-body">
-                  <h5 className="card-title">
-                    Capsule {index + indexOfFirstEntry + 1}
-                  </h5>
-                  <p className="card-text">Overview: {entry.overview}</p>
-                  <p className="card-text">
-                    Message: {entry.messageToFutureSelf}
-                  </p>
-                  {entry.imageURL && (
-                    <img
-                      src={entry.imageURL}
-                      alt="Uploaded"
-                      className="img-fluid"
-                    />
-                  )}
-                </div>
-              </div>
-            ))}
+        {successMessage && (
+          <div className="success-message">
+            <p>{successMessage}</p>
+            <div className="fringe-animation">🎉</div>{" "}
+            {/* Add some animation */}
           </div>
-          {totalPages > 1 && (
-            <nav aria-label="Page navigation">
-              <ul className="pagination justify-content-center">
-                {[...Array(totalPages).keys()].map((page) => (
-                  <li
-                    key={page}
-                    className={`page-item ${
-                      page + 1 === currentPage ? "active" : ""
-                    }`}
-                  >
-                    <button
-                      onClick={() => paginate(page + 1)}
-                      className="page-link"
-                    >
-                      {page + 1}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )}
-        </div>
+        )}
       </div>
     </div>
   );

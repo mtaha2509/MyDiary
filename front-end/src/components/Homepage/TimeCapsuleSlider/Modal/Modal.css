@@ -1,0 +1,66 @@
+.time-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .time-modal-content {
+    background: #eeecff;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+  }
+  
+  .time-modal-left {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .time-modal-image {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .time-modal-title {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .time-modal-right {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .time-modal-description {
+    font-size: 16px;
+  }
+  
+  .time-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff5a5f;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
