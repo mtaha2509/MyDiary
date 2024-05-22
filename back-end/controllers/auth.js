@@ -2,8 +2,8 @@ const db = require("../db");
 const { hash } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { verify } = require("jsonwebtoken");
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
 const verifyToken = (token) => {
@@ -26,6 +26,24 @@ exports.getUsers = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
+  }
+};
+
+exports.getUser = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+    const { id, email } = decodedPayload;
+    res.json(id);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -192,7 +210,7 @@ exports.getDiary = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT b.id, b.title, b.content, b.created_at, u.first_name, u.last_name
+      SELECT b.id, b.title, b.content, b.created_at, b.user_id, u.first_name, u.last_name
       FROM blogs b
       JOIN users u ON b.user_id = u.id
       ORDER BY b.created_at DESC
@@ -203,14 +221,15 @@ exports.getPosts = async (req, res) => {
       title: row.title,
       content: row.content,
       created_at: row.created_at,
+      user_id: row.user_id, // Ensure this is included
       first_name: row.first_name,
       last_name: row.last_name,
     }));
 
     res.json(blogPosts);
   } catch (err) {
-    console.error('Error fetching blog posts:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching blog posts:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -247,13 +266,38 @@ exports.postPost = async (req, res) => {
 exports.editBlog = async (req, res) => {
   const { title, content, blog_id } = req.body;
   if (!title || !content || !blog_id) {
-    return res.status(400).json({ error: "Title, content, and blog_id are required" });
+    return res
+      .status(400)
+      .json({ error: "Title, content, and blog_id are required" });
   }
   try {
-    await db.query(
-      "UPDATE blogs SET title = $1, content = $2 WHERE id = $3",
-      [title, content, blog_id]
-    );
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
+
+    // Fetch the blog post to verify the owner
+    const { rows } = await db.query("SELECT user_id FROM blogs WHERE id = $1", [
+      blog_id,
+    ]);
+    if (rows.length === 0 || rows[0].user_id !== user_id) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You can only edit your own posts" });
+    }
+
+    await db.query("UPDATE blogs SET title = $1, content = $2 WHERE id = $3", [
+      title,
+      content,
+      blog_id,
+    ]);
     res.status(200).json({ message: "Blog updated successfully" });
   } catch (error) {
     console.error("Error updating blog", error);
@@ -267,6 +311,28 @@ exports.deleteBlog = async (req, res) => {
     return res.status(400).json({ error: "Blog ID is required" });
   }
   try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
+
+    // Fetch the blog post to verify the owner
+    const { rows } = await db.query("SELECT user_id FROM blogs WHERE id = $1", [
+      blog_id,
+    ]);
+    if (rows.length === 0 || rows[0].user_id !== user_id) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You can only delete your own posts" });
+    }
+
     await db.query("DELETE FROM blogs WHERE id = $1", [blog_id]);
     res.status(200).json({ message: "Blog deleted successfully" });
   } catch (error) {

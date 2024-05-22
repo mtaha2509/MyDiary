@@ -1,35 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import './BlogPage.css';
-import { getPosts, postPost, editBlog, deleteBlog } from '../../../api/auth';
+import React, { useState, useEffect } from "react";
+import "./BlogPage.css";
+import {
+  getPosts,
+  postPost,
+  editBlog,
+  deleteBlog,
+  getUser,
+} from "../../../api/auth";
 
 function BlogPage() {
   const [posts, setPosts] = useState([]);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState('');
-  const [editedContent, setEditedContent] = useState('');
-  const [editId, setEditId] = useState('');
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedContent, setEditedContent] = useState("");
+  const [editId, setEditId] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     fetchPosts();
+    fetchCurrentUser();
+    console.log(currentUser);
   }, []);
+
+  const fetchCurrentUser = async () => {
+    try {
+      const user = await getUser();
+
+      setCurrentUser(user.data);
+    } catch (error) {
+      handleError("Error fetching current user", error);
+    }
+  };
 
   const fetchPosts = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
       const data = await getPosts();
+      console.log(data);
       if (Array.isArray(data)) {
         setPosts(data);
       } else {
         setPosts([]);
-        handleError('Error: Received data is not an array', new Error('Data type error'));
+        handleError(
+          "Error: Received data is not an array",
+          new Error("Data type error")
+        );
       }
     } catch (error) {
-      handleError('Error fetching posts', error);
+      handleError("Error fetching posts", error);
     } finally {
       setLoading(false);
     }
@@ -46,17 +69,17 @@ function BlogPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) {
-      setError('Title and content cannot be empty');
+      setError("Title and content cannot be empty");
       return;
     }
     setLoading(true);
-    setError('');
+    setError("");
     try {
       await postPost({ title, content });
       clearForm();
       fetchPosts();
     } catch (error) {
-      handleError('Error creating post', error);
+      handleError("Error creating post", error);
     } finally {
       setLoading(false);
     }
@@ -64,12 +87,16 @@ function BlogPage() {
 
   const handleEdit = async (blogId, updatedTitle, updatedContent) => {
     try {
-      await editBlog({ blog_id: blogId, title: updatedTitle, content: updatedContent });
+      await editBlog({
+        blog_id: blogId,
+        title: updatedTitle,
+        content: updatedContent,
+      });
       fetchPosts();
-      setEditId('');
+      setEditId("");
       setIsEditing(false);
     } catch (error) {
-      handleError('Error editing blog', error);
+      handleError("Error editing blog", error);
     }
   };
 
@@ -78,13 +105,13 @@ function BlogPage() {
       await deleteBlog(blogId);
       fetchPosts();
     } catch (error) {
-      handleError('Error deleting blog', error);
+      handleError("Error deleting blog", error);
     }
   };
 
   const clearForm = () => {
-    setTitle('');
-    setContent('');
+    setTitle("");
+    setContent("");
   };
 
   const handleError = (message, error) => {
@@ -93,7 +120,7 @@ function BlogPage() {
   };
 
   const handleEditInputChange = (e) => {
-    if (e.target.name === 'editedTitle') {
+    if (e.target.name === "editedTitle") {
       setEditedTitle(e.target.value);
     } else {
       setEditedContent(e.target.value);
@@ -101,10 +128,10 @@ function BlogPage() {
   };
 
   const handleEditCancel = () => {
-    setEditId('');
+    setEditId("");
     setIsEditing(false);
-    setEditedTitle('');
-    setEditedContent('');
+    setEditedTitle("");
+    setEditedContent("");
   };
 
   const handleEditClick = (post) => {
@@ -139,7 +166,7 @@ function BlogPage() {
           required
         ></textarea>
         <button type="submit" className="blog-button" disabled={loading}>
-          {loading ? 'Submitting...' : 'Submit'}
+          {loading ? "Submitting..." : "Submit"}
         </button>
       </form>
       {loading && !posts.length && <p>Loading...</p>}
@@ -160,7 +187,13 @@ function BlogPage() {
                     value={editedContent}
                     onChange={handleEditInputChange}
                   ></textarea>
-                  <button onClick={() => handleEdit(post.id, editedTitle, editedContent)}>Save</button>
+                  <button
+                    onClick={() =>
+                      handleEdit(post.id, editedTitle, editedContent)
+                    }
+                  >
+                    Save
+                  </button>
                   <button onClick={handleEditCancel}>Cancel</button>
                 </>
               ) : (
@@ -168,11 +201,21 @@ function BlogPage() {
                   <h2>{post.title}</h2>
                   <p>{post.content}</p>
                   <p className="blog-post-info">
-                    <span>Posted by {post.first_name} {post.last_name}</span>
+                    <span>
+                      Posted by {post.first_name} {post.last_name}
+                    </span>
                     <span> | {new Date(post.created_at).toLocaleString()}</span>
                   </p>
-                  <button onClick={() => handleEditClick(post)}>Edit</button>
-                  <button onClick={() => handleDelete(post.id)}>Delete</button>
+                  {currentUser && currentUser === post.user_id && (
+                    <>
+                      <button onClick={() => handleEditClick(post)}>
+                        Edit
+                      </button>
+                      <button onClick={() => handleDelete(post.id)}>
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </>
               )}
             </div>
