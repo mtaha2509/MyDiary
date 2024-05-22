@@ -11,6 +11,9 @@ const {
   postPost,
   editBlog,
   deleteBlog,
+  createTodo,
+  getTodos,
+  deleteTodo,
 } = require("../controllers/auth");
 const {
   validationMiddleware,
@@ -30,4 +33,7 @@ router.get("/getPosts", getPosts)
 router.post("/postPost", postPost)
 router.put("/editBlog", editBlog)
 router.delete("/deleteBlog/:blog_id", deleteBlog);
+router.post('/createTodo', createTodo);
+router.get('/getTodos', getTodos);
+router.delete('/deleteTodo/:id', deleteTodo);
 module.exports = router;

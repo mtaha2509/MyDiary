@@ -274,3 +274,82 @@ exports.deleteBlog = async (req, res) => {
     res.status(500).json({ error: "Error deleting blog" });
   }
 };
+
+exports.createTodo = async (req, res) => {
+  const { text } = req.body;
+  if (!text) {
+    return res
+      .status(400)
+      .json({ error: "Title, content, and user_id are required" });
+  }
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
+    await db.query(
+      "INSERT INTO todos (text, user_id) VALUES ($1, $2)",
+      [text, user_id]
+    );
+    res.status(201).json({ message: "Post created successfully" });
+  } catch (error) {
+    console.error("Error creating post", error);
+    res.status(500).json({ error: "Error creating post" });
+  }
+};
+
+exports.getTodos = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
+    const { rows } = await db.query("SELECT * FROM todos WHERE user_id = $1", [user_id]);
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error fetching todos", error);
+    res.status(500).json({ error: "Error fetching todos" });
+  }
+};
+
+exports.deleteTodo = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
+    const { id } = req.params;
+
+    const { rowCount } = await db.query("DELETE FROM todos WHERE id = $1 AND user_id = $2", [id, user_id]);
+
+    if (rowCount === 0) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.status(200).json({ message: "Todo deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting todo", error);
+    res.status(500).json({ error: "Error deleting todo" });
+  }
+};

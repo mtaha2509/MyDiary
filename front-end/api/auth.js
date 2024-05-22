@@ -60,3 +60,45 @@ export async function deleteBlog(blogId) {
     throw error;
   }
 }
+
+export async function createTodo(todo) {
+  try {
+    const response = await axios.post("http://localhost:3000/api/createTodo", todo, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating ToDo:", error);
+    throw error;
+  }
+}
+
+export async function getTodos() {
+  try {
+    const response = await axios.get("http://localhost:3000/api/getTodos", {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching ToDos:", error);
+    throw error;
+  }
+}
+
+export async function deleteTodo(id) {
+  try {
+    const response = await axios.delete(`http://localhost:3000/api/deleteTodo/${id}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting ToDo:", error);
+    throw error;
+  }
+}
