@@ -20,7 +20,6 @@ import Blog from "./components/BlogPage/BlogPage"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProtectedInfo } from "../api/auth";
 import { unauthenticateUser } from "./redux/slices/authSlice";
-import BlogPage from "./components/BlogPage/BlogPage";
 
 function PrivateRoutes() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);

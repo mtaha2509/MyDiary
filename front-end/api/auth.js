@@ -24,10 +24,21 @@ export async function DiaryEntry(diarydata) {
   return await axios.post("http://localhost:3000/api/diarypage", diarydata);
 }
 
+
 export async function getPosts() {
-  return await axios.get("http://localhost:3000/api/getPosts")
+  try {
+    const response = await axios.get("http://localhost:3000/api/getPosts");
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
+  }
 }
 
-export async function postPost(BlogPosts) {
-  return await axios.post("http://localhost:3000/api/postPost", BlogPosts)
+export async function postPost(blogPost) {
+  return await axios.post("http://localhost:3000/api/postPost", blogPost, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 }

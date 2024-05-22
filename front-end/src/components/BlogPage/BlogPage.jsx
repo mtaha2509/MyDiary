@@ -15,9 +15,16 @@ function BlogPage() {
 
   const fetchPosts = async () => {
     setLoading(true);
+    setError('');
     try {
       const data = await getPosts();
-      setPosts(data);
+      console.log('Fetched data:', data); // Log the returned data
+      if (Array.isArray(data)) {
+        setPosts(data);
+      } else {
+        setPosts([]);
+        handleError('Error: Received data is not an array', new Error('Data type error'));
+      }
     } catch (error) {
       handleError('Error fetching posts', error);
     } finally {
@@ -35,9 +42,15 @@ function BlogPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!title.trim() || !content.trim()) {
+      setError('Title and content cannot be empty');
+      return;
+    }
     setLoading(true);
+    setError('');
     try {
       await postPost({ title, content });
+      clearForm();
       fetchPosts();
     } catch (error) {
       handleError('Error creating post', error);
@@ -80,17 +93,23 @@ function BlogPage() {
           className="blog-input"
           required
         ></textarea>
-        <button type="submit" className="blog-button" disabled={loading}>Submit</button>
+        <button type="submit" className="blog-button" disabled={loading}>
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
       </form>
-      {loading && <p>Loading...</p>}
+      {loading && !posts.length && <p>Loading...</p>}
       <div className="blog-posts">
-        {posts.map((post) => (
-          <div key={post.id} className="blog-post">
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-            <p className="blog-post-date">{new Date(post.created_at).toLocaleString()}</p>
-          </div>
-        ))}
+        {Array.isArray(posts) && posts.length > 0 ? (
+          posts.map((post) => (
+            <div key={post.id} className="blog-post">
+              <h2>{post.title}</h2>
+              <p>{post.content}</p>
+              <p className="blog-post-date">{new Date(post.created_at).toLocaleString()}</p>
+            </div>
+          ))
+        ) : (
+          <p>No posts available.</p>
+        )}
       </div>
     </div>
   );
