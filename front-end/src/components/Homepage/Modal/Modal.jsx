@@ -45,7 +45,9 @@ const Modal = ({ show, onClose, content, title, templateUrl }) => {
           &times;
         </button>
         <div className="homepage-modal-body">
-          <h2 className="modal-title">{title}</h2>
+          <h2 className="modal-title" style={{ fontWeight: "bolder" }}>
+            {title}
+          </h2>
           <p className="modal-content">{pagedContent[currentPage]}</p>
           <div className="modal-pagination-buttons">
             <button onClick={handlePrevPage} disabled={currentPage === 0}>
