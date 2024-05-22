@@ -330,15 +330,16 @@ function DiaryEntryPage() {
                     ? `Remaining characters: ${remainingChars}`
                     : ""}
                 </p>
+                <h4 style={{ fontWeight:"bolder", textAlign:"center", marginRight:"100px" }} >Page {currentPage}</h4>
                 <div className="pagination-buttons">
                   <button
                     type="button"
                     onClick={handlePreviousPage}
                     disabled={currentPage === 1}
+                    style={{ marginRight: "75%" }}
                   >
                     &lt; Prev
                   </button>
-                  <span>Page {currentPage}</span>
                   <button
                     type="button"
                     onClick={handleNextPage}
@@ -346,9 +347,6 @@ function DiaryEntryPage() {
                   >
                     Next &gt;
                   </button>
-                </div>
-                <div className="replace-template-button">
-                  <button type="submit">Save Diary</button>
                 </div>
               </form>
             ) : (
@@ -367,9 +365,10 @@ function DiaryEntryPage() {
             )}
           </div>
           {selectedTemplate && ( // Render the replace button only if a template is selected
-            <div className="replace-template-button">
+            <div className="replace-template-button"  >
               <button onClick={handleReplaceTemplate}>Replace Template</button>
               <button onClick={handleDownloadPDF}>Download Diary</button>
+              <button type="submit">Save Diary</button>
             </div>
           )}
         </div>

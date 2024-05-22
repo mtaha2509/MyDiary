@@ -17,6 +17,9 @@ import lighttheme from "./lighttheme.svg";
 import horrortheme from "./horrortheme.svg";
 import cartoon from "./TimeCapsule.svg";
 import theme from "./theme.svg";
+import hassaan from "./hassaan.svg";
+import taha from "./taha.svg";
+import asim from "./asim.svg";
 export {
   Diary,
   dropdown,
@@ -37,4 +40,7 @@ export {
   lighttheme,
   cartoon,
   theme,
+  hassaan,
+  taha,
+  asim,
 };

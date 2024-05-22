@@ -94,6 +94,16 @@
   color: white;
 }
 
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 2%;
+    width: 100%;
+}
+
 .ql-editor{
   margin-top: 10%;
 }
