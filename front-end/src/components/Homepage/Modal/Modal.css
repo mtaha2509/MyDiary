@@ -1,82 +1,100 @@
+/* Modal Overlay */
 .homepage-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 20px;
-  }
-  
-  .homepage-modal-content {
-    border-radius: 12px;
-    max-width: 90%;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 20px; 
-    color: white; 
-  }
-  
-  .homepage-close-button {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  
-  .homepage-modal-body {
-    padding: 20px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center; /* Center text */
-  }
-  
-  .homepage-modal-body h2 {
-    margin-bottom: 15px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  }
-  
-  .homepage-modal-body p {
-    margin: 10px 0;
-    line-height: 1.5;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  }
-  
-  .modal-pagination-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    width: 100%;
-  }
-  
-  .modal-pagination-buttons button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 5px;
-  }
-  
-  .modal-pagination-buttons button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Modal Content */
+.homepage-modal-content {
+  border-radius: 16px;
+  max-width: 80%;
+  width: 600px; /* Fixed width for consistency */
+  max-height: 80vh; /* Fixed height for consistency */
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0); /* Transparent background */
+  color: #f0f0f0; /* Light text color */
+  backdrop-filter: blur(10px); /* Blur effect for background */
+}
+
+/* Close Button */
+.homepage-close-button {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #f0f0f0;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/* Modal Body */
+.homepage-modal-body {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center text */
+  font-family: 'Helvetica Neue', sans-serif; /* Modern font */
+}
+
+/* Modal Title */
+.homepage-modal-body h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #f0f0f0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Modal Content */
+.homepage-modal-body .modal-content {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  color: #f0f0f0; /* Match title color */
+  background: transparent; /* Ensure background is transparent */
+}
+
+/* Pagination Buttons */
+.modal-pagination-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+/* Pagination Button Style */
+.modal-pagination-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px; /* Rounded buttons */
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-pagination-buttons button:hover {
+  background-color: #0056b3; /* Hover effect */
+}
+
+.modal-pagination-buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
