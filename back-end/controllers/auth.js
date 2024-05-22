@@ -353,3 +353,33 @@ exports.deleteTodo = async (req, res) => {
     res.status(500).json({ error: "Error deleting todo" });
   }
 };
+
+exports.timecapsule = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const id=decodedPayload.id;
+    const { overview, messageToFutureSelf, uploadedImage } = req.body;
+
+    const timeCapsuleinsertQuery = 'INSERT INTO TimeCapsule (user_id,timecapsule_id, title, message_to_future_self, image_url) VALUES ($1,$2, $3, $4, $5)';
+    const timeCapsuleValues = [id, overview, messageToFutureSelf, uploadedImage];
+
+    await db.query(timeCapsuleinsertQuery, timeCapsuleValues);
+
+    return res.status(200).json({
+      success: true,
+      message: "Time Capsule entry inserted successfully",
+    });
+  }
+  catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}

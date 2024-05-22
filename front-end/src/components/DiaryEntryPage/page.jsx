@@ -115,7 +115,7 @@ function DiaryEntryPage() {
 
     diaryEntries.forEach((entry, index) => {
       if (index !== 0) {
-        doc.addPage(); // Add a new page for each diary entry except the first one
+        doc.addPage();
       }
 
       // Add page number
@@ -221,7 +221,7 @@ function DiaryEntryPage() {
       setDiaryTitle(diaryEntries[currentPage - 2].title);
     }
   };
-  // Function to save diary entries
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -30,4 +30,13 @@ CREATE TABLE todos (
     completed BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_id INTEGER NOT NULL
+)
+
+CREATE TABLE TIMECAPSULES (
+    user_id INT,
+    timecapsule_id SERIAL PRIMARY KEY,
+    title VARCHAR(255),
+    message_to_future_self TEXT,
+    image_url VARCHAR(255),
+    FOREIGN KEY (timecapsule_id) REFERENCES users(id)
 );

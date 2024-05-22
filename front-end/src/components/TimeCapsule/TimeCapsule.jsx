@@ -3,6 +3,7 @@ import "./TimeCapsule.css";
 import Sidebar from "../DiaryEntryPage/SideBar/Sidebar";
 import BoxComponent from "./Time-Capsule/BoxComponent";
 import cartoon from "../../assets/cartoon.svg";
+import { Timecapsule } from "../../../api/auth";
 
 const TimeCapsule = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -69,13 +70,20 @@ const TimeCapsule = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
   e.preventDefault();
-  const currentDate = new Date().toLocaleDateString();
   setEntries((prevEntries) => [
     ...prevEntries,
     { ...newEntry },
   ]);
+
+  try {
+    const formData={
+      newEntry,
+    };
+    await Timecapsule(formData);
+  }
+  catch(err){}
 
   setNewEntry({
     overview: "",
