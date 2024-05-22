@@ -7,6 +7,8 @@ import {
   deleteBlog,
   getUser,
 } from "../../../api/auth";
+import { Footer } from '../LandingPage';
+import NavBar from '../LandingPage/navbar/navbar';
 
 function BlogPage() {
   const [posts, setPosts] = useState([]);
@@ -141,7 +143,8 @@ function BlogPage() {
 
   return (
     <div className="BlogPage">
-      <h1>My Blog</h1>
+      <NavBar className="fadeIn about-nav" />
+      <h1>Blogs</h1>
       {error && <p className="error-message">{error}</p>}
       <form className="blog-form" onSubmit={handleSubmit}>
         <label htmlFor="title">Title:</label>
@@ -222,6 +225,7 @@ function BlogPage() {
           <p>No posts available.</p>
         )}
       </div>
+      <Footer className="fadeIn about-footer" />
     </div>
   );
 }

@@ -15,7 +15,6 @@ const ToDoList = () => {
     const fetchTodos = async () => {
       try {
         const todos = await getTodos();
-        console.log("Fetched Todos:", todos);
         setItems(todos);
       } catch (error) {
         console.error("Error fetching ToDos:", error);
