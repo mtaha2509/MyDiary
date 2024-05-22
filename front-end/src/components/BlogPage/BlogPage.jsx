@@ -14,6 +14,7 @@ function BlogPage() {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  // const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -67,16 +68,21 @@ function BlogPage() {
     setContent(e.target.value);
   };
 
+  // const handleImageUpload = (e) => {
+  //   setImage(e.target.files[0]);
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) {
-      setError("Title and content cannot be empty");
+    if (!title.trim() || !content.trim() /* || !image */) { 
+      setError("Title and content are required");
       return;
     }
     setLoading(true);
     setError("");
     try {
-      await postPost({ title, content });
+      // const imageUrl = await uploadImage(image);
+      await postPost({ title, content /* , imageUrl */ });
       clearForm();
       fetchPosts();
     } catch (error) {
@@ -113,6 +119,7 @@ function BlogPage() {
   const clearForm = () => {
     setTitle("");
     setContent("");
+    // setImage(null);
   };
 
   const handleError = (message, error) => {
@@ -125,6 +132,23 @@ function BlogPage() {
       setEditedTitle(e.target.value);
     } else {
       setEditedContent(e.target.value);
+    }
+  };
+
+  const closeModal = (confirmed = false) => {
+    if (confirmed || !isEditing) {
+      setShowModal(false);
+      setSelectedPost(null);
+      handleEditCancel();
+    }
+  };
+
+  const handleCancelConfirmation = () => {
+    if (isEditing && (editedTitle.trim() || editedContent.trim())) {
+      const confirmCancel = window.confirm("Are you sure you want to cancel? Your changes will be lost.");
+      closeModal(confirmCancel);
+    } else {
+      closeModal(true);
     }
   };
 
@@ -147,21 +171,22 @@ function BlogPage() {
     setShowModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedPost(null);
-  };
-
   return (
     <div className="BlogPage">
       <NavBar className="fadeIn about-nav" />
-      <h1 className="fadeIn">Blogs</h1>
+      <div className="hero-section">
+        <h1 className="fadeIn">Welcome to Our Blog</h1>
+        <p className="fadeIn">Explore our latest posts and share your thoughts.</p>
+      </div>
       {error && <p className="error-message">{error}</p>}
       {loading && !posts.length && <p className="loading-message">Loading...</p>}
       <div className="blog-posts">
         {Array.isArray(posts) && posts.length > 0 ? (
           posts.map((post) => (
             <div key={post.id} className="blog-post" onClick={() => handlePostClick(post)}>
+              <div className="blog-post-image">
+                <img src={post.imageUrl || `https://picsum.photos/seed/${post.id}/300/200`} alt={post.title} />
+              </div>
               <h2 className="fadeIn">{post.title}</h2>
               <p className="blog-snippet">{post.content}</p>
               <p className="blog-post-info">
@@ -177,6 +202,7 @@ function BlogPage() {
         )}
       </div>
       <form className="blog-form" onSubmit={handleSubmit}>
+        <h2 className="fadeIn">Create a New Post</h2>
         <label htmlFor="title">Title:</label>
         <input
           type="text"
@@ -196,6 +222,16 @@ function BlogPage() {
           className="blog-input"
           required
         ></textarea>
+        {/* Image upload input (commented out) */}
+        {/* <label htmlFor="image">Image:</label>
+        <input
+          type="file"          
+          // id="image"
+          // accept="image/*"
+          // onChange={handleImageUpload}
+          // className="blog-input"
+        // /> */}
+        {/* Button to submit the form */}
         <button type="submit" className="blog-button" disabled={loading}>
           {loading ? "Submitting..." : "Submit"}
         </button>
@@ -205,9 +241,11 @@ function BlogPage() {
       {showModal && selectedPost && (
         <div className="modal" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeModal}>&times;</button>
             <h2 className="fadeIn">{selectedPost.title}</h2>
             <p className="fadeIn">{selectedPost.content}</p>
+            <div className="blog-post-image">
+              <img src={selectedPost.imageUrl || `https://picsum.photos/seed/${selectedPost.id}/600/400`} alt={selectedPost.title} />
+            </div>
             <p className="blog-post-info">
               <span>
                 Posted by {selectedPost.first_name} {selectedPost.last_name}
@@ -224,6 +262,38 @@ function BlogPage() {
                 </button>
               </>
             )}
+            {isEditing && (
+              <div className="edit-form">
+                <label htmlFor="editedTitle">Title:</label>
+                <input
+                  type="text"
+                  id="editedTitle"
+                  name="editedTitle"
+                  value={editedTitle}
+                  onChange={handleEditInputChange}
+                  className="blog-input"
+                  required
+                />
+                <label htmlFor="editedContent">Content:</label>
+                <textarea
+                  id="editedContent"
+                  name="editedContent"
+                  value={editedContent}
+                  onChange={handleEditInputChange}
+                  className="blog-input"
+                  required
+                ></textarea>
+                <button
+                  className="blog-button"
+                  onClick={() => handleEdit(selectedPost.id, editedTitle, editedContent)}
+                >
+                  Save
+                </button>
+              </div>
+            )}
+            <button className="cancel-button" onClick={handleCancelConfirmation}>
+              Cancel
+            </button>
           </div>
         </div>
       )}
