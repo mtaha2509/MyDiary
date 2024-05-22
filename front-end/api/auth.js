@@ -71,5 +71,8 @@ export async function deleteBlog(blogId) {
 }
 
 export async function Timecapsule(timecapsuledata) {
-  return await axios.post("http://localhost:3000/api/timecapsule", timecapsuledata);
+  return await axios.post(
+    "http://localhost:3000/api/timecapsule",
+    timecapsuledata
+  );
 }

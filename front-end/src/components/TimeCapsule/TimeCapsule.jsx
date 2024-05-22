@@ -4,6 +4,7 @@ import Sidebar from "../DiaryEntryPage/SideBar/Sidebar";
 import BoxComponent from "./Time-Capsule/BoxComponent";
 import cartoon from "../../assets/cartoon.svg";
 import { Timecapsule } from "../../../api/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import Firebase Storage modules
 
 const TimeCapsule = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -17,6 +18,9 @@ const TimeCapsule = () => {
   const [dragging, setDragging] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 3;
+
+  // Create a reference to Firebase Storage bucket
+  const storage = getStorage();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +36,7 @@ const TimeCapsule = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log(file);
     setNewEntry((prevState) => ({
       ...prevState,
       uploadedImage: file,
@@ -71,26 +76,34 @@ const TimeCapsule = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setEntries((prevEntries) => [
-    ...prevEntries,
-    { ...newEntry },
-  ]);
+    e.preventDefault();
 
-  try {
-    const formData={
-      newEntry,
-    };
-    await Timecapsule(formData);
-  }
-  catch(err){}
+    const storageRef = ref(storage, `images/${newEntry.uploadedImage.name}`);
+    await uploadBytes(storageRef, newEntry.uploadedImage);
 
-  setNewEntry({
-    overview: "",
-    messageToFutureSelf: "",
-    uploadedImage: null,
-  });
-};
+    const downloadURL = await getDownloadURL(storageRef);
+
+    setNewEntry((prevState) => ({
+      ...prevState,
+      uploadedImage: downloadURL,
+    }));
+
+    setEntries((prevEntries) => [...prevEntries, { ...newEntry }]);
+
+    try {
+      const formData = {
+        newEntry,
+      };
+      console.log(formData);
+      await Timecapsule(formData);
+    } catch (err) {}
+
+    setNewEntry({
+      overview: "",
+      messageToFutureSelf: "",
+      uploadedImage: null,
+    });
+  };
 
   const totalPages = Math.ceil(entries.length / entriesPerPage);
   const indexOfLastEntry = currentPage * entriesPerPage;
@@ -106,7 +119,10 @@ const TimeCapsule = () => {
             <h1 className="page-title" style={{ fontWeight: "bold" }}>
               Welcome to Time Capsule 💊
             </h1>
-            <p className="page-subtitle" style={{ fontWeight: "bold", color: "grey" }}>
+            <p
+              className="page-subtitle"
+              style={{ fontWeight: "bold", color: "grey" }}
+            >
               Plant your Time Capsule and let it revive your beloved memories
             </p>
             {/* <BoxComponent /> */}
@@ -119,10 +135,13 @@ const TimeCapsule = () => {
             toggleSidebar={toggleSidebar}
             sidebarExpanded={sidebarExpanded}
           />
-          <div className="planting-contain" style={{ backgroundColor:"#d9f2f7" }} >
+          <div
+            className="planting-contain"
+            style={{ backgroundColor: "#d9f2f7" }}
+          >
             <div
               className="time-capsule-header"
-              style={{borderRadius: "80px" }}
+              style={{ borderRadius: "80px" }}
             >
               <h2 className="text-center" style={{ fontWeight: "bold" }}>
                 Plant a Time Capsule
@@ -147,7 +166,7 @@ const TimeCapsule = () => {
                   type="text"
                   placeholder="Type"
                   value={newEntry.overview}
-                  onChange={(e)=> {
+                  onChange={(e) => {
                     const overview = e.target.value;
                     setNewEntry((prevState) => ({
                       ...prevState,
@@ -181,7 +200,10 @@ const TimeCapsule = () => {
                     Drag & Drop or Click to Upload
                   </div>
                 </div>
-                <div className="form-group mt-3" style={{ textAlign: "center" }}>
+                <div
+                  className="form-group mt-3"
+                  style={{ textAlign: "center" }}
+                >
                   <button type="submit" className="btn btn-primary">
                     Set Time Capsule
                   </button>
@@ -191,9 +213,12 @@ const TimeCapsule = () => {
           </div>
         </div>
       </div>
-      <div className="diary-entry" >
+      <div className="diary-entry">
         <div className="col-lg-6 offset-lg-3">
-          <h2 className="text-center" style={{ fontWeight: "bold", marginTop:"10%" }}>
+          <h2
+            className="text-center"
+            style={{ fontWeight: "bold", marginTop: "10%" }}
+          >
             Time Capsules
           </h2>
           <div
@@ -204,26 +229,27 @@ const TimeCapsule = () => {
               borderRadius: "20px",
             }}
           >
-          {currentEntries.map((entry, index) => (
-            <div key={index} className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title" style={{ fontWeight: "bold" }}>
-                  Capsule {index + indexOfFirstEntry + 1}
-                </h5>
-                <p className="card-text">Overview: {entry.overview}</p>
-                <p className="card-text">Message: {entry.messageToFutureSelf}</p>
-                {entry.uploadedImage && (
-                  <img
-                    src={URL.createObjectURL(entry.uploadedImage)}
-                    alt="Uploaded"
-                    className="img-fluid"
-                  />
-                )}
+            {currentEntries.map((entry, index) => (
+              <div key={index} className="card mb-3">
+                <div className="card-body">
+                  <h5 className="card-title" style={{ fontWeight: "bold" }}>
+                    Capsule {index + indexOfFirstEntry + 1}
+                  </h5>
+                  <p className="card-text">Overview: {entry.overview}</p>
+                  <p className="card-text">
+                    Message: {entry.messageToFutureSelf}
+                  </p>
+                  {entry.uploadedImage && (
+                    <img
+                      src={entry.uploadedImage}
+                      alt="Uploaded"
+                      className="img-fluid"
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
-          {/* Pagination */}
           {totalPages > 1 && (
             <nav aria-label="Page navigation">
               <ul className="pagination justify-content-center">
