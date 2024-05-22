@@ -69,3 +69,7 @@ export async function deleteBlog(blogId) {
     throw error;
   }
 }
+
+export async function Timecapsule(timecapsuledata) {
+  return await axios.post("http://localhost:3000/api/timecapsule", timecapsuledata);
+}
