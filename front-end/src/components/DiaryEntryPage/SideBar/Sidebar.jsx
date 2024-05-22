@@ -1,7 +1,7 @@
 import React from "react";
 import "./SideBar.css";
 
-import { ExpandIcon, ShrinkIcon } from "../../../assets";
+import { ExpandIcon, ShrinkIcon,gif } from "../../../assets";
 
 import { useDispatch } from "react-redux";
 
@@ -28,13 +28,14 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
     >
       <div className="sidebar">
         <div className="sidebar-toggle-button" onClick={toggleSidebar}>
-          <span className="sidebar-icon">
+          <div className="sidebar-icon">
+            <img src={gif} alt="bruh" className={`sidebar-gif ${sidebarExpanded ? 'hidden' : ''}`} />
             {sidebarExpanded ? (
               <img src={ShrinkIcon} className="sidebar-shrink-icon" />
             ) : (
-              <img src={ExpandIcon} className="sidebar-expand-icon" />
+              <img src={ExpandIcon} className="sidebar-expand-icon"/>
             )}
-          </span>
+          </div>
           {sidebarExpanded && (
             <span className="sidebar-label" style={{ fontSize: "medium" }}>
               Close Sidebar

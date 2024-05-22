@@ -81,7 +81,7 @@ function DiaryEntryPage() {
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryContent, setDiaryContent] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [charLimit, setCharLimit] = useState(500);
+  const [charLimit, setCharLimit] = useState(350);
   const [remainingChars, setRemainingChars] = useState(charLimit);
   const [diarySaved, setDiarySaved] = useState(false);
 
@@ -359,7 +359,10 @@ function DiaryEntryPage() {
                     type="button"
                     onClick={handlePreviousPage}
                     disabled={currentPage === 1}
-                    style={{ marginRight: "75%" }}
+                    style={{ 
+                      marginRight: "75%",
+                     }}
+                     className="page-button"
                   >
                     &lt; Prev
                   </button>
@@ -367,6 +370,7 @@ function DiaryEntryPage() {
                     type="button"
                     onClick={handleNextPage}
                     disabled={currentPage >= diaryEntries.length}
+                    className="page-button"
                   >
                     Next &gt;
                   </button>
@@ -389,9 +393,9 @@ function DiaryEntryPage() {
           </div>
           {selectedTemplate && ( // Render the replace button only if a template is selected
             <div className="replace-template-button"  >
-              <button onClick={handleReplaceTemplate}>Replace Template</button>
-              <button onClick={handleDownloadPDF}>Download Diary</button>
-              <button type="submit">Save Diary</button>
+              <button className="page-buttons" onClick={handleReplaceTemplate}>Replace Template</button>
+              <button className="page-buttons" onClick={handleDownloadPDF}>Download Diary</button>
+              <button className="page-buttons" type="submit">Save Diary</button>
             </div>
           )}
           {diarySaved && <p>Diary Saved</p>}

@@ -12,7 +12,7 @@ function Section2() {
               <h2>TRY MyDiary+ For Free</h2>
               <div>
                 <p>Start your very own, personalized journaling journey!</p>
-                <a href="#" className="get-started-button">Get Started</a>
+                <a href="/register" className="get-started-button">Get Started</a>
               </div>
             </div>
           </div>

@@ -17,7 +17,7 @@ function Header() {
                 Transform Your Thoughts. Beyond Text, A Diary Reimagined.
                 Connect, Reflect, and Flourish.
               </p>
-              <a href="#" className="demo-btn">
+              <a href="/register" className="demo-btn">
                 TRY IT FOR FREE
               </a>
             </div>

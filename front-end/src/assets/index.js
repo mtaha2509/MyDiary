@@ -20,6 +20,7 @@ import theme from "./theme.svg";
 import hassaan from "./hassaan.svg";
 import taha from "./taha.svg";
 import asim from "./asim.svg";
+import gif from "./gif.svg";
 export {
   Diary,
   dropdown,
@@ -43,4 +44,5 @@ export {
   hassaan,
   taha,
   asim,
+  gif,
 };

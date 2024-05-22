@@ -15,6 +15,10 @@
   width: 200px;
 }
 
+.sidebar-gif{
+  height: 25px;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;

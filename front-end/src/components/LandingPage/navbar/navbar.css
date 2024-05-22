@@ -58,6 +58,25 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
 }
 
+.navbar-home{
+    color: #2E2F35; 
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+}
+
+.navbar-blog{
+    color: #2E2F35; 
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+}
+
+.navbar-about{
+    color: #2E2F35; 
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+
+}
+
 .navbar-create-account {
     color: #FFFFFF; 
     background-color: #FF6D2C;

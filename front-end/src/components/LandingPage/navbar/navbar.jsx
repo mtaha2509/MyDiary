@@ -51,12 +51,12 @@ function NavBar() {
         </div>
         <div className={`Navbar-Options ${isMenuOpen ? "open" : ""}`}>
           <div className="navbar-buttons">
-              <a href="/about" className="navbar-create-account" onClick={handleAboutClick}>
+              <a href="/about" className="navbar-about" onClick={handleAboutClick} >
                 About
               </a>
               </div>
           <div className="navbar-buttons">
-              <a href="/BlogPage" className="navbar-create-account" onClick={handleBlogClick}>
+              <a href="/BlogPage" className="navbar-blog" onClick={handleBlogClick}>
                 Blog
               </a>
               </div>
@@ -77,7 +77,7 @@ function NavBar() {
             )}
             {authState.isAuth && (
               <>
-                <a className="navbar-create-account" onClick={handleHomeClick}>
+                <a className="navbar-home" onClick={handleHomeClick}>
                   Homepage
                 </a>
                 <a
