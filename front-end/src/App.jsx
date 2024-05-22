@@ -63,13 +63,13 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/BlogPage" element={<Blog />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/timecapsule" element={<TimeCapsule />} />
           <Route path="/diarypage" element={<DiaryEntryPage />} />
           <Route path="/notes" element={<Notes />} />
           <Route path="/todolist" element={<ToDoList />} />
-          <Route path="/BlogPage" element={<Blog />} />
         </Route>
         <Route element={<RestrictedRoutes />}>
           <Route path="/login" element={<Login />} />

@@ -72,3 +72,12 @@
     font-size: 0.9em;
     color: #999;
   }  
+
+  .blog-post-info {
+  font-size: 0.9em;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+}
+
+  
