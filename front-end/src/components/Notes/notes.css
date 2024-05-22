@@ -1,13 +1,22 @@
 .notes-container {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+  flex-grow: 1;
+  margin-left: 0;
+  margin-top: 10rem;
+  transition: margin-left 0.3s ease;
+  overflow-x: hidden;
 }
 
 .notes-body {
   background: #eee;
   background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
   padding: 0 16px;
+}
+
+.notes-list {
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 16px;
+  justify-content: center;
 }
 
 .notes-header {
@@ -23,14 +32,6 @@
   font-weight: 200;
 }
 
-.notes-footer {
-  position: absolute;
-  text-align: center;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;
-}
-
 .notes-footer p {
   color: #ccc;
 }
@@ -43,6 +44,8 @@
   width: 240px;
   margin: 16px;
   float: left;
+  float: left;
+  border-radius: 25px;
 }
 
 .notes-note h1 {
@@ -55,6 +58,13 @@
   margin-bottom: 10px;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.notes{
+  display: grid;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .notes-note-delete {
@@ -70,6 +80,15 @@
   outline: none;
 }
 
+.notes-title {
+  font-weight: bold;
+}
+
+.notes-subtitle {
+  color: #666; /* Slightly lighter subtitle color */
+  font-weight: bold
+}
+
 .notes-create-note {
   position: relative;
   width: 480px;
@@ -78,6 +97,7 @@
   padding: 15px;
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
+  margin-top: 10%;
 }
 
 .notes-create-note input,
@@ -89,6 +109,10 @@
   font-size: 1.2em;
   font-family: inherit;
   resize: none;
+}
+
+.sidebar-expanded + .notes-container {
+  margin-left: 270px;
 }
 
 .notes-create-note button {
@@ -104,4 +128,31 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   outline: none;
+}
+
+.all-notes {
+  z-index: 1;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  display: grid;
+  justify-content: center;
+  width: 30%;
+  margin-left: 60rem;
+  border-radius:35px;
+}
+
+/* Added styles for sidebar integration */
+.sidebar-and-content {
+  display: flex;
+}
+
+.notes-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 10rem; /* Converted to rem for consistency */
+  padding-right: 5rem; /* Converted to rem for consistency */
+  width: calc(100vw - 13rem); /* Converted to rem for consistency */
+  margin-left: 13rem; /* Converted to rem for consistency */
+  transition: width 0.3s ease, margin-left 0.3s ease;
 }
