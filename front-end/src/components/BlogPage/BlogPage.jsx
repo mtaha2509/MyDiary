@@ -21,11 +21,12 @@ function BlogPage() {
   const [editedContent, setEditedContent] = useState("");
   const [editId, setEditId] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     fetchPosts();
     fetchCurrentUser();
-    console.log(currentUser);
   }, []);
 
   const fetchCurrentUser = async () => {
@@ -141,11 +142,40 @@ function BlogPage() {
     setEditedContent(post.content);
   };
 
+  const handlePostClick = (post) => {
+    setSelectedPost(post);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedPost(null);
+  };
+
   return (
     <div className="BlogPage">
       <NavBar className="fadeIn about-nav" />
-      <h1>Blogs</h1>
+      <h1 className="fadeIn">Blogs</h1>
       {error && <p className="error-message">{error}</p>}
+      {loading && !posts.length && <p className="loading-message">Loading...</p>}
+      <div className="blog-posts">
+        {Array.isArray(posts) && posts.length > 0 ? (
+          posts.map((post) => (
+            <div key={post.id} className="blog-post" onClick={() => handlePostClick(post)}>
+              <h2 className="fadeIn">{post.title}</h2>
+              <p className="blog-snippet">{post.content}</p>
+              <p className="blog-post-info">
+                <span>
+                  Posted by {post.first_name} {post.last_name}
+                </span>
+                <span> | {new Date(post.created_at).toLocaleString()}</span>
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="fadeIn">No posts available.</p>
+        )}
+      </div>
       <form className="blog-form" onSubmit={handleSubmit}>
         <label htmlFor="title">Title:</label>
         <input
@@ -170,62 +200,33 @@ function BlogPage() {
           {loading ? "Submitting..." : "Submit"}
         </button>
       </form>
-      {loading && !posts.length && <p>Loading...</p>}
-      <div className="blog-posts">
-        {Array.isArray(posts) && posts.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.id} className="blog-post">
-              {isEditing && editId === post.id ? (
-                <>
-                  <input
-                    type="text"
-                    name="editedTitle"
-                    value={editedTitle}
-                    onChange={handleEditInputChange}
-                  />
-                  <textarea
-                    name="editedContent"
-                    value={editedContent}
-                    onChange={handleEditInputChange}
-                  ></textarea>
-                  <button
-                    onClick={() =>
-                      handleEdit(post.id, editedTitle, editedContent)
-                    }
-                  >
-                    Save
-                  </button>
-                  <button onClick={handleEditCancel}>Cancel</button>
-                </>
-              ) : (
-                <>
-                  <h2>{post.title}</h2>
-                  <p>{post.content}</p>
-                  <p className="blog-post-info">
-                    <span>
-                      Posted by {post.first_name} {post.last_name}
-                    </span>
-                    <span> | {new Date(post.created_at).toLocaleString()}</span>
-                  </p>
-                  {currentUser && currentUser === post.user_id && (
-                    <>
-                      <button onClick={() => handleEditClick(post)}>
-                        Edit
-                      </button>
-                      <button onClick={() => handleDelete(post.id)}>
-                        Delete
-                      </button>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-          ))
-        ) : (
-          <p>No posts available.</p>
-        )}
-      </div>
       <Footer className="fadeIn about-footer" />
+
+      {showModal && selectedPost && (
+        <div className="modal" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={closeModal}>&times;</button>
+            <h2 className="fadeIn">{selectedPost.title}</h2>
+            <p className="fadeIn">{selectedPost.content}</p>
+            <p className="blog-post-info">
+              <span>
+                Posted by {selectedPost.first_name} {selectedPost.last_name}
+              </span>
+              <span> | {new Date(selectedPost.created_at).toLocaleString()}</span>
+            </p>
+            {currentUser && currentUser === selectedPost.user_id && (
+              <>
+                <button onClick={() => handleEditClick(selectedPost)}>
+                  Edit
+                </button>
+                <button onClick={() => handleDelete(selectedPost.id)}>
+                  Delete
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

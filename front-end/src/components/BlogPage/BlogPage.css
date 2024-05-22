@@ -1,84 +1,209 @@
 .BlogPage {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-    margin-top: 5rem;
-    background-color: #f4f4f4;
-  }
-  
-  .blog-form {
-    margin-bottom: 20px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    background: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .blog-input {
-    width: calc(100% - 16px); /* Subtracting padding */
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .blog-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .blog-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .blog-posts {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .blog-post {
-    width: 300px;
-    margin: 10px;
-    padding: 20px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .blog-post h2 {
-    margin-top: 0;
-    font-size: 1.5em;
-    color: #333;
-  }
-  
-  .blog-post p {
-    margin-bottom: 10px;
-    color: #666;
-  }
-  
-  .blog-post-date {
-    font-size: 0.9em;
-    color: #999;
-  }  
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  margin-top: 5rem;
+  background-color: #f4f4f4;
+}
 
-  .blog-post-info {
+.fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.blog-form {
+  margin-bottom: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.blog-input {
+  width: calc(100% - 16px); /* Subtracting padding */
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.blog-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.blog-button:hover {
+  background-color: #0056b3;
+}
+
+.blog-posts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.blog-post {
+  width: 300px;
+  margin: 10px;
+  padding: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.blog-post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.blog-post h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.blog-post p {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.blog-post-date {
+  font-size: 0.9em;
+  color: #999;
+}
+
+.blog-post-info {
   font-size: 0.9em;
   color: #555;
   display: flex;
   justify-content: space-between;
 }
 
-  
+.blog-snippet {
+  max-height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  transform: scale(0.8);
+  animation: scaleIn 0.3s forwards;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Additional Design Enhancements */
+
+/* Typography */
+h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.error-message, .loading-message {
+  font-size: 1.2em;
+  color: #ff0000;
+  margin-bottom: 10px;
+}
+
+.blog-snippet {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.blog-button {
+  font-size: 1em;
+  padding: 12px 20px;
+  border-radius: 5px;
+}
+
+/* Forms */
+.blog-form input, .blog-form textarea {
+  font-size: 1em;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Modal */
+.modal-content h2 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .blog-posts {
+    flex-direction: column;
+  }
+
+  .blog-post {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
