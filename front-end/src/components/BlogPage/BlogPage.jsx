@@ -18,7 +18,6 @@ function BlogPage() {
     setError('');
     try {
       const data = await getPosts();
-      console.log('Fetched data:', data); // Log the returned data
       if (Array.isArray(data)) {
         setPosts(data);
       } else {
@@ -49,7 +48,7 @@ function BlogPage() {
     setLoading(true);
     setError('');
     try {
-      await postPost({ title, content });
+      await postPost({ title, content, user_id: 3 });  // Assuming user_id is 1 for now
       clearForm();
       fetchPosts();
     } catch (error) {

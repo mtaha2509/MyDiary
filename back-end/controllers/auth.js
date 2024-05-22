@@ -215,6 +215,11 @@ exports.getPosts = async (req, res) => {
 
 exports.postPost = async (req, res) => {
   const { title, content, user_id } = req.body;
+
+  if (!title || !content || !user_id) {
+    return res.status(400).json({ error: 'Title, content, and user_id are required' });
+  }
+
   try {
     await db.query(
       'INSERT INTO blogs (title, content, user_id) VALUES ($1, $2, $3)',
