@@ -1,53 +1,140 @@
-import React, { useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import Card from './Cards/Card';
-import './Slider.css';
-import { Logo2 } from "../../../assets";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import Card from "./Cards/Card";
+import axios from "axios";
+import "./Slider.css";
+import Modal from "../Modal/Modal";
 
 const Slider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const totalCards = 10; // Total number of cards
-  const initialCards = 4; // Number of cards to display initially
+  const [diaryEntries, setDiaryEntries] = useState([]);
+  const [cardsToShow, setCardsToShow] = useState(4);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedEntry, setSelectedEntry] = useState(null);
+
+  useEffect(() => {
+    const fetchDiaryEntries = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/diarypage");
+        setDiaryEntries(response.data);
+      } catch (error) {
+        console.error("Error fetching diary entries:", error);
+      }
+    };
+
+    fetchDiaryEntries();
+
+    const updateCardsToShow = () => {
+      if (window.innerWidth <= 768) {
+        setCardsToShow(2);
+      } else {
+        setCardsToShow(4);
+      }
+    };
+
+    updateCardsToShow();
+    window.addEventListener("resize", updateCardsToShow);
+
+    return () => window.removeEventListener("resize", updateCardsToShow);
+  }, []);
+
+  const totalCards = diaryEntries.length;
 
   const handleNext = () => {
-    setCurrentIndex(prevIndex => (prevIndex === totalCards - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % totalCards);
   };
 
   const handlePrev = () => {
-    setCurrentIndex(prevIndex => (prevIndex === 0 ? totalCards - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? totalCards - 1 : prevIndex - 1
+    );
   };
 
-  // Calculate the start and end indices based on the current index
-  const start = currentIndex;
-  const end = (currentIndex + initialCards - 1) % totalCards;
+  const handleCardClick = (entry) => {
+    setSelectedEntry(entry);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => setShowModal(false);
+
+  const startIndex = currentIndex;
+  const endIndex = (startIndex + cardsToShow - 1) % totalCards;
 
   return (
     <div className="slider-wrapper">
-      <div className="welcome-text">Welcome👋,<br /></div>
-      <p style={{ marginLeft: '5%', color: '#999F9E', fontSize: '20px', marginTop: '10px' }}>How's it going?</p>
+      <div className="welcome-text">
+        Welcome👋,
+        <br />
+      </div>
+      <p
+        style={{
+          marginLeft: "5%",
+          color: "#999F9E",
+          fontSize: "20px",
+          marginTop: "10px",
+        }}
+      >
+        How's it going?
+      </p>
       <div className="slider-container">
-        <div className="Diaries">
-          My Diaries
+        <div className="Diaries">My Diaries</div>
+        {totalCards === 0 ? (
+          <div className="no-entries-message">
+            Oh looks like you have not written anything!!
+            <br />
+            <a href="/diarypage" className="write-link">
+              Click here to write your first Diary Entry
+            </a>
+          </div>
+        ) : (
+          <Row className="card-row">
+            {[...Array(Math.min(cardsToShow, totalCards))].map((_, index) => {
+              const actualIndex = (startIndex + index) % totalCards;
+              const entry = diaryEntries[actualIndex];
+              return (
+                <Col key={index} xs={12} md={6} lg={3}>
+                  <Card
+                    imageUrl={entry?.template_url}
+                    title={entry?.title}
+                    description={
+                      entry?.content.split(" ").slice(0, 5).join(" ") + "..."
+                    }
+                    onClick={() => handleCardClick(entry)}
+                  />
+                </Col>
+              );
+            })}
+          </Row>
+        )}
+      </div>
+      {totalCards > cardsToShow && (
+        <div className="buttons">
+          <button
+            className="prev-button"
+            onClick={handlePrev}
+            disabled={totalCards <= cardsToShow}
+          >
+            Prev
+          </button>
+          <button
+            className="next-button"
+            onClick={handleNext}
+            disabled={totalCards <= cardsToShow}
+          >
+            Next
+          </button>
         </div>
-        <Row className="card-row">
-          {[...Array(initialCards)].map((_, index) => {
-            const actualIndex = (start + index) % totalCards;
-            return (
-              <Col key={index}>
-                <Card
-                  imageUrl={Logo2}
-                  title={`Title ${actualIndex + 1}`}
-                  description="Description goes here"
-                />
-              </Col>
-            );
-          })}
-        </Row>
-      </div>
-      <div className="buttons">
-        <button className="prev-button" onClick={handlePrev}>Prev</button>
-        <button className="next-button" onClick={handleNext}>Next</button>
-      </div>
+      )}
+
+      {selectedEntry && (
+        <Modal
+          show={showModal}
+          onClose={handleCloseModal}
+          content={selectedEntry.content}
+          title={selectedEntry.title}
+          templateUrl={selectedEntry.template_url}
+        />
+      )}
     </div>
   );
 };
