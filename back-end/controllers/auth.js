@@ -29,24 +29,6 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-exports.getUser = async (req, res) => {
-  try {
-    const token = req.cookies["token"];
-    if (!token) {
-      return res.status(401).json({ error: "Unauthorized: No token provided" });
-    }
-    const decodedPayload = verifyToken(token);
-    if (!decodedPayload) {
-      return res.status(401).json({ error: "Unauthorized: Invalid token" });
-    }
-    const { id, email } = decodedPayload;
-    res.json(id);
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
 exports.register = async (req, res) => {
   const { first_name, last_name, username, password } = req.body;
 
@@ -69,7 +51,24 @@ exports.register = async (req, res) => {
     });
   }
 };
-
+exports.getUser = async (req, res) => {
+  try {
+    console.log("In backend");
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+    const { id, email } = decodedPayload;
+    res.json(id);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 exports.login = async (req, res) => {
   let user = req.user;
   let payload = {
@@ -128,13 +127,12 @@ exports.diarypage = async (req, res) => {
     }
     const { id, email } = decodedPayload;
     const { diaryEntries, selectedTemplate } = req.body;
-
     const diaryEntryInsertQuery = `
       INSERT INTO DiaryEntries (user_id, template_url)
       VALUES ($1, $2)
       RETURNING diary_entry_id
     `;
-    const diaryEntryValues = [id, selectedTemplate.image];
+    const diaryEntryValues = [id, selectedTemplate.image]; // Assuming 'selectedTemplate.image' corresponds to 'template_url'
     const { rows } = await db.query(diaryEntryInsertQuery, diaryEntryValues);
     const diaryEntryId = rows[0].diary_entry_id;
 
@@ -211,7 +209,7 @@ exports.getDiary = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT b.id, b.title, b.content, b.created_at, b.user_id, u.first_name, u.last_name
+      SELECT b.id, b.title, b.content, b.created_at, u.first_name, u.last_name
       FROM blogs b
       JOIN users u ON b.user_id = u.id
       ORDER BY b.created_at DESC
@@ -222,7 +220,6 @@ exports.getPosts = async (req, res) => {
       title: row.title,
       content: row.content,
       created_at: row.created_at,
-      user_id: row.user_id, // Ensure this is included
       first_name: row.first_name,
       last_name: row.last_name,
     }));
@@ -272,28 +269,6 @@ exports.editBlog = async (req, res) => {
       .json({ error: "Title, content, and blog_id are required" });
   }
   try {
-    const token = req.cookies["token"];
-    if (!token) {
-      return res.status(401).json({ error: "Unauthorized: No token provided" });
-    }
-
-    const decodedPayload = verifyToken(token);
-    if (!decodedPayload) {
-      return res.status(401).json({ error: "Unauthorized: Invalid token" });
-    }
-
-    const { id: user_id } = decodedPayload;
-
-    // Fetch the blog post to verify the owner
-    const { rows } = await db.query("SELECT user_id FROM blogs WHERE id = $1", [
-      blog_id,
-    ]);
-    if (rows.length === 0 || rows[0].user_id !== user_id) {
-      return res
-        .status(403)
-        .json({ error: "Forbidden: You can only edit your own posts" });
-    }
-
     await db.query("UPDATE blogs SET title = $1, content = $2 WHERE id = $3", [
       title,
       content,
@@ -312,6 +287,22 @@ exports.deleteBlog = async (req, res) => {
     return res.status(400).json({ error: "Blog ID is required" });
   }
   try {
+    await db.query("DELETE FROM blogs WHERE id = $1", [blog_id]);
+    res.status(200).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting blog", error);
+    res.status(500).json({ error: "Error deleting blog" });
+  }
+};
+
+exports.createTodo = async (req, res) => {
+  const { text } = req.body;
+  if (!text) {
+    return res
+      .status(400)
+      .json({ error: "Title, content, and user_id are required" });
+  }
+  try {
     const token = req.cookies["token"];
     if (!token) {
       return res.status(401).json({ error: "Unauthorized: No token provided" });
@@ -323,27 +314,75 @@ exports.deleteBlog = async (req, res) => {
     }
 
     const { id: user_id } = decodedPayload;
-
-    // Fetch the blog post to verify the owner
-    const { rows } = await db.query("SELECT user_id FROM blogs WHERE id = $1", [
-      blog_id,
+    await db.query("INSERT INTO todos (text, user_id) VALUES ($1, $2)", [
+      text,
+      user_id,
     ]);
-    if (rows.length === 0 || rows[0].user_id !== user_id) {
-      return res
-        .status(403)
-        .json({ error: "Forbidden: You can only delete your own posts" });
+    res.status(201).json({ message: "Post created successfully" });
+  } catch (error) {
+    console.error("Error creating post", error);
+    res.status(500).json({ error: "Error creating post" });
+  }
+};
+
+exports.getTodos = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
     }
 
-    await db.query("DELETE FROM blogs WHERE id = $1", [blog_id]);
-    res.status(200).json({ message: "Blog deleted successfully" });
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
+    const { rows } = await db.query("SELECT * FROM todos WHERE user_id = $1", [
+      user_id,
+    ]);
+    res.status(200).json(rows);
   } catch (error) {
-    console.error("Error deleting blog", error);
-    res.status(500).json({ error: "Error deleting blog" });
+    console.error("Error fetching todos", error);
+    res.status(500).json({ error: "Error fetching todos" });
+  }
+};
+
+exports.deleteTodo = async (req, res) => {
+  try {
+    const token = req.cookies["token"];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const decodedPayload = verifyToken(token);
+    if (!decodedPayload) {
+      return res.status(401).json({ error: "Unauthorized: Invalid token" });
+    }
+
+    const { id: user_id } = decodedPayload;
+    const { id } = req.params;
+
+    const { rowCount } = await db.query(
+      "DELETE FROM todos WHERE id = $1 AND user_id = $2",
+      [id, user_id]
+    );
+
+    if (rowCount === 0) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.status(200).json({ message: "Todo deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting todo", error);
+    res.status(500).json({ error: "Error deleting todo" });
   }
 };
 
 exports.timecapsule = async (req, res) => {
   try {
+    console.log("in backend");
+    console.log(req.body);
     const token = req.cookies["token"];
     if (!token) {
       return res.status(401).json({ error: "Unauthorized: No token provided" });
@@ -353,11 +392,12 @@ exports.timecapsule = async (req, res) => {
       return res.status(401).json({ error: "Unauthorized: Invalid token" });
     }
 
-    const id=decodedPayload.id;
-    const { overview, messageToFutureSelf, uploadedImage } = req.body;
-
-    const timeCapsuleinsertQuery = 'INSERT INTO TimeCapsule (user_id,timecapsule_id, title, message_to_future_self, image_url) VALUES ($1,$2, $3, $4, $5)';
-    const timeCapsuleValues = [id, overview, messageToFutureSelf, uploadedImage];
+    const id = decodedPayload.id;
+    const { overview, messageToFutureSelf, imageURL } = req.body;
+    console.log(id);
+    const timeCapsuleinsertQuery =
+      "INSERT INTO timecapsules (user_id, title, message_to_future_self, image_url) VALUES ($1,$2, $3, $4)";
+    const timeCapsuleValues = [id, overview, messageToFutureSelf, imageURL];
 
     await db.query(timeCapsuleinsertQuery, timeCapsuleValues);
 
@@ -365,9 +405,8 @@ exports.timecapsule = async (req, res) => {
       success: true,
       message: "Time Capsule entry inserted successfully",
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error.message);
     return res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};

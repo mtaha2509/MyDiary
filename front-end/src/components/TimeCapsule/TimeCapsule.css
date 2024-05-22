@@ -1,211 +1,98 @@
-.page-title,
-.page-subtitle,
-h2 {
-  position: relative;
-  z-index: 1;
-}
-
-
-.diary-entries {
-  display: flex;
-  flex-direction: column;
-  margin-left: -20px;
-}
-
-.time-capsule-image {
-  position: absolute;
-  top: 50%;
-  right: 13%;
-  transform: translateY(-50%);
-  width: 25%;
-  height: 50%;
-}
-
-.diary-entry{
-  background-color: #d9f2f7;
-  padding: 110px;
-  display: grid;
-  flex-direction: column;
-  align-items: centre;
-  margin-left: 11%;
-  height: 50vh;
-  width: 78%;
-  border-radius: 50px;
-  position: relative;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
-  top:100px;
-}
-
-.time-capsule {
-  background-color: #d9f2f7;
-  padding: 110px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 10%;
-  height: 50vh;
-  margin-top:5%;
-  width: 80%;
-  border-radius: 50px;
-  position: relative; /* Add position relative to the .time-capsule */
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
-}
-
-.entry-box {
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  padding: 10px;  
+/* General styles */
+.page-title, .page-subtitle, h2 {
+  text-align: center;
+  color: #333; /* Darkened text color */
   margin-bottom: 20px;
-}
-
-.entry-content p {
-  margin: 5px 0;
-}
-
-.entry-header {
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .page-title {
-  text-align: center;
-  color: black;
-  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .page-subtitle {
-  color: black;
-  margin-bottom: 20px;
+  color: #666; /* Slightly lighter subtitle color */
+  font-weight: bold;
 }
 
-form {
-  margin-bottom: 20px;
+/* Container and content adjustments for sidebar */
+.timeCapsule-container {
+  flex-grow: 1;
+  margin-left: 0;
+  margin-top: 10rem; /* Converted to rem for consistency */
+  transition: margin-left 0.3s ease;
+  overflow-x: hidden;
 }
 
-input[type="date"],
-textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  margin-top: -5px;
-  border: none;
-  outline: none;
-}
-
-button {
-  background-color: #ff6f61;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #e64943;
-}
-
-h2 {
-  color: #444;
-}
-
-.entries {
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
+.timeCapsule-content {
   position: relative;
-  top: -345px;
-}
-
-.parent-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.planting-contain {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  margin-top: 100px;
-  border-radius: 50px;
-  width: calc(110% + 51%); /* Adjust the width as needed */
-  margin-left: -30%; /* Half of the width increment */
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
-}
-
-
-.entries p {
-  margin-bottom: 35px;
-}
-
-.time-capsule-header {
-  bottom: 40px;
-  position: relative;
-  padding: 150px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  right:70%;
+  justify-content: center;
+  padding-top: 10rem; /* Converted to rem for consistency */
+  padding-right: 5rem; /* Converted to rem for consistency */
+  width: calc(100vw - 13rem); /* Converted to rem for consistency */
+  margin-left: 13rem; /* Converted to rem for consistency */
+  transition: width 0.3s ease, margin-left 0.3s ease;
 }
 
-.time-capsule-header::before {
-  position: absolute;
-  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  animation: draw-border 2s linear forwards;
-  animation-delay: 0.25s;
+.timeCapsule-container.expanded .timeCapsule-content {
+  width: calc(100vw - 27rem); /* Converted to rem for consistency */
+  margin-left: 27rem; /* Converted to rem for consistency */
 }
 
-@media (max-width: 768px) {
-  .time-capsule-header {
-    align-items: flex-start;
-  }
-
-  .page-subtitle {
-    text-align: center;
-    margin-left: 0;
-  }
-
-  .diary-entries-container {
-    margin-left: -20px;
-  }
-
-  .entry-box {
-    margin-left: 20px;
-  }
-}
-
-@keyframes draw-border {
-  to {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  }
-}
-
-.drag-drop-area {
-  border: 2px dashed #cccccc;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.drag-drop-area.active {
-  background-color: #f0f0f0;
+/* Time Capsule container */
+.time-capsule, .planting-contain {
+  background-color: #e0f8f2; /* Fun mint green */
+  padding: 4rem; /* Converted to rem for consistency */
+  border-radius: 1.5rem; /* Slightly reduced border radius */
+  margin-top: 2rem; /* Converted to rem for consistency */
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1); /* Softened box shadow */
 }
 
 .card-body {
-  position: relative;
-  bottom: 30px;
+  background-color: #94e7d2; /* Fun yellow */
+  padding: 2rem; /* Converted to rem for consistency */
+  border-radius: 1rem; /* Slightly reduced border radius */
 }
 
-.drag-drop-area.active:before {
-  content: 'Drop here';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 18px;
-  color: #333333;
+.form-group {
+  margin-bottom: 2rem; /* Converted to rem for consistency */
+}
+
+input[type="text"], input[type="file"], textarea {
+  width: 100%;
+  padding: 1.5rem; /* Increased padding for better input appearance */
+  margin-top: 1.5rem; /* Converted to rem for consistency */
+  outline: none;
+  border-radius: 1rem; /* Rounded border radius */
+  transition: border-color 0.3s ease; /* Added transition for smoother hover effect */
+}
+
+input[type="text"]:focus, input[type="file"]:focus, textarea:focus {
+  border-color: #ff6d2c; /* Vibrant orange border color on focus */
+}
+
+.timecapsule-button {
+  background-color: #ff6d2c; /* Vibrant orange */
+
+  color: white;
+  padding: 1.5rem 3rem; /* Increased padding for better button appearance */
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease; /* Added transition for smoother hover effect */
+}
+
+.timecapsule-button:hover {
+  background-color: black; /* Darker shade of orange on hover */
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 2rem; /* Converted to rem for consistency */
+}
+
+.page-item.active .page-link {
+  background-color: #ff6d2c; /* Vibrant orange */
+  border-color: #ff6d2c; /* Vibrant orange */
 }

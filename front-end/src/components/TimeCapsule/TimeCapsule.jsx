@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./TimeCapsule.css";
+import { NavBar } from "../LandingPage";
 import Sidebar from "../DiaryEntryPage/SideBar/Sidebar";
-import BoxComponent from "./Time-Capsule/BoxComponent";
-import cartoon from "../../assets/cartoon.svg";
 import { Timecapsule } from "../../../api/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import "./TimeCapsule.css";
 
 const TimeCapsule = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -11,12 +11,14 @@ const TimeCapsule = () => {
   const [newEntry, setNewEntry] = useState({
     overview: "",
     messageToFutureSelf: "",
-    uploadedImage: null,
+    imageURL: "",
   });
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 3;
+
+  const storage = getStorage();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,10 +34,7 @@ const TimeCapsule = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setNewEntry((prevState) => ({
-      ...prevState,
-      uploadedImage: file,
-    }));
+    setSelectedFile(file);
   };
 
   const handleDragOver = (e) => {
@@ -57,40 +56,38 @@ const TimeCapsule = () => {
     setDragging(false);
 
     const file = e.dataTransfer.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setNewEntry((prevState) => ({
-          ...prevState,
-          uploadedImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
+    setSelectedFile(file);
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setEntries((prevEntries) => [
-    ...prevEntries,
-    { ...newEntry },
-  ]);
+    e.preventDefault();
 
-  try {
-    const formData={
-      newEntry,
-    };
-    await Timecapsule(formData);
-  }
-  catch(err){}
+    if (selectedFile) {
+      const storageRef = ref(storage, `images/${selectedFile.name}`);
+      await uploadBytes(storageRef, selectedFile);
+      const downloadURL = await getDownloadURL(storageRef);
 
-  setNewEntry({
-    overview: "",
-    messageToFutureSelf: "",
-    uploadedImage: null,
-  });
-};
+      const updatedEntry = {
+        ...newEntry,
+        imageURL: downloadURL,
+      };
+
+      setEntries((prevEntries) => [...prevEntries, updatedEntry]);
+
+      try {
+        await Timecapsule(updatedEntry);
+      } catch (err) {
+        console.error(err);
+      }
+
+      setNewEntry({
+        overview: "",
+        messageToFutureSelf: "",
+        imageURL: "",
+      });
+      setSelectedFile(null);
+    }
+  };
 
   const totalPages = Math.ceil(entries.length / entriesPerPage);
   const indexOfLastEntry = currentPage * entriesPerPage;
@@ -99,131 +96,89 @@ const TimeCapsule = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="fadein">
-      <div className="container-fluid">
-        <div className="col-lg-12 offset-lg-12">
-          <div className="time-capsule">
-            <h1 className="page-title" style={{ fontWeight: "bold" }}>
-              Welcome to Time Capsule 💊
-            </h1>
-            <p className="page-subtitle" style={{ fontWeight: "bold", color: "grey" }}>
-              Plant your Time Capsule and let it revive your beloved memories
-            </p>
-            {/* <BoxComponent /> */}
-          </div>
+    <div
+      className={`timeCapsule-container ${sidebarExpanded ? "expanded" : ""}`}
+    >
+      <NavBar />
+      <Sidebar
+        toggleSidebar={toggleSidebar}
+        sidebarExpanded={sidebarExpanded}
+      />
+      <div className="timeCapsule-content">
+        <div className="timeCapsule">
+          <h1 className="page-title">Welcome to Time Capsule 💊</h1>
+          <p className="page-subtitle">
+            Plant your Time Capsule and let it revive your beloved memories
+          </p>
         </div>
-      </div>
-      <div className="col-lg-6 offset-lg-3">
-        <div className="p-2">
-          <Sidebar
-            toggleSidebar={toggleSidebar}
-            sidebarExpanded={sidebarExpanded}
-          />
-          <div className="planting-contain" style={{ backgroundColor:"#d9f2f7" }} >
-            <div
-              className="time-capsule-header"
-              style={{borderRadius: "80px" }}
+        <div className="planting-contain">
+          <div className="time-capsule-header">
+            <h2 className="text-center">Plant a Time Capsule</h2>
+          </div>
+          <div className="card-body">
+            <form
+              onSubmit={handleSubmit}
+              onDragOver={handleDragOver}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
             >
-              <h2 className="text-center" style={{ fontWeight: "bold" }}>
-                Plant a Time Capsule
-              </h2>
-            </div>
-            <div
-              className="card-body"
-              style={{
-                backgroundColor: "#c1c1c1",
-                padding: "20px",
-                borderRadius: "20px",
-              }}
-            >
-              <form
-                onSubmit={handleSubmit}
-                onDragOver={handleDragOver}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-              >
-                <input
-                  type="text"
-                  placeholder="Type"
-                  value={newEntry.overview}
-                  onChange={(e)=> {
-                    const overview = e.target.value;
-                    setNewEntry((prevState) => ({
-                      ...prevState,
-                      overview,
-                    }));
-                  }}
+              <input
+                type="text"
+                placeholder="Type"
+                name="overview"
+                value={newEntry.overview}
+                onChange={handleInputChange}
+              />
+              <div className="form-group mt-3">
+                <textarea
+                  name="messageToFutureSelf"
+                  placeholder="A message to your future self..."
+                  value={newEntry.messageToFutureSelf}
+                  onChange={handleInputChange}
+                  className="form-control"
+                  rows="4"
                 />
-                <div className="form-group mt-3">
-                  <textarea
-                    name="messageToFutureSelf"
-                    placeholder="A message to your future self..."
-                    value={newEntry.messageToFutureSelf}
-                    onChange={handleInputChange}
-                    className="form-control"
-                    rows="4"
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
-                  <div
-                    className={`drag-drop-area ${dragging ? "active" : ""}`}
-                    onDragOver={handleDragOver}
-                    onDragEnter={handleDragEnter}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                  >
-                    Drag & Drop or Click to Upload
-                  </div>
-                </div>
-                <div className="form-group mt-3" style={{ textAlign: "center" }}>
-                  <button type="submit" className="btn btn-primary">
-                    Set Time Capsule
-                  </button>
-                </div>
-              </form>
-            </div>
+              </div>
+              <div className="form-group mt-3">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+              </div>
+              <div className="form-group mt-3 text-center">
+                <button type="submit" className="timecapsule-button">
+                  Set Time Capsule
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
-      <div className="diary-entry" >
-        <div className="col-lg-6 offset-lg-3">
-          <h2 className="text-center" style={{ fontWeight: "bold", marginTop:"10%" }}>
-            Time Capsules
-          </h2>
-          <div
-            className="diary-entries"
-            style={{
-              backgroundColor: "#c1c1c1",
-              padding: "30px",
-              borderRadius: "20px",
-            }}
-          >
-          {currentEntries.map((entry, index) => (
-            <div key={index} className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-title" style={{ fontWeight: "bold" }}>
-                  Capsule {index + indexOfFirstEntry + 1}
-                </h5>
-                <p className="card-text">Overview: {entry.overview}</p>
-                <p className="card-text">Message: {entry.messageToFutureSelf}</p>
-                {entry.uploadedImage && (
-                  <img
-                    src={URL.createObjectURL(entry.uploadedImage)}
-                    alt="Uploaded"
-                    className="img-fluid"
-                  />
-                )}
+        <div className="diary-entry">
+          <h2 className="text-center">Time Capsules</h2>
+          <div className="diary-entries">
+            {currentEntries.map((entry, index) => (
+              <div key={index} className="card mb-3">
+                <div className="card-body">
+                  <h5 className="card-title">
+                    Capsule {index + indexOfFirstEntry + 1}
+                  </h5>
+                  <p className="card-text">Overview: {entry.overview}</p>
+                  <p className="card-text">
+                    Message: {entry.messageToFutureSelf}
+                  </p>
+                  {entry.imageURL && (
+                    <img
+                      src={entry.imageURL}
+                      alt="Uploaded"
+                      className="img-fluid"
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
-          {/* Pagination */}
           {totalPages > 1 && (
             <nav aria-label="Page navigation">
               <ul className="pagination justify-content-center">
