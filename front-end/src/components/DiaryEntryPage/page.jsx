@@ -28,7 +28,8 @@ function DiaryEntryPage() {
     {
       id: 2,
       name: "Template 2",
-      image: lighttheme,
+      image:
+        "https://img.freepik.com/free-vector/purple-pink-halftone-background-vector_53876-67278.jpg?t=st=1716357499~exp=1716361099~hmac=33ed745c972c7275829accedb5f9252c457323220458da0bddcad62d28b6f92d&w=740",
       description: "Description for Template 2",
     },
     {
@@ -42,14 +43,14 @@ function DiaryEntryPage() {
       id: 4,
       name: "Template 4",
       image:
-        "https://img.freepik.com/free-photo/blue-wall-background_53876-88663.jpg?t=st=1715464876~exp=1715468476~hmac=e60797571a897a4de61ef6b428ec4599590192007dc1ac8194fe2ac97b8970e6&w=740",
+        "https://img.freepik.com/free-vector/grunge-watercolor-background-using-pastel-colours_1048-6530.jpg?t=st=1716357569~exp=1716361169~hmac=d423ea2a6c3191d1c00d2839a14be9a3f8239154f78bd20c0a9e7cb5490cc91d&w=740",
       description: "Description for Template 4",
     },
     {
       id: 5,
       name: "Template 5",
       image:
-        "https://img.freepik.com/free-vector/blue-curve-background_53876-113112.jpg?t=st=1715464915~exp=1715468515~hmac=c26c04fb46c8ccd474a8a1b9e33224fb58c303443bc7fe6d93c44ff98f80ef9c&w=1380",
+        "https://img.freepik.com/free-vector/abstract-orange-background_698452-1400.jpg?t=st=1716357688~exp=1716361288~hmac=d44dc791dc02d20e1b1c2d5dbfbccbb97452369c3ef01f96b8b7aad1ea6f27ca&w=996",
       description: "Description for Template 5",
     },
     {

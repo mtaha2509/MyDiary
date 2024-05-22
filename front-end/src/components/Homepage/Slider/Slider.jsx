@@ -78,41 +78,53 @@ const Slider = () => {
       </p>
       <div className="slider-container">
         <div className="Diaries">My Diaries</div>
-        <Row className="card-row">
-          {[...Array(cardsToShow)].map((_, index) => {
-            const actualIndex = (startIndex + index) % totalCards;
-            const entry = diaryEntries[actualIndex];
-            return (
-              <Col key={index} xs={12} md={6} lg={3}>
-                <Card
-                  imageUrl={entry?.template_url}
-                  title={entry?.title}
-                  description={
-                    entry?.content.split(" ").slice(0, 5).join(" ") + "..."
-                  }
-                  onClick={() => handleCardClick(entry)}
-                />
-              </Col>
-            );
-          })}
-        </Row>
+        {totalCards === 0 ? (
+          <div className="no-entries-message">
+            Oh looks like you have not written anything!!
+            <br />
+            <a href="/diarypage" className="write-link">
+              Click here to write your first Diary Entry
+            </a>
+          </div>
+        ) : (
+          <Row className="card-row">
+            {[...Array(Math.min(cardsToShow, totalCards))].map((_, index) => {
+              const actualIndex = (startIndex + index) % totalCards;
+              const entry = diaryEntries[actualIndex];
+              return (
+                <Col key={index} xs={12} md={6} lg={3}>
+                  <Card
+                    imageUrl={entry?.template_url}
+                    title={entry?.title}
+                    description={
+                      entry?.content.split(" ").slice(0, 5).join(" ") + "..."
+                    }
+                    onClick={() => handleCardClick(entry)}
+                  />
+                </Col>
+              );
+            })}
+          </Row>
+        )}
       </div>
-      <div className="buttons">
-        <button
-          className="prev-button"
-          onClick={handlePrev}
-          disabled={totalCards <= cardsToShow}
-        >
-          Prev
-        </button>
-        <button
-          className="next-button"
-          onClick={handleNext}
-          disabled={totalCards <= cardsToShow}
-        >
-          Next
-        </button>
-      </div>
+      {totalCards > cardsToShow && (
+        <div className="buttons">
+          <button
+            className="prev-button"
+            onClick={handlePrev}
+            disabled={totalCards <= cardsToShow}
+          >
+            Prev
+          </button>
+          <button
+            className="next-button"
+            onClick={handleNext}
+            disabled={totalCards <= cardsToShow}
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {selectedEntry && (
         <Modal

@@ -36,7 +36,7 @@
 }
 
 .next-button, .prev-button {
-  background-color: #007bff;
+  background-color: #FF6D2C;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -46,5 +46,18 @@
 }
 
 .next-button:hover, .prev-button:hover {
-  background-color: #0056b3;
+  background-color: black;
+}
+
+.no-entries-message {
+  text-align: center;
+  font-size: 20px;
+  color: #333;
+  margin-top: 50px;
+}
+
+.write-link {
+  color: #FF6D2C;
+  font-weight: bold;
+  text-decoration: none;
 }

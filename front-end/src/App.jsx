@@ -15,7 +15,7 @@ import TimeCapsule from "./components/TimeCapsule/TimeCapsule";
 import Notes from "./components/Notes/notes";
 import About from "./components/About/about";
 import ToDoList from "./components/todolist/todolist";
-import Blog from "./components/BlogPage/BlogPage"
+import Blog from "./components/BlogPage/BlogPage";
 
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProtectedInfo } from "../api/auth";
@@ -62,7 +62,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-
+        <Route path="/about" element={<About />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/timecapsule" element={<TimeCapsule />} />
@@ -74,7 +74,6 @@ function App() {
         <Route element={<RestrictedRoutes />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
-          <Route path="/about" element={<About />} />
         </Route>
       </Routes>
     </BrowserRouter>
