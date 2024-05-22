@@ -3,6 +3,7 @@ import "./todolist.css";
 import { Footer } from '../LandingPage';
 import { createTodo, getTodos, deleteTodo } from '../../../api/auth';
 import NavBar from '../LandingPage/navbar/navbar';
+import { v4 as uuidv4 } from 'uuid';
 
 const ToDoList = () => {
   const [items, setItems] = useState([]);
@@ -14,6 +15,7 @@ const ToDoList = () => {
     const fetchTodos = async () => {
       try {
         const todos = await getTodos();
+        console.log("Fetched Todos:", todos);
         setItems(todos);
       } catch (error) {
         console.error("Error fetching ToDos:", error);
@@ -26,12 +28,18 @@ const ToDoList = () => {
   const addItem = async () => {
     if (inputText.trim() !== "") {
       try {
-        const newTodo = await createTodo({
+        const newTodo = {
+          id: uuidv4(),
           text: inputText,
           completed: false
-        });
-        setItems(prevItems => [newTodo, ...prevItems]);
+        };
+        setItems(prevItems => [...prevItems, newTodo]);
         setInputText("");
+
+        await createTodo({
+          text: newTodo.text,
+          completed: newTodo.completed
+        });
       } catch (error) {
         console.error("Error creating ToDo:", error);
       }
@@ -72,16 +80,20 @@ const ToDoList = () => {
 
   const deleteItem = async (id) => {
     try {
-      await deleteTodo(id);
-      setItems(prevItems => prevItems.filter(item => item.id !== id));
-      delete timeoutsRef.current[id];
-      setTimers(prevTimers => {
-        const updatedTimers = { ...prevTimers };
-        delete updatedTimers[id];
-        return updatedTimers;
-      });
+      const isDeleted = await deleteTodo(id);
+      if (isDeleted) {
+        setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+        delete timeoutsRef.current[id];
+        setTimers((prevTimers) => {
+          const updatedTimers = { ...prevTimers };
+          delete updatedTimers[id];
+          return updatedTimers;
+        });
+      } else {
+        console.error(`Error deleting ToDo: Item with ID ${id} not found in the backend.`);
+      }
     } catch (error) {
-      console.error("Error deleting ToDo:", error);
+      console.error("Error deleting ToDo:", error.message);
     }
   };
 
@@ -118,7 +130,7 @@ const ToDoList = () => {
             <ul className="todo-list">
               {items.map((todoItem) => (
                 <ToDoItem
-                  key={todoItem.id} // Use the id of the todoItem as the key
+                  key={todoItem.id}
                   id={todoItem.id}
                   text={todoItem.text}
                   completed={todoItem.completed}
@@ -135,10 +147,9 @@ const ToDoList = () => {
   );
 };
 
-const InputArea = (props) => {
+const InputArea = ({ value, onChange, onAdd }) => {
   const handleChange = (event) => {
-    const newValue = event.target.value;
-    props.onChange(newValue);
+    onChange(event.target.value);
   };
 
   return (
@@ -147,29 +158,27 @@ const InputArea = (props) => {
         className="todo-input"
         onChange={handleChange}
         type="text"
-        value={props.value}
+        value={value}
         placeholder="Enter a task"
       />
-      <button className="todo-add-button" onClick={props.onAdd}>
+      <button className="todo-add-button" onClick={onAdd}>
         <span>Add</span>
       </button>
     </div>
   );
 };
 
-const ToDoItem = (props) => {
+const ToDoItem = ({ id, text, completed, onToggle, countdown }) => {
   return (
     <div
-      className={`todo-item ${props.completed ? "completed" : "new-item"}`}
-      onClick={() => {
-        props.onToggle(props.id);
-      }}
+      className={`todo-item ${completed ? "completed" : "new-item"}`}
+      onClick={() => onToggle(id)}
     >
       <li>
         <span className="todo-text">
-          {props.text}
+          {text}
         </span>
-        {props.completed && <span className="countdown">({props.countdown}s)</span>}
+        {completed && <span className="countdown">({countdown}s)</span>}
       </li>
     </div>
   );
