@@ -7,6 +7,7 @@ import ToDoList from "./ToDoList/ToDoList";
 import AIBot from "../Bot/AI/AI";
 import "./Homepage.css";
 import "../About/about";
+import TimeCapsuleSlider from "../Homepage/TimeCapsuleSlider/TimeCapsuleSlider";
 import { Footer } from "../LandingPage";
 import { useDispatch } from "react-redux";
 
@@ -29,7 +30,8 @@ const Homepage = () => {
           <Slider />
         </div>
         <div className="homePage-todoList">
-          <ToDoList />
+          {/* <ToDoList /> */}
+          <TimeCapsuleSlider />
         </div>
       </div>
       <AIBot />

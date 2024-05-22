@@ -16,6 +16,7 @@ const {
   createTodo,
   getTodos,
   deleteTodo,
+  getTimeCapsule,
 } = require("../controllers/auth");
 const {
   validationMiddleware,
@@ -25,6 +26,7 @@ const { userAuth } = require("../middlewares/auth-middleware");
 const router = Router();
 
 router.get("/get-users", getUsers);
+router.get("/getTimeCapsule", getTimeCapsule);
 router.get("/get-user", getUser);
 router.get("/protected", userAuth, protected);
 router.post("/register", registerValidation, validationMiddleware, register);

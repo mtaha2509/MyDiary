@@ -79,14 +79,14 @@ const About = () => {
                     <img src={taha} alt="Muhammad Taha" style={{ width:"100%", heigh:"20%" }} />
                     <div className="description">Muhammad Taha - Designer</div>
                   </div>
-                  <p>Muhammad Taha</p>
+                  <p style={{ fontWeight: "bold" }}>Muhammad Taha</p>
                 </div>
                 <div className="member">
                   <div className="image-container">
                     <img src={asim} alt="Muhammad Asim" style={{ width:"100%", heigh:"20%" }} />
-                    <div className="description">Muhammad Asim - Customer Support</div>
+                    <div className="description">Muhammad Asim - Project Manager</div>
                   </div>
-                  <p>Muhammad Asim</p>
+                  <p style={{ fontWeight: "bold" }}>Muhammad Asim</p>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ const About = () => {
         />
       </div>
       
-      {/* <div className='fadeIn about-footer'><Footer/></div> */}
+      <div className='fadeIn about-footer'><Footer/></div>
     </div>
   );
 };

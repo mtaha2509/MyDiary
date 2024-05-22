@@ -1,8 +1,12 @@
 import React from "react";
 import "./SideBar.css";
+
 import { ExpandIcon, ShrinkIcon } from "../../../assets";
+
 import { useDispatch } from "react-redux";
+
 import { authenticateUser } from "../../../redux/slices/authSlice";
+import "../../BlogPage/BlogPage"
 import { useNavigate } from "react-router-dom";
 import "../../todolist/todolist"
 
@@ -57,6 +61,11 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
             <div className="sidebar-entry">
               <a href="#" onClick={() => handleNavigation("/diarypage")}>
                 <span className="sidebar-entry-label">Diary Entry</span>
+              </a>
+            </div>
+            <div className="sidebar-entry">
+              <a href="#" onClick={() => handleNavigation("/BlogPage")}>
+                <span className="sidebar-entry-label">Blog Page</span>
               </a>
             </div>
           </div>

@@ -1,9 +1,9 @@
 .BlogPage {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   text-align: center;
   padding: 20px;
   margin-top: 5rem;
-  background-color: #f4f4f4;
+  background-color: #f8f8f8;
 }
 
 .fadeIn {
@@ -17,27 +17,27 @@
 
 .blog-form {
   margin-bottom: 20px;
-  max-width: 600px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   background: white;
-  padding: 20px;
-  border: 1px solid #ccc;
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .blog-input {
-  width: calc(100% - 16px); /* Subtracting padding */
-  margin-bottom: 10px;
-  padding: 8px;
+  width: calc(100% - 16px);
+  margin-bottom: 20px;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 16px;
 }
 
 .blog-button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -52,18 +52,17 @@
 }
 
 .blog-posts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  margin-bottom: 40px;
 }
 
 .blog-post {
   width: 300px;
-  margin: 10px;
   padding: 20px;
   background: white;
-  border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -75,8 +74,20 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+.blog-post-image {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.blog-post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .blog-post h2 {
-  margin-top: 0;
+  margin-top: 10px;
   font-size: 1.5em;
   color: #333;
 }
@@ -84,11 +95,6 @@
 .blog-post p {
   margin-bottom: 10px;
   color: #666;
-}
-
-.blog-post-date {
-  font-size: 0.9em;
-  color: #999;
 }
 
 .blog-post-info {
@@ -105,7 +111,6 @@
   white-space: nowrap;
 }
 
-/* Modal styles */
 .modal {
   position: fixed;
   top: 0;
@@ -123,9 +128,9 @@
 
 .modal-content {
   background: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
-  max-width: 600px;
+  max-width: 800px;
   width: 100%;
   position: relative;
   transform: scale(0.8);
@@ -142,19 +147,24 @@
   cursor: pointer;
 }
 
-/* Animations */
 @keyframes scaleIn {
   to {
     transform: scale(1);
   }
 }
 
-/* Additional Design Enhancements */
-
-/* Typography */
-h1 {
-  font-size: 2.5em;
+h1, h2 {
+  font-family: 'Playfair Display', serif;
   font-weight: bold;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 2em;
   margin-bottom: 20px;
 }
 
@@ -169,25 +179,23 @@ h1 {
   line-height: 1.5;
 }
 
-/* Buttons */
 .blog-button {
   font-size: 1em;
-  padding: 12px 20px;
+  padding: 14px 24px;
   border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Forms */
 .blog-form input, .blog-form textarea {
   font-size: 1em;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
 
-/* Modal */
 .modal-content h2 {
-  font-size: 1.8em;
+  font-size: 2em;
   margin-bottom: 10px;
 }
 
@@ -196,14 +204,70 @@ h1 {
   line-height: 1.5;
 }
 
-/* Responsiveness */
 @media (max-width: 768px) {
   .blog-posts {
-    flex-direction: column;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 
   .blog-post {
-    width: 100%;
-    margin-bottom: 20px;
+    width: 250px;
   }
+}
+
+.hero-section {
+  background-image: url('https://picsum.photos/1920/1080?random');
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section h1 {
+  font-size: 4em;
+  margin-bottom: 20px;
+}
+
+.hero-section p {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+}
+
+.cancel-button {
+  padding: 10px 20px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.cancel-button:hover {
+  background-color: #999;
+}
+
+.edit-form {
+  margin-top: 20px;
+}
+
+.edit-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }

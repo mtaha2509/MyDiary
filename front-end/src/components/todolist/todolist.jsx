@@ -4,12 +4,16 @@ import { Footer } from '../LandingPage';
 import { createTodo, getTodos, deleteTodo } from '../../../api/auth';
 import NavBar from '../LandingPage/navbar/navbar';
 import { v4 as uuidv4 } from 'uuid';
+import SideBar from "../DiaryEntryPage/SideBar/Sidebar";
+
 
 const ToDoList = () => {
   const [items, setItems] = useState([]);
   const [inputText, setInputText] = useState("");
   const timeoutsRef = useRef({});
   const [timers, setTimers] = useState({});
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -112,8 +116,16 @@ const ToDoList = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const toggleSidebar = () => {
+    setSidebarExpanded(!sidebarExpanded);
+  };
+
   return (
     <div className="todo-body">
+      <SideBar
+        toggleSidebar={toggleSidebar}
+        sidebarExpanded={sidebarExpanded}
+      />
       <NavBar className="fadeIn about-nav" />
       <div className="todo-content">
         <div className="todo-container">
@@ -141,7 +153,6 @@ const ToDoList = () => {
           </div>
         </div>
       </div>
-      <Footer className="fadeIn about-footer" />
     </div>
   );
 };

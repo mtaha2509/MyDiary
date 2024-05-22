@@ -1,0 +1,39 @@
+.time-card {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 10px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    background-color: #000; /* Set background color to black */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adjust box shadow */
+    color: #fff;
+  }
+  
+  .time-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .time-card-content {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .time-card-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .time-card-timer {
+    margin-top: 5px;
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    .time-card {
+      max-width: 100%;
+    }
+  }
+  
