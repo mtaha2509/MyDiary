@@ -192,7 +192,7 @@ exports.getDiary = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT b.id, b.title, b.content, b.created_at, u.username
+      SELECT b.id, b.title, b.content, b.created_at, u.first_name, u.last_name
       FROM blogs b
       JOIN users u ON b.user_id = u.id
       ORDER BY b.created_at DESC
@@ -203,7 +203,8 @@ exports.getPosts = async (req, res) => {
       title: row.title,
       content: row.content,
       created_at: row.created_at,
-      username: row.username,
+      first_name: row.first_name,
+      last_name: row.last_name,
     }));
 
     res.json(blogPosts);

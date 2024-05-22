@@ -62,6 +62,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/BlogPage" element={<Blog />} />
 
         <Route element={<PrivateRoutes />}>
           <Route path="/homepage" element={<Homepage />} />
@@ -69,12 +71,10 @@ function App() {
           <Route path="/diarypage" element={<DiaryEntryPage />} />
           <Route path="/notes" element={<Notes />} />
           <Route path="/todolist" element={<ToDoList />} />
-          <Route path="/BlogPage" element={<Blog />} />
         </Route>
         <Route element={<RestrictedRoutes />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
-          <Route path="/about" element={<About />} />
         </Route>
       </Routes>
     </BrowserRouter>

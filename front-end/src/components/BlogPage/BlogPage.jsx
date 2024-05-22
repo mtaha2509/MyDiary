@@ -167,7 +167,10 @@ function BlogPage() {
                 <>
                   <h2>{post.title}</h2>
                   <p>{post.content}</p>
-                  <p className="blog-post-date">{new Date(post.created_at).toLocaleString()}</p>
+                  <p className="blog-post-info">
+                    <span>Posted by {post.first_name} {post.last_name}</span>
+                    <span> | {new Date(post.created_at).toLocaleString()}</span>
+                  </p>
                   <button onClick={() => handleEditClick(post)}>Edit</button>
                   <button onClick={() => handleDelete(post.id)}>Delete</button>
                 </>
