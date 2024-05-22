@@ -9,6 +9,8 @@ const {
   getDiary,
   getPosts,
   postPost,
+  editBlog,
+  deleteBlog,
 } = require("../controllers/auth");
 const {
   validationMiddleware,
@@ -26,5 +28,6 @@ router.post("/diarypage", diarypage);
 router.get("/diarypage", getDiary);
 router.get("/getPosts", getPosts)
 router.post("/postPost", postPost)
-
+router.put("/editBlog", editBlog)
+router.delete("/deleteBlog/:blog_id", deleteBlog);
 module.exports = router;

@@ -42,3 +42,21 @@ export async function postPost(blogPost) {
     }
   });
 }
+
+export async function editBlog(blogData) {
+  return await axios.put("http://localhost:3000/api/editBlog", blogData, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
+export async function deleteBlog(blogId) {
+  try {
+    const response = await axios.delete(`http://localhost:3000/api/deleteBlog/${blogId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting blog:', error);
+    throw error;
+  }
+}

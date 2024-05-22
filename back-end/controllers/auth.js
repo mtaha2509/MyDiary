@@ -242,3 +242,34 @@ exports.postPost = async (req, res) => {
     res.status(500).json({ error: "Error creating post" });
   }
 };
+
+exports.editBlog = async (req, res) => {
+  const { title, content, blog_id } = req.body;
+  if (!title || !content || !blog_id) {
+    return res.status(400).json({ error: "Title, content, and blog_id are required" });
+  }
+  try {
+    await db.query(
+      "UPDATE blogs SET title = $1, content = $2 WHERE id = $3",
+      [title, content, blog_id]
+    );
+    res.status(200).json({ message: "Blog updated successfully" });
+  } catch (error) {
+    console.error("Error updating blog", error);
+    res.status(500).json({ error: "Error updating blog" });
+  }
+};
+
+exports.deleteBlog = async (req, res) => {
+  const { blog_id } = req.params;
+  if (!blog_id) {
+    return res.status(400).json({ error: "Blog ID is required" });
+  }
+  try {
+    await db.query("DELETE FROM blogs WHERE id = $1", [blog_id]);
+    res.status(200).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting blog", error);
+    res.status(500).json({ error: "Error deleting blog" });
+  }
+};
