@@ -95,6 +95,7 @@
   transition: background-color 0.3s;
   display: flex;
   align-items: center;
+  position: relative; /* Added */
 }
 
 .todo-item.new-item {
@@ -121,7 +122,17 @@
   color: inherit;
 }
 
+.countdown {
+  position: absolute;
+  right: 10px; /* Adjust as needed */
+  color: #777; /* Adjust color as needed */
+}
+
+.todo-item .todo-text {
+  flex: 1; /* Added */
+  margin-right: 20px; /* Adjust spacing between text and timer */
+}
+
 .about-footer {
   margin: 0;
 }
-
