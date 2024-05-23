@@ -1,13 +1,10 @@
 import React from "react";
 import "./SideBar.css";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import NoteIcon from "@mui/icons-material/Note";
 import ListIcon from "@mui/icons-material/List";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import BookIcon from "@mui/icons-material/Book";
-import ArticleIcon from "@mui/icons-material/Article";
 import { ExpandIcon, ShrinkIcon, gif } from "../../../assets";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -21,11 +18,7 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
   };
 
   return (
-    <div
-      className={`sidebar-container ${
-        sidebarExpanded ? "sidebar-expanded" : ""
-      }`}
-    >
+    <div className={`sidebar-container ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
       <div className="sidebar">
         <div className="sidebar-toggle-button" onClick={toggleSidebar}>
           <div className="sidebar-icon">
@@ -46,40 +39,24 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
             </span>
           )}
         </div>
-        {sidebarExpanded && (
-          <div className="sidebar-entries" style={{ fontSize: "medium" }}>
-            <div className="sidebar-entry">
-              <a href="#" onClick={() => handleNavigation("/notes")}>
-                <NoteIcon className="sidebar-entry-icon" />
-                <span className="sidebar-entry-label">Sticky Notes</span>
-              </a>
-            </div>
-            <div className="sidebar-entry">
-              <a href="/todolist" onClick={() => handleNavigation("/todolist")}>
-                <ListIcon className="sidebar-entry-icon" />
-                <span className="sidebar-entry-label">To-do List</span>
-              </a>
-            </div>
-            <div className="sidebar-entry">
-              <a href="#" onClick={() => handleNavigation("/timecapsule")}>
-                <ArchiveIcon className="sidebar-entry-icon" />
-                <span className="sidebar-entry-label">Time Capsule</span>
-              </a>
-            </div>
-            <div className="sidebar-entry">
-              <a href="#" onClick={() => handleNavigation("/diarypage")}>
-                <BookIcon className="sidebar-entry-icon" />
-                <span className="sidebar-entry-label">Diary Entry</span>
-              </a>
-            </div>
-            {/* <div className="sidebar-entry">
-              <a href="#" onClick={() => handleNavigation("/BlogPage")}>
-                <ArticleIcon className="sidebar-entry-icon" />
-                <span className="sidebar-entry-label">Blog Page</span>
-              </a>
-            </div> */}
+        <div className="sidebar-entries" style={{ fontSize: "medium" }}>
+          <div className="sidebar-entry" onClick={() => handleNavigation("/todolist")}>
+            <ListIcon className="sidebar-entry-icon" />
+            {sidebarExpanded && <span className="sidebar-entry-label">To-do List</span>}
           </div>
-        )}
+          <div className="sidebar-entry" onClick={() => handleNavigation("/timecapsule")}>
+            <ArchiveIcon className="sidebar-entry-icon" />
+            {sidebarExpanded && <span className="sidebar-entry-label">Time Capsule</span>}
+          </div>
+          <div className="sidebar-entry" onClick={() => handleNavigation("/diarypage")}>
+            <BookIcon className="sidebar-entry-icon" />
+            {sidebarExpanded && <span className="sidebar-entry-label">Diary Entry</span>}
+          </div>
+          <div className="sidebar-entry" onClick={() => handleNavigation("/notes")}>
+            <NoteIcon className="sidebar-entry-icon" />
+            {sidebarExpanded && <span className="sidebar-entry-label">Sticky Notes</span>}
+          </div>
+        </div>
       </div>
     </div>
   );

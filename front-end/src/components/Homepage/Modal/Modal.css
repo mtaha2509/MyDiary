@@ -65,7 +65,7 @@
 /* Modal Content */
 .homepage-modal-body .modal-content {
   margin: 10px 0;
-  font-size: 1.1rem;
+  font-size: 1.3rem; /* Increased font size */
   color: #f0f0f0; /* Match title color */
   background: transparent; /* Ensure background is transparent */
 }

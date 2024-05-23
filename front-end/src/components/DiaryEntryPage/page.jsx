@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { DiaryEntry } from "../../../api/auth";
 import { NavBar } from "../LandingPage";
 import TemplateCard from "./Template-Card/TemplateCard";
+import AIBot from "../Bot/AI/AI";
 
 function DiaryEntryPage() {
   const authState = useSelector((state) => state.auth);
@@ -251,6 +252,7 @@ function DiaryEntryPage() {
   return (
     <>
       <div className="page-container">
+        <AIBot/>
         <NavBar />
         <SideBar
           toggleSidebar={toggleSidebar}

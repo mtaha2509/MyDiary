@@ -1,21 +1,21 @@
-/* page.css */
 .page-container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5rem;
 }
 
 .page-content {
   flex-grow: 1; 
-  padding: 20px 20px 20px 130px; /* Top, right, bottom, left padding */
+  padding: 20px 20px 20px 130px;
   margin-top: 25px;
-  width: calc(100vw - 130px); /* Adjust width to leave space for sidebar */
-  transition: padding-left 0.3s ease; /* Smooth transition for padding */
+  width: calc(100vw - 130px);
+  transition: padding-left 0.3s ease;
 }
 
 .sidebar-expanded + .page-content {
-  padding-left: 270px; /* Increase left padding when sidebar is expanded */
+  padding-left: 270px;
 }
 
 .page-buttons {
@@ -142,8 +142,8 @@
   border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.6); /* Transparent background */
-  outline: none; /* Remove outlines */
+  background-color: rgba(255, 255, 255, 0.6);
+  outline: none;
 }
 
 .diary-title::placeholder,

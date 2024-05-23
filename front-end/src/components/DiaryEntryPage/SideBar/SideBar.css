@@ -8,14 +8,14 @@
   transition: width 0.3s ease;
   z-index: 300;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-expanded {
   width: 200px;
 }
 
-.sidebar-gif{
+.sidebar-gif {
   height: 25px;
 }
 
@@ -33,12 +33,11 @@
   color: #fff;
   cursor: pointer;
   padding: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
-  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-toggle-button:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Darken on hover */
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-toggle-button .sidebar-icon {
@@ -62,33 +61,23 @@
 }
 
 .sidebar-entry:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Darken on hover */
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-entry:hover .sidebar-entry-label {
-  color: #fff; /* Change text color on hover */
+  color: #fff;
 }
 
 .sidebar-entry-label {
   color: #ccc;
-  margin-left: 10px; /* Add some space between icon and label */
-}
-
-.sidebar-expand-icon,
-.sidebar-shrink-icon {
-  position: absolute;
-  right: -15px;
-  top: 25px;
-  transition: transform 0.3s ease; /* Add smooth transition */
-}
-
-.sidebar-expand-icon:hover,
-.sidebar-shrink-icon:hover {
-  transform: scale(1.1); /* Scale up on hover */
+  margin-left: 10px;
+  display: none;
 }
 
 .sidebar-entry-icon {
   margin-right: 10px;
+  font-size: 2rem;
+  color: #d3d3d3;
 }
 
 .sidebar-icon {
@@ -96,3 +85,19 @@
   align-items: center;
 }
 
+.sidebar-expand-icon,
+.sidebar-shrink-icon {
+  position: absolute;
+  right: -15px;
+  top: 25px;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-expand-icon:hover,
+.sidebar-shrink-icon:hover {
+  transform: scale(1.1);
+}
+
+.sidebar-expanded .sidebar-entry-label {
+  display: inline;
+}
