@@ -69,8 +69,8 @@ const TimeCapsuleSlider = () => {
 
   return (
     <div className="slider-wrapper">
-      <div className="welcome-text">
-        Welcome👋,
+      <div className="catchy-hook">
+        Journey Through Time 🚀
         <br />
       </div>
       <p
@@ -81,16 +81,16 @@ const TimeCapsuleSlider = () => {
           marginTop: "10px",
         }}
       >
-        How's it going?
+        Ready to unlock your memories?
       </p>
       <div className="slider-container">
         <div className="Capsules">My Time Capsules</div>
         {totalCards === 0 ? (
           <div className="no-entries-message">
-            Oh looks like you have not set any time capsules!!
+            Oh no! You haven't set any time capsules yet!!
             <br />
             <a href="/timecapsule" className="set-link">
-              Click here to set your first Time Capsule
+              Click here to create your first Time Capsule
             </a>
           </div>
         ) : (
