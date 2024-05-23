@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./page.css";
-import { SideBar, MainNavBar } from "../DiaryEntryPage"; // Import SideBar and MainNavBar
+import { SideBar, MainNavBar } from "../DiaryEntryPage";
 import {
   Diary_temp1,
   TimeCapsule,
   phool,
   horrortheme,
   lighttheme,
-} from "./../../assets"; // Import templates
+} from "./../../assets";
 import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
 import { DiaryEntry } from "../../../api/auth";
 import { NavBar } from "../LandingPage";
-import TemplateCard from "./Template-Card/TemplateCard"; // Import TemplateCard component
+import TemplateCard from "./Template-Card/TemplateCard";
 
 function DiaryEntryPage() {
   const authState = useSelector((state) => state.auth);
@@ -84,14 +84,11 @@ function DiaryEntryPage() {
   const [charLimit, setCharLimit] = useState(350);
   const [remainingChars, setRemainingChars] = useState(charLimit);
   const [diarySaved, setDiarySaved] = useState(false);
-
-  // State for diary entries
   const [diaryEntries, setDiaryEntries] = useState([
     { pageNumber: 1, title: "", content: "" },
   ]);
 
   useEffect(() => {
-    // Calculate remaining characters
     const contentLength = diaryContent.length;
     const remaining = charLimit - contentLength;
     setRemainingChars(remaining);
@@ -101,7 +98,6 @@ function DiaryEntryPage() {
     setSidebarExpanded(!sidebarExpanded);
   };
 
-  // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -165,26 +161,20 @@ function DiaryEntryPage() {
     doc.save("diary.pdf");
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // Function to handle template selection
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
-    // Close the modal
     closeModal();
   };
 
-  // Function to handle replacing the template
   const handleReplaceTemplate = () => {
-    setSelectedTemplate(null); // Clear selected template
-    // No need to clear userInput state
-    openModal(); // Open modal for selecting a new template
+    setSelectedTemplate(null);
+    openModal();
   };
 
-  // Function to handle typing in the diary content
   const handleDiaryContentChange = (e) => {
     const content = e.target.value;
     const contentLength = content.length;
@@ -208,12 +198,10 @@ function DiaryEntryPage() {
       });
       setDiaryEntries(updatedEntries);
 
-      // Move to the next page
       setCurrentPage(currentPage + 1);
       setDiaryContent(content.slice(charLimit));
       setRemainingChars(charLimit - content.slice(charLimit).length);
 
-      // Add a new page to the diary entries
       setDiaryEntries([
         ...updatedEntries,
         {
@@ -240,29 +228,30 @@ function DiaryEntryPage() {
       setDiaryTitle(diaryEntries[currentPage - 2].title);
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting diary entries");
     try {
       const values = {
         diaryEntries,
         selectedTemplate,
       };
+      console.log(values);
       await DiaryEntry(values);
       setDiarySaved(true);
       setTimeout(() => {
         setDiarySaved(false);
       }, 2000);
-    } catch (error) {console.log("What")}
+    } catch (error) {
+      console.error("Error saving diary:", error);
+    }
   };
 
   return (
     <>
       <div className="page-container">
-        <div>
-          <NavBar />
-        </div>
-
+        <NavBar />
         <SideBar
           toggleSidebar={toggleSidebar}
           sidebarExpanded={sidebarExpanded}
@@ -278,7 +267,9 @@ function DiaryEntryPage() {
             </p>
           </div>
           <div
-            className="template-slot"
+            className={`template-slot ${
+              selectedTemplate ? "template-selected" : ""
+            }`}
             style={{
               backgroundImage: selectedTemplate
                 ? `url(${selectedTemplate.image})`
@@ -286,13 +277,9 @@ function DiaryEntryPage() {
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              position: "relative", // Ensure the positioning context for the text input
-              height: "140%",
-              width: "63%",
             }}
           >
             {selectedTemplate ? (
-              // Render the selected template here
               <form onSubmit={handleSubmit}>
                 <input
                   type="text"
@@ -310,59 +297,25 @@ function DiaryEntryPage() {
                     });
                     setDiaryEntries(updatedEntries);
                   }}
-                  style={{
-                    position: "absolute",
-                    top: "26%",
-                    left: "55%",
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: "transparent",
-                    border: "none",
-                    fontSize: "2rem",
-                    fontWeight: "bold",
-                    color: "white",
-                  }}
                 />
                 <textarea
                   className="diary-content"
                   placeholder="Content"
                   value={diaryContent}
                   onChange={handleDiaryContentChange}
-                  style={{
-                    position: "absolute",
-                    top: "49%",
-                    left: "51%",
-                    transform: "translate(-50%, -50%)",
-                    width: "49%",
-                    height: "31%",
-                    backgroundColor: "transparent",
-                    border: "none",
-                    fontSize: "1.5rem",
-                    color: "white",
-                    resize: "auto",
-                  }}
                 />
-                <p
-                  style={{
-                    position: "absolute",
-                    bottom: "10%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
+                <p className="remaining-chars">
                   {remainingChars >= 0
                     ? `Remaining characters: ${remainingChars}`
                     : ""}
                 </p>
-                <h4 style={{ fontWeight:"bolder", textAlign:"center", marginRight:"100px" }} >Page {currentPage}</h4>
+                <h4 className="page-number">Page {currentPage}</h4>
                 <div className="pagination-buttons">
                   <button
                     type="button"
                     onClick={handlePreviousPage}
                     disabled={currentPage === 1}
-                    style={{ 
-                      marginRight: "75%",
-                     }}
-                     className="page-button"
+                    className="page-button"
                   >
                     &lt; Prev
                   </button>
@@ -375,29 +328,35 @@ function DiaryEntryPage() {
                     Next &gt;
                   </button>
                 </div>
-              </form>
-            ) : (
-              // Render placeholder content if no template is selected
-              <div className="empty-slot">
-                <p>First you need to select a Template</p>
-                <div>
+                <div className="action-buttons">
                   <button
-                    onClick={openModal}
-                    className="choose-template-button"
+                    className="page-buttons"
+                    type="button"
+                    onClick={handleReplaceTemplate}
                   >
-                    Choose A template
+                    Replace Template
+                  </button>
+                  <button
+                    className="page-buttons"
+                    type="button"
+                    onClick={handleDownloadPDF}
+                  >
+                    Download Diary
+                  </button>
+                  <button className="page-buttons" type="submit">
+                    Save Diary
                   </button>
                 </div>
+              </form>
+            ) : (
+              <div className="empty-slot">
+                <p>First you need to select a Template</p>
+                <button onClick={openModal} className="choose-template-button">
+                  Choose A template
+                </button>
               </div>
             )}
           </div>
-          {selectedTemplate && ( // Render the replace button only if a template is selected
-            <div className="replace-template-button"  >
-              <button className="page-buttons" onClick={handleReplaceTemplate}>Replace Template</button>
-              <button className="page-buttons" onClick={handleDownloadPDF}>Download Diary</button>
-              <button className="page-buttons" type="submit">Save Diary</button>
-            </div>
-          )}
           {diarySaved && <p>Diary Saved</p>}
         </div>
       </div>
@@ -406,7 +365,6 @@ function DiaryEntryPage() {
           <div className="modal-content">
             <h2 className="choose-template-heading">Choose a Template</h2>
             <div className="template-thumbnails">
-              {/* Map through the templates and render a TemplateCard for each */}
               {templates.map((template) => (
                 <TemplateCard
                   key={template.id}
