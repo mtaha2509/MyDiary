@@ -1,14 +1,14 @@
 import React from "react";
 import "./SideBar.css";
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import NoteIcon from '@mui/icons-material/Note';
-import ListIcon from '@mui/icons-material/List';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import BookIcon from '@mui/icons-material/Book';
-import ArticleIcon from '@mui/icons-material/Article';
-import { ExpandIcon, ShrinkIcon,gif } from "../../../assets";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import NoteIcon from "@mui/icons-material/Note";
+import ListIcon from "@mui/icons-material/List";
+import ArchiveIcon from "@mui/icons-material/Archive";
+import BookIcon from "@mui/icons-material/Book";
+import ArticleIcon from "@mui/icons-material/Article";
+import { ExpandIcon, ShrinkIcon, gif } from "../../../assets";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -21,15 +21,23 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
   };
 
   return (
-    <div className={`sidebar-container ${sidebarExpanded ? "sidebar-expanded" : ""}`}>
+    <div
+      className={`sidebar-container ${
+        sidebarExpanded ? "sidebar-expanded" : ""
+      }`}
+    >
       <div className="sidebar">
         <div className="sidebar-toggle-button" onClick={toggleSidebar}>
           <div className="sidebar-icon">
-          <img src={gif} alt="bruh" className={`sidebar-gif ${sidebarExpanded ? 'hidden' : ''}`} />
+            <img
+              src={gif}
+              alt="bruh"
+              className={`sidebar-gif ${sidebarExpanded ? "hidden" : ""}`}
+            />
             {sidebarExpanded ? (
               <img src={ShrinkIcon} className="sidebar-shrink-icon" />
             ) : (
-              <img src={ExpandIcon}className="sidebar-expand-icon" />
+              <img src={ExpandIcon} className="sidebar-expand-icon" />
             )}
           </div>
           {sidebarExpanded && (
@@ -64,12 +72,12 @@ function SideBar({ toggleSidebar, sidebarExpanded }) {
                 <span className="sidebar-entry-label">Diary Entry</span>
               </a>
             </div>
-            <div className="sidebar-entry">
+            {/* <div className="sidebar-entry">
               <a href="#" onClick={() => handleNavigation("/BlogPage")}>
                 <ArticleIcon className="sidebar-entry-icon" />
                 <span className="sidebar-entry-label">Blog Page</span>
               </a>
-            </div>
+            </div> */}
           </div>
         )}
       </div>

@@ -34,7 +34,6 @@ router.post("/login", loginValidation, validationMiddleware, login);
 router.get("/logout", logout);
 router.post("/diarypage", diarypage);
 router.post("/timecapsule", timecapsule);
-
 router.get("/diarypage", getDiary);
 router.get("/getPosts", getPosts);
 router.post("/postPost", postPost);

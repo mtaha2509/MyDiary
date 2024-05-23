@@ -1,39 +1,68 @@
 .time-card {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    margin: 10px;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    background-color: #000; /* Set background color to black */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adjust box shadow */
-    color: #fff;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(50, 50, 50, 0.7));
+  background-size: 400% 400%;
+  animation: gradientAnimation 10s ease infinite;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  .time-card:hover {
-    transform: translateY(-5px);
+  50% {
+    background-position: 100% 50%;
   }
-  
-  .time-card-content {
-    padding: 20px;
-    text-align: center;
+  100% {
+    background-position: 0% 50%;
   }
-  
-  .time-card-title {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
+}
+
+.time-card:hover {
+  transform: translateY(-5px);
+  animation: gradientAnimation 2s ease infinite;
+}
+
+.time-card-content {
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.time-card-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  animation: shimmer 5s linear infinite;
+}
+
+.time-card-timer {
+  margin-top: 5px;
+  font-size: 16px;
+  animation: shimmer 7s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
   }
-  
-  .time-card-timer {
-    margin-top: 5px;
-    font-size: 16px;
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1);
   }
-  
-  @media (max-width: 768px) {
-    .time-card {
-      max-width: 100%;
-    }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
   }
-  
+}
+
+@media (max-width: 768px) {
+  .time-card {
+    max-width: 100%;
+  }
+}

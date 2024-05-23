@@ -53,7 +53,6 @@ exports.register = async (req, res) => {
 };
 exports.getUser = async (req, res) => {
   try {
-    console.log("In backend");
     const token = req.cookies["token"];
     if (!token) {
       return res.status(401).json({ error: "Unauthorized: No token provided" });
@@ -209,7 +208,7 @@ exports.getDiary = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT b.id, b.title, b.content, b.created_at, u.first_name, u.last_name
+      SELECT b.id, b.user_id, b.title, b.content, b.created_at, u.first_name, u.last_name
       FROM blogs b
       JOIN users u ON b.user_id = u.id
       ORDER BY b.created_at DESC
@@ -217,6 +216,7 @@ exports.getPosts = async (req, res) => {
 
     const blogPosts = result.rows.map((row) => ({
       id: row.id,
+      user_id: row.user_id,
       title: row.title,
       content: row.content,
       created_at: row.created_at,
@@ -381,7 +381,6 @@ exports.deleteTodo = async (req, res) => {
 
 exports.timecapsule = async (req, res) => {
   try {
-    console.log("in backend");
     console.log(req.body);
     const token = req.cookies["token"];
     if (!token) {
