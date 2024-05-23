@@ -42,19 +42,17 @@
   margin-top: 20px;
 }
 
-.next-button,
-.prev-button {
-  background-color: #ff6d2c;
+.next-button, .prev-button {
+  background-color: #FF6D2C;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease; /* Added transition for smoother hover effect */
 }
 
-.next-button:hover,
-.prev-button:hover {
+.next-button:hover, .prev-button:hover {
   background-color: black;
 }
 

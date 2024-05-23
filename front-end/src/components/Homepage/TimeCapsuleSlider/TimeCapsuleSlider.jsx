@@ -113,12 +113,12 @@ const TimeCapsuleSlider = () => {
             })}
           </Row>
         )}
-        <div className="slider-buttons">
+        <div className="buttons">
           <button className="prev-button" onClick={handlePrev}>
-            &lt;
+            Prev
           </button>
           <button className="next-button" onClick={handleNext}>
-            &gt;
+            Next
           </button>
         </div>
       </div>
