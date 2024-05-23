@@ -33,10 +33,10 @@ function BlogPage() {
   const fetchCurrentUser = async () => {
     try {
       const user = await getUser();
-      console.log("Fetched current user:", user); // Debug log
+      // console.log("Fetched current user:", user); // Debug log
       setCurrentUser(user);
     } catch (error) {
-      handleError("Error fetching current user", error);
+      // handleError("Error fetching current user", error);
     }
   };
 
