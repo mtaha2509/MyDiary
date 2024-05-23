@@ -26,15 +26,15 @@ const list = [
     id: 3,
     color: "#EEECFF",
     SVG: Weather1,
-    title: "Track Your Vibe!  See Your Mood Journey",
-    desc: "Chart your emotions: Fun tracker unlocks self-awareness!",
+    title: "Chat your emotions with the AI Bot",
+    desc: "With our In-Built AI Chat bots, you can Utilize them for more creativity",
   },
   {
     id: 4,
     color: "#D9F2F7",
     SVG: Gratitude,
-    title: "Spark Self-Discovery: Prompts & Gratitude",
-    desc: "Deepen your reflections with our inspiring prompts!   Unlock a grateful heart with a dedicated gratitude section.",
+    title: "Spark Self-Discovery: Prompts",
+    desc: "Deepen your reflections with our inspiring prompts! The ChatBots are here for your Help.",
   },
   {
     id: 5,
@@ -47,8 +47,8 @@ const list = [
     id: 6,
     color: "#EBFDEB",
     SVG: Weather2,
-    title: "Mood & Weather Match?",
-    desc: " See how your mood connects to the weather!  Real-time weather displayed alongside your entries.",
+    title: "A Whole Community",
+    desc: "A lot of users prefer our apps and we have a whole community. Go through the blog page to know about them!",
   },
 ];
 export default list;
