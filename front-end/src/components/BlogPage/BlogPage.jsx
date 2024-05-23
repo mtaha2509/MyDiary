@@ -178,6 +178,7 @@ function BlogPage() {
         <h1 className="fadeIn">Welcome to Our Blog</h1>
         <p className="fadeIn">
           Explore our latest posts and share your thoughts.
+          Guess the today's theme!
         </p>
       </div>
       {error && <p className="error-message">{error}</p>}
@@ -290,6 +291,7 @@ function BlogPage() {
                 <button onClick={() => handleEditClick(selectedPost)}>
                   Edit
                 </button>
+                <p></p>
                 <button onClick={() => handleDelete(selectedPost.id)}>
                   Delete
                 </button>
