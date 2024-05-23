@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
 import Card from "./Cards/Card"; // Adjust the path as necessary
 import Modal from "./Modal/Modal"; // Adjust the path as necessary
 import axios from "axios";
 import "./TimeCapsuleSlider.css";
-import {
-  openCapsule,
-  setActiveModal,
-  closeModal,
-} from "../../../redux/slices/timeCapsuleSlice";
 
 const TimeCapsuleSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [timeCapsules, setTimeCapsules] = useState([]);
   const [cardsToShow, setCardsToShow] = useState(4);
-  const { openedCapsules, activeModal } = useSelector(
-    (state) => state.timeCapsule
-  );
-  const dispatch = useDispatch();
+  const [showModalIndex, setShowModalIndex] = useState(null);
+  const [isExpired, setIsExpired] = useState(false);
 
   useEffect(() => {
     const fetchTimeCapsules = async () => {
@@ -61,19 +53,15 @@ const TimeCapsuleSlider = () => {
     );
   };
 
-  const handleCardClick = (capsule) => {
-    if (openedCapsules.includes(capsule.timecapsule_id)) {
-      dispatch(setActiveModal(capsule.timecapsule_id));
-    }
-  };
-
-  const handleOpenCapsule = (capsuleId) => {
-    dispatch(openCapsule(capsuleId));
-    dispatch(setActiveModal(capsuleId));
+  const handleCardClick = (index, expired) => {
+    console.log(index);
+    setShowModalIndex(index);
+    setIsExpired(expired);
   };
 
   const handleCloseModal = () => {
-    dispatch(closeModal());
+    setShowModalIndex(null);
+    setIsExpired(false);
   };
 
   const startIndex = currentIndex;
@@ -117,9 +105,8 @@ const TimeCapsuleSlider = () => {
                     title={capsule.title}
                     messageToFutureSelf={capsule.message_to_future_self}
                     openDateTime={capsule.opendatetime}
-                    onOpen={() => handleOpenCapsule(capsule.timecapsule_id)}
-                    onClick={() => handleCardClick(capsule)}
-                    opened={openedCapsules.includes(capsule.timecapsule_id)}
+                    id={index}
+                    onClick={handleCardClick}
                   />
                 </Col>
               );
@@ -135,24 +122,14 @@ const TimeCapsuleSlider = () => {
           </button>
         </div>
       </div>
-      {activeModal && (
+      {showModalIndex !== null && isExpired === true && (
         <Modal
           show={true}
           onClose={handleCloseModal}
-          title={
-            timeCapsules.find(
-              (capsule) => capsule.timecapsule_id === activeModal
-            )?.title
-          }
-          imageUrl={
-            timeCapsules.find(
-              (capsule) => capsule.timecapsule_id === activeModal
-            )?.image_url
-          }
+          title={timeCapsules[showModalIndex]?.title}
+          imageUrl={timeCapsules[showModalIndex]?.image_url}
           messageToFutureSelf={
-            timeCapsules.find(
-              (capsule) => capsule.timecapsule_id === activeModal
-            )?.message_to_future_self
+            timeCapsules[showModalIndex]?.message_to_future_self
           }
         />
       )}

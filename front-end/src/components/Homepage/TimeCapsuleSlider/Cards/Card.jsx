@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Modal from "../Modal/Modal"; // Adjust the path as necessary
+import React, { useState, useEffect } from "react";
 import "./Card.css";
-import { useDispatch } from "react-redux";
-import {
-  openCapsule,
-  setActiveModal,
-} from "../../../../redux/slices/timeCapsuleSlice";
 
 const Card = ({
   imageUrl,
   title,
   messageToFutureSelf,
+  onClick,
   openDateTime,
-  timecapsule_id,
-  opened,
+  id,
 }) => {
   const calculateTimeLeft = (openDateTime) => {
     const now = new Date().getTime();
@@ -37,32 +31,25 @@ const Card = ({
   };
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(openDateTime));
-  const [timerActive, setTimerActive] = useState(true);
-  const dispatch = useDispatch();
+  const [expired, setExpired] = useState(false);
 
   useEffect(() => {
-    if (!timerActive) return;
-
     const timer = setInterval(() => {
       const newTimeLeft = calculateTimeLeft(openDateTime);
       setTimeLeft(newTimeLeft);
 
-      if (newTimeLeft === null) {
-        setTimerActive(false);
-        dispatch(openCapsule(timecapsule_id));
-        dispatch(setActiveModal(timecapsule_id));
-        clearInterval(timer);
+      if (newTimeLeft === null && !expired) {
+        setExpired(true);
       }
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [openDateTime, timecapsule_id, timerActive, dispatch]);
-
-  const handleCardClick = () => {
-    if (!timerActive && opened) {
-      dispatch(setActiveModal(timecapsule_id));
+    // Clear the timer if the capsule is expired
+    if (expired) {
+      clearInterval(timer);
     }
-  };
+
+    return () => clearInterval(timer);
+  }, [openDateTime, expired]);
 
   const formatTime = (time) => {
     if (time === null) {
@@ -72,8 +59,12 @@ const Card = ({
     return `${time.days}d ${time.hours}h ${time.minutes}m ${time.seconds}s`;
   };
 
+  const handleClick = () => {
+    onClick(id, expired);
+  };
+
   return (
-    <div className="time-card" onClick={handleCardClick}>
+    <div className="time-card" onClick={handleClick}>
       <div className="time-card-content">
         <h3 className="time-card-title">{title}</h3>
         <div className="time-card-timer">{formatTime(timeLeft)}</div>
