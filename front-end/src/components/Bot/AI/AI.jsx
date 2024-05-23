@@ -214,7 +214,7 @@ function SliderContent({
           color: "white",
         }}
       >
-        {loading1 ? "Loading..." : "Text"}
+        {loading1 ? "Loading..." : "Text to Text"}
       </button>
       <button
         disabled={loading2}
