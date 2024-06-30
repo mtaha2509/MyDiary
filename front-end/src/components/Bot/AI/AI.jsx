@@ -79,7 +79,7 @@ function App() {
       }
       setLoading1(true);
       const genAI = new GoogleGenerativeAI(
-        "AIzaSyAnhmR1EFQGoGR-IE0Iunh0VmX5q7Xjd0Q"
+        "YOUR_APIKEY"
       );
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
@@ -101,7 +101,7 @@ function App() {
       }
       setLoading2(true);
       const genAI = new GoogleGenerativeAI(
-        "AIzaSyAnhmR1EFQGoGR-IE0Iunh0VmX5q7Xjd0Q"
+        "YOUR_APIKEY"
       );
       const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
